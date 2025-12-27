@@ -10,7 +10,7 @@ class StudentGradeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Grades'),
+        title: const Text('My Grades'),
       ),
       body: Center(child: CustomText(text: "This is Grade Screen")),
         bottomNavigationBar: StudentNavBar(currentIndex: 3)
