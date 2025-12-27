@@ -20,6 +20,10 @@ class AppIcons {
   static const String walletU = "$basePath/walletU.svg";
 
   static const String notification = "$basePath/notification.svg";
+  static const String home = "$basePath/home.svg";
+  static const String attendance = "$basePath/attendance.svg";
+  static const String assignments = "$basePath/assignments.svg";
+  static const String grade = "$basePath/grade.svg";
 
 
 

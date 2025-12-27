@@ -6,7 +6,7 @@ import 'package:get/get_navigation/src/routes/get_route.dart';
 import '../../view/screen/role_screen/demo/demo.dart';
 import '../../view/screen/role_screen/institution/institution_home/institution_home_screen.dart';
 import '../../view/screen/role_screen/parents/parents_home/parents_home_screen.dart';
-import '../../view/screen/role_screen/student/student_home/student_home_screen.dart';
+import '../../view/screen/role_screen/student/view/student_home/student_home_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_home/teachers_home_screen.dart';
 
 class AppRoutes {
