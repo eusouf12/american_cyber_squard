@@ -1,8 +1,12 @@
 import 'package:get/get.dart';
 
 class StudentAttendanceController extends GetxController {
-  RxInt currentIndex = 0.obs;
+  var currentIndex = 0.obs;
   final List<String> tabNamelist = ["Weekly", "Monthly", "Calender"];
+
+  void changeTab(int index){
+    currentIndex.value = index;
+  }
 
 
   final attendancePercent = 0.90.obs;

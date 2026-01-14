@@ -1,6 +1,5 @@
 import 'package:america_ayber_squad/utils/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
@@ -75,7 +74,7 @@ class StudentAttendanceScreen extends StatelessWidget {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(10),
                     child: LinearProgressIndicator(
-                      value: studentAttendanceController.progressValue,
+                      value: studentAttendanceController.progressValue/100,
                       minHeight: 12,
                       backgroundColor: Colors.grey.shade200,
                       color: Colors.green,
@@ -118,6 +117,7 @@ class StudentAttendanceScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 30),
+
             // Tabs
             Obx(() => CustomAttendanceTabbar(
               textColor: AppColors.white,
@@ -133,40 +133,36 @@ class StudentAttendanceScreen extends StatelessWidget {
             ),
             const SizedBox(height: 30),
             // Attendance List
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.only(top: 20.h),
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  if (index == 0) {
-                    return CustomAttendanceCard(
-                      day: "Monday",
-                      date: "Oct 10, 2023",
-                      status: "Present",
-                      color: AppColors.primary,
-                    );
-                  }
-                  else if (index == 1) {
-                    return CustomAttendanceCard(
-                      day: "Tuesday",
-                      date: "Oct 11, 2023",
-                      status: "Absent",
-                      color: AppColors.orange,
-                    );
-                    }
-                  else if (index == 2) {
-                    return CustomAttendanceCard(
-                      day: "Wednesday",
-                      date: "Oct 12, 2023",
-                      status: "Late",
-                      color: AppColors.accentsRed,
-                    );
-                  }
-                  return null;
-                }
-              )
-            )
-          ],
+      Obx(() {
+        if (studentAttendanceController.currentIndex.value == 0) {
+          return CustomAttendanceCard(
+            day: "Monday",
+            date: "Oct 10, 2023",
+            status: "Present",
+            color: AppColors.primary,
+          );
+        }
+        else if (studentAttendanceController.currentIndex.value == 1) {
+          return CustomAttendanceCard(
+            day: "Tuesday",
+            date: "Oct 11, 2023",
+            status: "Absent",
+            color: AppColors.orange,
+          );
+        }
+        else if (studentAttendanceController.currentIndex.value == 2) {
+          return CustomAttendanceCard(
+            day: "Wednesday",
+            date: "Oct 12, 2023",
+            status: "Late",
+            color: AppColors.accentsRed,
+          );
+        }
+        // ✅ fallback widget (must)
+        return const SizedBox.shrink();
+      })
+
+      ],
         ),
       ),
       bottomNavigationBar: const StudentNavBar(currentIndex: 1),
