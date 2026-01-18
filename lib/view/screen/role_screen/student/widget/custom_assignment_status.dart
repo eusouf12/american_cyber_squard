@@ -1,128 +1,195 @@
-import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:america_ayber_squad/view/components/custom_button/custom_button.dart'; // Custom button import
+import '../../../../../utils/app_colors/app_colors.dart'; // Assuming this is where your colors are defined
+import '../../../../components/custom_text/custom_text.dart'; // Assuming your custom text widget
 
-class CustomGradedCard extends StatelessWidget {
+class CustomAssignmentCard extends StatelessWidget {
   final String? title;
   final String? subject;
-  final String? grade;
-  final double? percentage;
-  final String? gradedDate;
+  final String? tagText;
+  final Color? tagColor;
+  final Color? tagTextColor;
+  final bool isCheckIcon; // Check if the icon is a check
+  final String? dateLabel;
+  final String? dateValue;
+  final String? status;
+  final Color? statusColor;
+  final Color? statusTextColor;
+  final bool showSubmitButton;
+  final VoidCallback? onViewDetails;
+  final VoidCallback? onSubmit;
 
-  const CustomGradedCard({
+  const CustomAssignmentCard({
     super.key,
     this.title,
     this.subject,
-    this.grade,
-    this.percentage,
-    this.gradedDate,
+    this.tagText,
+    this.tagColor,
+    this.tagTextColor,
+    this.isCheckIcon = false,
+    this.dateLabel,
+    this.dateValue,
+    this.status,
+    this.statusColor,
+    this.statusTextColor,
+    this.showSubmitButton = false,
+    this.onViewDetails,
+    this.onSubmit,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade200),
-        boxShadow: [
-          BoxShadow(
-              color: Colors.grey.withOpacity(0.05),
-              blurRadius: 10,
-              offset: const Offset(0, 5)),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header: Title & Grade
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                  child: CustomText(
-                      text: title ?? "English Literature Analysis",
-                      fontWeight: FontWeight.w600,
-                      fontSize: 16,
-                      overflow: TextOverflow.ellipsis)),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
-                    borderRadius: BorderRadius.circular(20)),
-                child: Row(
-                  children: [
-                    Text("Grade: ${grade ?? "A-"}",
-                        style: const TextStyle(
-                            color: Colors.black87,
-                            fontSize: 11,
-                            fontWeight: FontWeight.bold)),
-                    const SizedBox(width: 4),
-                    const Icon(Icons.emoji_events_outlined,
-                        size: 14, color: Colors.grey),
-                  ],
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 5),
-
-          CustomText(
-              text: "Subject",
-              fontSize: 13,
-              color: Colors.grey,
-              fontWeight: FontWeight.w500),
-          const SizedBox(height: 15),
-
-          // Grade & Progress Bar Section
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text("Grade",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-              Text("${(percentage! * 100).toInt()}%",
-                  style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 13)),
-            ],
-          ),
-          const SizedBox(height: 8),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(5),
-            child: LinearProgressIndicator(
-              value: percentage ?? 0.75,
-              minHeight: 8,
-              backgroundColor: Colors.grey.shade200,
-              color: Colors.blueGrey.shade700,
-            ),
-          ),
-          const SizedBox(height: 15),
-
-          // Footer: Graded Date
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(17),
+          border: Border.all(color: Colors.grey.shade200),
+          boxShadow: [
+            BoxShadow(color: Colors.grey.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5)),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Tag Section
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Graded:",
-                      style: TextStyle(color: Colors.grey[600], fontSize: 13)),
-                  const SizedBox(width: 5),
-                  Text(gradedDate ?? "Sep 28, 2025",
-                      style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 13)),
+                  Expanded(
+                    child: CustomText(
+                      text: title ?? "Assignment Title",
+                      fontSize: 16,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.black,
+                      textAlign: TextAlign.start,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: tagColor ?? Colors.blue.shade50,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: Row(
+                      children: [
+                        CustomText(
+                          text: tagText ?? "Due Soon",
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: tagTextColor ?? Colors.blue,
+                        ),
+                        const SizedBox(width: 4),
+                        Icon(
+                          isCheckIcon ? Icons.check_circle : Icons.access_time_filled,
+                          size: 12,
+                          color: tagTextColor ?? Colors.blue,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-              Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                    color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.circular(5)),
-                child: CustomText(text: 'Graded', color: Colors.grey, fontSize: 12, fontWeight: FontWeight.w500,)
-              )
-            ],
-          ),
-        ],
+            ),
+            const SizedBox(height: 5),
+
+            // Subject Text with Border
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: CustomText(
+                text: subject ?? "Subject Name",
+                fontSize: 13,
+                fontWeight: FontWeight.w400,
+                color: AppColors.black,
+                textAlign: TextAlign.start,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            // Date and Status Row
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      CustomText(
+                        text: dateLabel ?? "Due: ",
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                        color: AppColors.black,
+                      ),
+                      CustomText(
+                        text: dateValue ?? "Date Not Provided",
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.black,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                    decoration: BoxDecoration(
+                      color: statusColor ?? Colors.orange.shade100,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: CustomText(
+                      text: status ?? "Pending",
+                      fontSize: 11,
+                      fontWeight: FontWeight.bold,
+                      color: statusTextColor ?? Colors.orange.shade800,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const SizedBox(height: 15),
+
+            // Action Buttons Row
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: onViewDetails,
+                      style: OutlinedButton.styleFrom(
+                        foregroundColor: AppColors.black,
+                        side: BorderSide(color: Colors.grey.shade300),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                      ),
+                      child: const Text("View details"),
+                    ),
+                  ),
+                  if (showSubmitButton) ...[
+                    const SizedBox(width: 15),
+                    Expanded(
+                      child: ElevatedButton(
+                        onPressed: onSubmit,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.primary,
+                          foregroundColor: Colors.white,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+                        ),
+                        child: const Text("Submit"),
+                      ),
+                    ),
+                  ]
+                ],
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
+        ),
       ),
     );
   }

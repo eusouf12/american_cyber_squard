@@ -1,3 +1,5 @@
+import 'package:america_ayber_squad/view/components/custom_button/custom_button.dart';
+import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -29,12 +31,11 @@ class StudentAssignmentScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // 1. Top Summary Cards (Gradient)
             Row(
               children: [
                 CustomGradeSummaryCard(
                   count: "8",
-                  label: "Submitted",
+                  label: "Completed",
                   gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
                 ),
                 const SizedBox(width: 10),
@@ -46,16 +47,81 @@ class StudentAssignmentScreen extends StatelessWidget {
                 const SizedBox(width: 10),
                 CustomGradeSummaryCard(
                   count: "12",
-                  label: "Graded",
+                  label: "In Progress",
                   gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
                 ),
               ],
             ),
-
             const SizedBox(height: 25),
+            Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.green.shade200,
+                borderRadius: BorderRadius.circular(16),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.2),
+                    blurRadius: 8,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title
+                  CustomText(
+                      text: "Assignments",
+                      fontSize: 22,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white
+                  ),
+                  const SizedBox(height: 4),
 
-            // 2. Assignment List
-            _buildAssignmentCard(
+                  // Description
+
+                  CustomText(
+                      text: "Track your homework and project deadlines",
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      color: Colors.white,
+                    maxLines: 3,
+                    textAlign: TextAlign.start,
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Due Count Section with Icon
+                  Container(
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    decoration: BoxDecoration(
+                      color: Colors.green.shade400,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.assignment,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        CustomText(
+                            text: "2 Due Today",
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.white
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                ],
+              ),
+            ),
+            const SizedBox(height: 25),
+            CustomAssignmentCard(
               title: "Math Homework 1",
               subject: "Algebra & Functions",
               tagText: "Due in 1 day",
@@ -67,10 +133,11 @@ class StudentAssignmentScreen extends StatelessWidget {
               statusColor: Colors.orange.shade100,
               statusTextColor: Colors.orange.shade800,
               showSubmitButton: true,
+              onViewDetails: () {
+                print("Math Homework 1 View details tapped");
+              },
             ),
-
-            // Card 2: Pending (Due later)
-            _buildAssignmentCard(
+            CustomAssignmentCard(
               title: "Science Lab Report",
               subject: "Chemistry",
               tagText: "Due in 3 days",
@@ -82,12 +149,13 @@ class StudentAssignmentScreen extends StatelessWidget {
               statusColor: Colors.orange.shade100,
               statusTextColor: Colors.orange.shade800,
               showSubmitButton: true,
+              onViewDetails: () {
+                print("Science Lab Report View details tapped");
+              },
             ),
-
-            // Card 3: Submitted
-            _buildAssignmentCard(
+            CustomAssignmentCard(
               title: "History Essay",
-              subject: "History", // Subject corrected
+              subject: "History",
               tagText: "Submitted",
               tagColor: Colors.green.shade50,
               tagTextColor: Colors.green,
@@ -98,20 +166,11 @@ class StudentAssignmentScreen extends StatelessWidget {
               statusColor: Colors.green.shade50,
               statusTextColor: Colors.green,
               showSubmitButton: false,
+              onViewDetails: () {
+                print("History Essay View details tapped");
+              },
             ),
-
-            // Card 4: Graded (With Progress Bar)
-            CustomGradedCard(
-              title: "English Literature Analysis",
-              subject: "English",
-              grade: "A-",
-              percentage: 0.92,
-              gradedDate: "Sep 28, 2025",
-            ),
-
-
-            // Card 5: Physics (Pending)
-            _buildAssignmentCard(
+            CustomAssignmentCard(
               title: "Physics Problem Set",
               subject: "Physics",
               tagText: "Due in 5 days",
@@ -123,6 +182,9 @@ class StudentAssignmentScreen extends StatelessWidget {
               statusColor: Colors.orange.shade100,
               statusTextColor: Colors.orange.shade800,
               showSubmitButton: false,
+              onViewDetails: () {
+                print("Physics Problem Set View details tapped");
+              },
             ),
           ],
         ),
@@ -130,120 +192,4 @@ class StudentAssignmentScreen extends StatelessWidget {
       bottomNavigationBar: StudentNavBar(currentIndex: 2),
     );
   }
-
-  // 2. Standard Assignment Card (Pending/Submitted)
-  Widget _buildAssignmentCard({
-    required String title,
-    required String subject,
-    required String tagText,
-    required Color tagColor,
-    required Color tagTextColor,
-    bool isCheckIcon = false,
-    required String dateLabel,
-    required String dateValue,
-    required String status,
-    required Color statusColor,
-    required Color statusTextColor,
-    required bool showSubmitButton,
-  }) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 20),
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.grey.shade200),
-        boxShadow: [
-          BoxShadow(color: Colors.grey.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5)),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header: Title & Tag
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(color: tagColor, borderRadius: BorderRadius.circular(20)),
-                child: Row(
-                  children: [
-                    Text(tagText, style: TextStyle(color: tagTextColor, fontSize: 10, fontWeight: FontWeight.bold)),
-                    if (isCheckIcon) ...[
-                      const SizedBox(width: 4),
-                      Icon(Icons.check_circle, size: 12, color: tagTextColor),
-                    ] else ...[
-                      const SizedBox(width: 4),
-                      Icon(Icons.access_time_filled, size: 12, color: tagTextColor),
-                    ]
-                  ],
-                ),
-              )
-            ],
-          ),
-          const SizedBox(height: 5),
-          Text(subject, style: TextStyle(color: Colors.grey[600], fontSize: 13)),
-          const SizedBox(height: 15),
-
-          // Date & Status Row
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  Text(dateLabel, style: TextStyle(color: Colors.grey[600], fontSize: 13)),
-                  const SizedBox(width: 5),
-                  Text(dateValue, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
-                ],
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(color: statusColor, borderRadius: BorderRadius.circular(5)),
-                child: Text(status, style: TextStyle(color: statusTextColor, fontSize: 11, fontWeight: FontWeight.bold)),
-              )
-            ],
-          ),
-          const SizedBox(height: 15),
-
-          // Buttons
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton(
-                  onPressed: () {},
-                  style: OutlinedButton.styleFrom(
-                    foregroundColor: Colors.grey[700],
-                    side: BorderSide(color: Colors.grey.shade300),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                  ),
-                  child: const Text("View details"),
-                ),
-              ),
-              if (showSubmitButton) ...[
-                const SizedBox(width: 15),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF008955), // Green Button
-                      foregroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-                    ),
-                    child: const Text("Submit"),
-                  ),
-                ),
-              ]
-            ],
-          )
-        ],
-      ),
-    );
-  }
-
 }

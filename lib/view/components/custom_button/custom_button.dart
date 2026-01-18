@@ -19,6 +19,7 @@ class CustomButton extends StatelessWidget {
     this.fontSize,
     this.borderWidth,
     this.borderRadius,
+    this.icon,
   });
 
   final double height;
@@ -33,6 +34,7 @@ class CustomButton extends StatelessWidget {
   final double? fontSize;
   final double? borderWidth;
   final double? borderRadius;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -52,13 +54,26 @@ class CustomButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius ?? 4),
           color: fillColor,
         ),
-        child: CustomText(
-          fontSize: fontSize ?? 18.sp,
-          fontWeight: FontWeight.w500,
-          color: textColor,
-          textAlign: TextAlign.center,
-          text: title,
+        child: Row(
+          children: [
+            if (icon != null) ...[
+              SizedBox(width: 12.w),
+              Icon(
+                icon ?? Icons.ac_unit,
+                color: textColor,
+                size: 20.sp,
+              ),
+              SizedBox(width: 8.w),
+            ],
+            CustomText(
+              fontSize: fontSize ?? 18.sp,
+              fontWeight: FontWeight.w500,
+              color: textColor,
+              textAlign: TextAlign.center,
+              text: title,
 
+            ),
+          ],
         ),
       ),
     );
