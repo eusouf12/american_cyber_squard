@@ -5,7 +5,7 @@ class CustomAllInfoCard extends StatelessWidget {
   final String subtitle;
   final String count;
   final IconData icon;
-  final Color cardColor;
+  final List<Color> cardColors;
   final Color textColor;
 
   const CustomAllInfoCard({
@@ -14,8 +14,11 @@ class CustomAllInfoCard extends StatelessWidget {
     required this.subtitle,
     required this.count,
     required this.icon,
-    this.cardColor = const Color(0xFFFDFFA8), // Light Yellowish default color
-    this.textColor = Colors.black, // Default text color
+    this.cardColors = const [
+      Color(0xFFFDFFA8),
+      Color(0xFFC8E6C9),
+    ],
+    this.textColor = Colors.black,
   }) : super(key: key);
 
   @override
@@ -23,7 +26,11 @@ class CustomAllInfoCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: cardColor, // Customizable background color
+        gradient: LinearGradient(
+          colors: cardColors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -36,10 +43,15 @@ class CustomAllInfoCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Title and Icon Row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              Icon(
+                icon,
+                size: 20,
+                color: textColor,
+              ),
+              SizedBox(width: 5,),
               Text(
                 title,
                 style: TextStyle(
@@ -48,28 +60,17 @@ class CustomAllInfoCard extends StatelessWidget {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              SizedBox(width: 40,),
-              Icon(
-                icon,
-                size: 20,
-                color: textColor,
-              ),
             ],
           ),
           const SizedBox(height: 10),
-
-          // Subtitle
           Text(
             subtitle,
             style: TextStyle(
               color: Colors.grey[700],
               fontSize: 12,
-              fontWeight: FontWeight.w400,
             ),
           ),
           const SizedBox(height: 10),
-
-          // Count
           Text(
             count,
             style: const TextStyle(

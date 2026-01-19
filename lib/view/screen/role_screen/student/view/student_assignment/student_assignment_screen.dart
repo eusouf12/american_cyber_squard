@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../components/custom_nav_bar/student_nav_bar.dart';
+import '../../../../../components/custom_royel_appbar/custom_royel_appbar.dart';
 import '../../widget/custom_assignment_status.dart';
 import '../../widget/custom_grade_summary_card.dart';
 
@@ -13,19 +14,7 @@ class StudentAssignmentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black),
-          onPressed: () => Get.back(),
-        ),
-        title: const Text(
-          "Assignments",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
+      appBar: CustomRoyelAppbar(titleName: "Assignments",),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Column(
@@ -36,8 +25,6 @@ class StudentAssignmentScreen extends StatelessWidget {
                 children: [
                   CustomGradeSummaryCard(
                     count: "8",
-
-
                     label: "Completed",
                     gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
                   ),

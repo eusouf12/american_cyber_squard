@@ -1,6 +1,3 @@
-
-
-
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 import '../../view/screen/role_screen/demo/demo.dart';
