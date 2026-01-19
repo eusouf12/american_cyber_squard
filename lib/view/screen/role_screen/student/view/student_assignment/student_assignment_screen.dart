@@ -30,26 +30,29 @@ class StudentAssignmentScreen extends StatelessWidget {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            Row(
-              children: [
-                CustomGradeSummaryCard(
-                  count: "8",
-                  label: "Completed",
-                  gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
-                ),
-                const SizedBox(width: 10),
-                CustomGradeSummaryCard(
-                  count: "3",
-                  label: "Pending",
-                  gradientColors: [Color(0xFFFFF9C4), Color(0xFFB2DFDB)],
-                ),
-                const SizedBox(width: 10),
-                CustomGradeSummaryCard(
-                  count: "12",
-                  label: "In Progress",
-                  gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
-                ),
-              ],
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  CustomGradeSummaryCard(
+                    count: "8",
+                    label: "Completed",
+                    gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
+                  ),
+                  const SizedBox(width: 10),
+                  CustomGradeSummaryCard(
+                    count: "3",
+                    label: "Pending",
+                    gradientColors: [Color(0xFFFFF9C4), Color(0xFFB2DFDB)],
+                  ),
+                  const SizedBox(width: 10),
+                  CustomGradeSummaryCard(
+                    count: "12",
+                    label: "In Progress",
+                    gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 25),
             Container(
