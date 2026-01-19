@@ -7,7 +7,8 @@ import '../../../../../components/custom_nav_bar/student_nav_bar.dart';
 import '../../controller/student_attandance_controller.dart';
 import '../../widget/custom_attendanceCard.dart';
 import '../../widget/custom_attendance_tabbar.dart';
-import '../../widget/student_attandance_point_card.dart';
+import '../../widget/custom_grade_summary_card.dart';
+import '../../widget/custom_history_item.dart';
 
 class StudentAttendanceScreen extends StatelessWidget {
   StudentAttendanceScreen({super.key});
@@ -17,152 +18,176 @@ class StudentAttendanceScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomRoyelAppbar(
+      appBar: CustomRoyelAppbar(
         titleName: "Attendance",
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            /// 🔹 Attendance Summary
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                // Horizontal Scrolling for Cards (Summary Cards)
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal, // Make it horizontally scrollable
+                  child: Row(
+                    children: [
+                      CustomGradeSummaryCard(
+                        count: "92%",
+                        label: "Average Attendance",
+                        gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
+                      ),
+                      const SizedBox(width: 10),
+                      CustomGradeSummaryCard(
+                        count: "3",
+                        label: "Days Present",
+                        gradientColors: [Color(0xFFFFF9C4), Color(0xFFB2DFDB)],
+                      ),
+                      const SizedBox(width: 10),
+                      CustomGradeSummaryCard(
+                        count: "12",
+                        label: "Late",
+                        gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
+                      ),
+                      const SizedBox(width: 10),
+                      CustomGradeSummaryCard(
+                        count: "12",
+                        label: "Days Absent",
+                        gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 25),
+
+                // Remaining Sections (e.g., Attendance Summary, Tabs, etc.)
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.green.shade200,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.2),
+                        blurRadius: 8,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      CustomText(
+                          text: "Assignments",
+                          fontSize: 22,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white
+                      ),
+                      const SizedBox(height: 4),
+
+                      CustomText(
+                        text: "Track your homework and project deadlines",
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.white,
+                        maxLines: 3,
+                        textAlign: TextAlign.start,
+                      ),
+
+                      const SizedBox(height: 16),
+
+                      // Due Count Section with Icon
+                      Container(
+                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                        decoration: BoxDecoration(
+                          color: Colors.green.shade400,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.assignment,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                            const SizedBox(width: 8),
+                            CustomText(
+                                text: "2 Due Today",
+                                fontSize: 16,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
+
             Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomText(
-                  text: "90%",
-                  fontSize: 30,
-                  fontWeight: FontWeight.w700,
+                const Text(
+                  "Recent History",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
-                const SizedBox(height: 10),
-                const CustomText(
-                  text: "Overall Attendance",
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
+                const SizedBox(height: 16),
+
+                HistoryItem(
+                  date: "Dec 10, 2024",
+                  subtitle: "Regular Class Day",
+                  status: "Present",
+                  statusColor: Colors.green,
+                  icon: Icons.check_circle,
+                  iconBg: Colors.green.withOpacity(0.1),
+                ),
+
+                HistoryItem(
+                  date: "Dec 09, 2024",
+                  subtitle: "Regular Class Day",
+                  status: "Present",
+                  statusColor: Colors.green,
+                  icon: Icons.check_circle,
+                  iconBg: Colors.green.withOpacity(0.1),
+                ),
+
+                HistoryItem(
+                  date: "Dec 08, 2024",
+                  subtitle: "Regular Class Day",
+                  status: "Late",
+                  statusColor: Colors.orange,
+                  icon: Icons.access_time_filled,
+                  iconBg: Colors.orange.withOpacity(0.1),
+                ),
+
+                HistoryItem(
+                  date: "Dec 07, 2024",
+                  subtitle: "Regular Class Day",
+                  status: "Absent",
+                  statusColor: Colors.red,
+                  icon: Icons.cancel,
+                  iconBg: Colors.red.withOpacity(0.1),
+                ),
+
+                HistoryItem(
+                  date: "Dec 06, 2024",
+                  subtitle: "Regular Class Day",
+                  status: "Present",
+                  statusColor: Colors.green,
+                  icon: Icons.check_circle,
+                  iconBg: Colors.green.withOpacity(0.1),
                 ),
               ],
-            ),
-
-            const SizedBox(height: 30),
-
-            /// 🔹 Progress Section
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(
-                  color: AppColors.grey_03,
-                  width: 1,
-                ),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const CustomText(
-                          text: "Progress",
-                        fontWeight: FontWeight.w500,
-                          fontSize: 14,
-                      ),
-                      Text(
-                        "${studentAttendanceController.presentDays.value}/${studentAttendanceController.totalDays.value} days",
-                        style: const TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 15),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: LinearProgressIndicator(
-                      value: studentAttendanceController.progressValue/100,
-                      minHeight: 12,
-                      backgroundColor: Colors.grey.shade200,
-                      color: Colors.green,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text("60%", style: TextStyle(color: Colors.grey, fontSize: 12)),
-                      Text("80%", style: TextStyle(color: Colors.grey, fontSize: 12)),
-                      Text("100%", style: TextStyle(color: Colors.grey, fontSize: 12)),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(height: 30),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                StudentAttandancePointCard(
-                  point: "315",
-                  title: "Present",
-                  textColor: Color(0xFF2E7D32),
-                  bgColor: Color(0xFFE8F5E9),
-                ),
-                StudentAttandancePointCard(
-                  point: "8",
-                  title: "Late",
-                  textColor: Color(0xFFF9A825),
-                  bgColor: Color(0xFFFFFDE7),
-                ),
-                StudentAttandancePointCard(
-                  point: "8",
-                  title: "Absent",
-                  textColor: Color(0xFFC62828),
-                  bgColor: Color(0xFFFFEBEE),
-                ),
-              ],
-            ),
-            const SizedBox(height: 30),
-
-            // Tabs
-            Obx(() => CustomAttendanceTabbar(
-              textColor: AppColors.white,
-              tabs: studentAttendanceController.tabNamelist,
-              selectedIndex: studentAttendanceController.currentIndex.value,
-              onTabSelected: (value) {
-                studentAttendanceController.currentIndex.value = value;
-                // Trigger data fetch (refresh)
-                // studentAttendanceController.fetchAllCases();
-              },
-              selectedColor: AppColors.primary,
             )
+              ],
             ),
-            const SizedBox(height: 30),
-            // Attendance List
-      Obx(() {
-        if (studentAttendanceController.currentIndex.value == 0) {
-          return CustomAttendanceCard(
-            day: "Monday",
-            date: "Oct 10, 2023",
-            status: "Present",
-            color: AppColors.primary,
-          );
-        }
-        else if (studentAttendanceController.currentIndex.value == 1) {
-          return CustomAttendanceCard(
-            day: "Tuesday",
-            date: "Oct 11, 2023",
-            status: "Absent",
-            color: AppColors.orange,
-          );
-        }
-        else if (studentAttendanceController.currentIndex.value == 2) {
-          return CustomAttendanceCard(
-            day: "Wednesday",
-            date: "Oct 12, 2023",
-            status: "Late",
-            color: AppColors.accentsRed,
-          );
-        }
-        // ✅ fallback widget (must)
-        return const SizedBox.shrink();
-      })
-
-      ],
+          ),
         ),
       ),
       bottomNavigationBar: const StudentNavBar(currentIndex: 1),

@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../components/custom_nav_bar/student_nav_bar.dart';
 import '../../controller/student_home_controller.dart';
+import '../../widget/custom_all_info_card.dart';
 import '../../widget/custom_attenddance.dart';
-import '../../widget/custom_grede_card.dart';
-import '../../widget/custom_overall_attendance.dart';
 import '../../widget/custom_shedule_item.dart';
 
 
@@ -25,7 +24,7 @@ class StudentHomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1. Header Section
+              // Header Section
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -66,65 +65,53 @@ class StudentHomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
 
-              // 2. Summary Cards (Classes & GPA)
-              Row(
-                children: [
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFFFDFFA8), // Light Yellowish
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Today's Classes", style: TextStyle(color: Colors.grey[800], fontSize: 12)),
-                              const Icon(Icons.calendar_today, size: 18),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          const Text("5", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-                        ],
-                      ),
+              // Summary Cards (Classes & GPA)
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    CustomAllInfoCard(
+                      title: "Attendance",
+                      subtitle: "Overall attendance rate",
+                      count: "92%",
+                      icon: Icons.check_circle_outline,
+                      cardColor: Color(0xFFFDFFA8),
+                      textColor: Colors.grey[800]!,
                     ),
-                  ),
-                  const SizedBox(width: 15),
-                  Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("GPA", style: TextStyle(color: Colors.grey[800], fontSize: 12)),
-                              const Icon(Icons.show_chart, size: 18),
-                            ],
-                          ),
-                          const SizedBox(height: 10),
-                          const Text("3.8", style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold)),
-                        ],
-                      ),
+                    const SizedBox(width: 8),
+                    CustomAllInfoCard(
+                      title: "Pending Assignments",
+                      subtitle: "Assignments due soon",
+                      count: "3",
+                      icon: Icons.assignment_late,
+                      cardColor: Color(0xFFFDFFA8),
+                      textColor: Colors.grey[800]!,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    CustomAllInfoCard(
+                      title: "Upcoming Exams",
+                      subtitle: "Exams scheduled soon",
+                      count: "2",
+                      icon: Icons.school_outlined,
+                      cardColor: Color(0xFFFDFFA8),
+                      textColor: Colors.grey[800]!,
+                    ),
+                    const SizedBox(width: 8),
+                    CustomAllInfoCard(
+                      title: "Grades Received",
+                      subtitle: "Recent grades received",
+                      count: "4",
+                      icon: Icons.grade_outlined,
+                      cardColor: Color(0xFFFDFFA8),
+                      textColor: Colors.grey[800]!,
+                    ),
+                  ],
+                ),
               ),
+
               const SizedBox(height: 25),
 
-              // 3. Today's Schedule
+              // Today's Schedule
               _buildSectionTitle("Today's Schedule", "View Week"),
               const SizedBox(height: 15),
 
@@ -142,7 +129,7 @@ class StudentHomeScreen extends StatelessWidget {
                 details: "Lab 3 • Dr. Smith",
                 time: "10:00 - 11:30 AM",
                 color: Colors.redAccent,
-                status: "Upcoming",
+                status: "Completed",
                 isActive: false,
                 onTap: () {},
               ),
@@ -151,75 +138,12 @@ class StudentHomeScreen extends StatelessWidget {
                 details: "Room 105 • Ms. Davis",
                 time: "12:00 - 01:30 PM",
                 color: Colors.indigo,
-                status: "Upcoming",
+                status: "Completed",
                 isActive: false,
                 onTap: () {},
               ),
 
-
-              // 4. Recent Grades
-              _buildSectionTitle("Recent Grades", "View All"),
-              const SizedBox(height: 15),
-
-              GridView.count(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                crossAxisSpacing: 15,
-                mainAxisSpacing: 15,
-                childAspectRatio: 1.1,
-                children: [
-                  CustomGradeCard(
-                    subject: "Mathematics",
-                    grade: "A",
-                    avg: "82% Average",
-                    icon: Icons.calculate_outlined,
-                    color: Colors.deepPurple,
-                  ),
-                  CustomGradeCard(
-                    subject: "Physics",
-                    grade: "B+",
-                    avg: "65% Average",
-                    icon: Icons.science_outlined,
-                    color: Colors.orange,
-                  ),
-                  CustomGradeCard(
-                    subject: "English",
-                    grade: "A-",
-                    avg: "88% Average",
-                    icon: Icons.book_outlined,
-                    color: Colors.indigo,
-                  ),
-                  CustomGradeCard(
-                    subject: "History",
-                    grade: "A",
-                    avg: "90% Average",
-                    icon: Icons.public,
-                    color: Colors.teal,
-                  ),
-                ],
-              ),
-
-
-              const SizedBox(height: 25),
-
-              // 5. Attendance Section
-              _buildSectionTitle("Attendance", ""),
-              const SizedBox(height: 15),
-              CustomOverallAttendance(
-                title: "Attendance Summary",
-                semesterStatus: "Semester 2, 2024",
-                overallAttendance: "85%",
-                progressValue: 0.85,
-                presentCount: "180",
-                lateCount: "5",
-                absentCount: "10",
-              ),
-
-
-              const SizedBox(height: 15),
-
-              // 6. Upcoming Assignments (Example)
+              // Upcoming Assignments (Example)
               _buildSectionTitle("Upcoming Assignments", "View All"),
               const SizedBox(height: 15),
               CustomAssignmentCard(

@@ -1,4 +1,3 @@
-import 'package:america_ayber_squad/view/components/custom_button/custom_button.dart';
 import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -133,9 +132,7 @@ class StudentAssignmentScreen extends StatelessWidget {
               statusColor: Colors.orange.shade100,
               statusTextColor: Colors.orange.shade800,
               showSubmitButton: true,
-              onViewDetails: () {
-                print("Math Homework 1 View details tapped");
-              },
+              onViewDetails: () {},
             ),
             CustomAssignmentCard(
               title: "Science Lab Report",
@@ -149,9 +146,7 @@ class StudentAssignmentScreen extends StatelessWidget {
               statusColor: Colors.orange.shade100,
               statusTextColor: Colors.orange.shade800,
               showSubmitButton: true,
-              onViewDetails: () {
-                print("Science Lab Report View details tapped");
-              },
+              onViewDetails: () {},
             ),
             CustomAssignmentCard(
               title: "History Essay",
@@ -166,9 +161,7 @@ class StudentAssignmentScreen extends StatelessWidget {
               statusColor: Colors.green.shade50,
               statusTextColor: Colors.green,
               showSubmitButton: false,
-              onViewDetails: () {
-                print("History Essay View details tapped");
-              },
+              onViewDetails: () {},
             ),
             CustomAssignmentCard(
               title: "Physics Problem Set",
@@ -182,9 +175,7 @@ class StudentAssignmentScreen extends StatelessWidget {
               statusColor: Colors.orange.shade100,
               statusTextColor: Colors.orange.shade800,
               showSubmitButton: false,
-              onViewDetails: () {
-                print("Physics Problem Set View details tapped");
-              },
+              onViewDetails: () {},
             ),
           ],
         ),

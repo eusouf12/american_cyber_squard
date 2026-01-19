@@ -1,3 +1,4 @@
+import 'package:america_ayber_squad/view/components/custom_button/custom_button.dart';
 import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +9,7 @@ class CustomScheduleItem extends StatelessWidget {
   final Color? color;
   final String? status;
   final bool isActive;
-  final VoidCallback? onTap;
+  final VoidCallback onTap;
 
   const CustomScheduleItem({
     super.key,
@@ -18,7 +19,7 @@ class CustomScheduleItem extends StatelessWidget {
     this.color,
     this.status,
     this.isActive = false,
-    this.onTap,
+    required this.onTap,
   });
 
   @override
@@ -80,18 +81,31 @@ class CustomScheduleItem extends StatelessWidget {
                     const SizedBox(height: 8),
 
                     // --- Status ---
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
-                        color: isActive ? Colors.green.shade50 : Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: CustomText(
-                        text: status ?? "Status",
-                        color: isActive ? Colors.green : Colors.grey,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: isActive ? Colors.green.shade50 : Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: CustomText(
+                            text: status ?? "Status",
+                            color: isActive ? Colors.green : Colors.grey,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                          ),
+
+                        ),
+                        // CustomButton(
+                        //     onTap: onTap,
+                        //     title: "Join Now",
+                        //     height: 30,
+                        //     width: 100,
+                        //     fontSize: 12,
+                        // )
+                      ],
                     ),
                     const SizedBox(height: 10),
                   ],
