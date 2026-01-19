@@ -1,5 +1,3 @@
-import 'package:america_ayber_squad/view/screen/role_screen/student/view/student_attendance/student_attendance_screen.dart';
-import 'package:america_ayber_squad/view/screen/role_screen/student/view/student_grade_screen/student_grade_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -9,8 +7,8 @@ import '../../../utils/app_icons/app_icons.dart';
 import '../../screen/role_screen/parents/views/academic_progress_screen.dart';
 import '../../screen/role_screen/parents/views/fee_management_screen.dart';
 import '../../screen/role_screen/parents/views/parents_home_screen.dart';
+import '../../screen/role_screen/parents/views/parents_profile_screen.dart';
 import '../../screen/role_screen/parents/views/parents_students_screen.dart';
-import '../../screen/role_screen/student/view/student_assignment/student_assignment_screen.dart';
 
 
 class Navbar extends StatefulWidget {
@@ -29,8 +27,8 @@ class _NavBarState extends State<Navbar> {
     AppIcons.home,
     AppIcons.attendance,
     AppIcons.assignments,
-    AppIcons.grade,
-    // AppIcons.navUser,
+    AppIcons.assignments,
+     AppIcons.attendance,
 
   ];
 
@@ -133,9 +131,9 @@ class _NavBarState extends State<Navbar> {
         case 3:
           Get.offAll(() => AcademicProgressScreen());
           break;
-      // case 4:
-      //   Get.to(() => ProfileScreen());
-      //   break;
+      case 4:
+        Get.to(() => ParentsProfileScreen());
+        break;
       }
     }
   }
