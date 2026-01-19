@@ -1,4 +1,3 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,18 +8,23 @@ import '../custom_text/custom_text.dart';
 class CustomRoyelAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String? titleName;
   final String? rightIcon;
+  final Color? color;
+  final Color? leftIconColor;
+  //final void Function()? leftOnTap;
   final void Function()? rightOnTap;
   final bool? leftIcon;
-  final Color? color;
-  final Color? backgroundColor;
+  final bool? centerTitleEnable;
 
   const CustomRoyelAppbar({
     super.key,
     this.titleName,
+    this.color,
+    this.leftIconColor,
+    // this.leftOnTap,
     this.rightIcon,
     this.rightOnTap,
     this.leftIcon = false,
-    this.color, this.backgroundColor,
+    this.centerTitleEnable = true,
   });
 
   @override
@@ -28,36 +32,42 @@ class CustomRoyelAppbar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       toolbarHeight: 80,
       elevation: 0,
-      centerTitle: true,
+      foregroundColor: Colors.transparent,
+      centerTitle: centerTitleEnable,
       scrolledUnderElevation: 0,
-      backgroundColor: backgroundColor ?? Colors.transparent, // ✅ Previously transparent
-      systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith( // ✅ Added for status bar
-       // statusBarColor: AppColors.white,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.light,
-      ),
       actions: [
         IconButton(
-          onPressed: () {
-            rightOnTap?.call();
-          },
-          icon: rightIcon == null
-              ? const SizedBox()
-              : CustomImage(imageSrc: rightIcon!, height: 32, width: 32),
-        ),
+            onPressed: () {
+              rightOnTap!();
+            },
+            icon: rightIcon == null
+                ? SizedBox()
+                : CustomImage(
+              imageSrc: rightIcon!,
+              height: 24,
+              width: 24,
+              imageColor: AppColors.black,
+            )),
       ],
-      leading: leftIcon == true
-          ? BackButton(color: color ?? AppColors.primaryTitleTextClr)
-          : null,
-      title: CustomText(
-        text: titleName ?? "",
-        fontSize: 20.w,
-        fontWeight: FontWeight.w600,
-        color: color ?? AppColors.primaryTitleTextClr,
+      backgroundColor: Colors.transparent,
+      leading: leftIcon == true ? BackButton(color: leftIconColor ?? Colors.black,) : SizedBox.shrink(),
+      leadingWidth: leftIcon == true ? kToolbarHeight : 0,
+
+      title: Align(
+        alignment: centerTitleEnable == true
+            ? Alignment.center
+            : Alignment.centerLeft,
+        child: CustomText(
+          text: titleName ?? "",
+          fontSize: 20.w,
+          fontWeight: FontWeight.w600,
+          color: color ?? AppColors.black,
+        ),
       ),
     );
   }
 
   @override
+  // TO DO: implement preferredSize
   Size get preferredSize => const Size.fromHeight(60);
 }

@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../utils/app_colors/app_colors.dart';
 
-
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
     super.key,
@@ -22,21 +21,22 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.hintText,
     this.hintStyle,
-    this.fillColor = AppColors.white,
+    this.fillColor = AppColors.black_80,
     this.suffixIcon,
     this.suffixIconColor,
-    this.fieldBorderRadius = 10,
-    this.fieldBorderColor = Colors.transparent, //const Color(0xffB5D8EE),
+    this.fieldBorderRadius = 16,
+    this.fieldBorderColor = Colors.transparent,
     this.isPassword = false,
     this.isPrefixIcon = true,
     this.readOnly = false,
     this.maxLength,
     this.prefixIcon,
     this.onTap,
-    this.isDens = false,
+    this.isDens = false, this.enabled = true,
   });
 
   final TextEditingController? textEditingController;
+  final bool? enabled;
   final FocusNode? focusNode;
   final TextInputType keyboardType;
   final TextInputAction textInputAction;
