@@ -1,79 +1,154 @@
-import 'package:america_ayber_squad/view/components/custom_nav_bar/student_nav_bar.dart';
-import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_royel_appbar.dart';
+import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
+import 'package:america_ayber_squad/view/components/custom_nav_bar/navbar.dart';
 import 'package:flutter/material.dart';
-
-import '../../../../../../utils/app_const/app_const.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import '../../../../../../../utils/app_colors/app_colors.dart';
+import '../../../../../../../utils/app_const/app_const.dart';
+import '../../../../../../core/app_routes/app_routes.dart';
 import '../../../../../components/custom_netwrok_image/custom_network_image.dart';
+import '../../../../../components/custom_show_dialog/custom_show_dialog.dart';
 import '../../../../../components/custom_text/custom_text.dart';
-import '../../widget/custom_profile_card.dart';
 
 class StudentProfile extends StatelessWidget {
   const StudentProfile({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomRoyelAppbar(
-        titleName: "Profile",
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                CustomNetworkImage(
-                  imageUrl: AppConstants.profileImage,
-                  height: 80,
-                  width: 80,
-                  boxShape: BoxShape.circle,
-                  border: Border.all(color: Colors.amberAccent, width: 2),
+    return CustomGradient(
+      child: Scaffold(
+        backgroundColor: AppColors.white,
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          width: MediaQuery.of(context).size.width,
+
+          child: Padding(
+            padding: const EdgeInsets.only(left: 24,right: 24, top: 30),
+            child: SingleChildScrollView(
+              child: SafeArea(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 20,),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        CustomNetworkImage(
+                          imageUrl: AppConstants.girlsPhoto,
+                          boxShape: BoxShape.circle,
+                          height: 80.h,
+                          width: 80.w,
+                        ),
+                        SizedBox(width: 15),
+                        CustomText(
+                          text: 'Debbendu Paul',
+                          fontSize: 20.sp,
+                          fontWeight: FontWeight.w700,
+                          color: AppColors.black,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 24),
+                    CustomFieldCard(
+                      titleKey: 'Chat',
+                      onTap: () => Get.toNamed(AppRoutes.chatListScreen),
+                    ),
+                    SizedBox(height: 15),
+                    CustomFieldCard(
+                      titleKey: 'Edit Profile',
+                      onTap: () => Get.toNamed(AppRoutes.editScreen),
+                    ),
+                    SizedBox(height: 15),
+                    CustomFieldCard(
+                      titleKey: 'Change Password',
+                      onTap: () => Get.toNamed(AppRoutes.changePassScreen),
+                    ),
+
+                    SizedBox(height: 15),
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (ctx) => AlertDialog(
+                            backgroundColor: AppColors.white,
+                            insetPadding: EdgeInsets.all(8),
+                            contentPadding: EdgeInsets.all(8),
+                            content: SizedBox(
+                              width: MediaQuery.sizeOf(context).width,
+                              child: CustomShowDialog(
+                                textColor: AppColors.black,
+                                title: 'Are You Sure',
+                                discription: 'Logout Your Account',
+                                showColumnButton: true,
+                                showCloseButton: true,
+                                rightOnTap: () => Get.back(),
+                                //leftOnTap: () => Get.offAllNamed(AppRoutes.loginScreen),
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                      child: CustomFieldCard(
+                        titleKey: 'Logout',
+                        color: AppColors.red,
+                        showArrow: true,
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(width: 16),
-                Expanded(
-                  child: CustomText(
-                    text: "Debbendu Paul",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                    maxLines: 1,
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ),
+        ),
+        bottomNavigationBar: Navbar(currentIndex: 4),
+      ),
+    );
+  }
+
+  Widget CustomFieldCard({
+    required String titleKey,
+    VoidCallback? onTap,
+    Color? color,
+    bool showArrow = true,
+  }) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 56,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: AppColors.primary1.withOpacity(1),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            children: [
+              CustomText(
+                text: titleKey.tr,
+                fontSize: 14,
+                fontWeight: FontWeight.w500,
+                color: color ?? AppColors.black,
+              ),
+              Spacer(),
+              if (showArrow)
+                Container(
+                  height: 45,
+                  width: 40,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: AppColors.primary.withOpacity(0.7),
+                  ),
+                  child: Icon(
+                    Icons.keyboard_arrow_right,
+                    color: AppColors.white,
                   ),
                 ),
-              ],
-            ),
-            SizedBox(width: 16),
-            CustomProfileCard(
-              nameTitle: "Grade & Exams",
-              onTap: () {},
-            ),
-            CustomProfileCard(
-              nameTitle: "Schedule",
-              onTap: () {},
-            ),
-            CustomProfileCard(
-              nameTitle: "Support",
-              onTap: () {},
-            ),
-            CustomProfileCard(
-              nameTitle: "Materials",
-              onTap: () {},
-            ),
-            CustomProfileCard(
-              nameTitle: "Change Password",
-              onTap: () {},
-            ),
-            CustomProfileCard(
-              nameTitle: "Edit Profile",
-              onTap: () {},
-            ),
-
-          ],
+            ],
+          ),
         ),
       ),
-      bottomNavigationBar: StudentNavBar(currentIndex: 4),
     );
   }
 }

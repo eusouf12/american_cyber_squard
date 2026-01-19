@@ -28,7 +28,7 @@ class _UserNavBarState extends State<StudentNavBar> {
     AppIcons.attendance,
     AppIcons.assignments,
     AppIcons.assignments,
-    AppIcons.assignments,
+    AppIcons.attendance,
 
   ];
 
