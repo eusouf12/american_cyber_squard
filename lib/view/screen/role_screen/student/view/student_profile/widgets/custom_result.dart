@@ -1,7 +1,6 @@
 import 'package:america_ayber_squad/utils/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../../../components/custom_text/custom_text.dart';
 
 class CustomCard extends StatelessWidget {
