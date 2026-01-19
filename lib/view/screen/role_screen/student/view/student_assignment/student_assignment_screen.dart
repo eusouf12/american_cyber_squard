@@ -72,10 +72,10 @@ class StudentAssignmentScreen extends StatelessWidget {
                   // Description
 
                   CustomText(
-                      text: "Track your homework and project deadlines",
-                      fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      color: Colors.white,
+                    text: "Track your homework and project deadlines",
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: Colors.white,
                     maxLines: 3,
                     textAlign: TextAlign.start,
                   ),

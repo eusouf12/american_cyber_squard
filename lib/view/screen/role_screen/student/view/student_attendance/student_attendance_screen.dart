@@ -1,12 +1,9 @@
-import 'package:america_ayber_squad/utils/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
 import '../../../../../components/custom_nav_bar/student_nav_bar.dart';
 import '../../controller/student_attandance_controller.dart';
-import '../../widget/custom_attendanceCard.dart';
-import '../../widget/custom_attendance_tabbar.dart';
 import '../../widget/custom_grade_summary_card.dart';
 import '../../widget/custom_history_item.dart';
 

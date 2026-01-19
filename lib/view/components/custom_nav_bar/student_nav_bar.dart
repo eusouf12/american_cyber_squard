@@ -1,5 +1,4 @@
 import 'package:america_ayber_squad/view/screen/role_screen/student/view/student_attendance/student_attendance_screen.dart';
-import 'package:america_ayber_squad/view/screen/role_screen/student/view/student_grade_screen/student_grade_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,6 +7,8 @@ import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_icons/app_icons.dart';
 import '../../screen/role_screen/student/view/student_assignment/student_assignment_screen.dart';
 import '../../screen/role_screen/student/view/student_home/student_home_screen.dart';
+import '../../screen/role_screen/student/view/student_my_classes_screen/student_my_classes_screen.dart';
+import '../../screen/role_screen/student/view/student_profile/student_profile.dart';
 
 
 class StudentNavBar extends StatefulWidget {
@@ -26,8 +27,8 @@ class _UserNavBarState extends State<StudentNavBar> {
     AppIcons.home,
     AppIcons.attendance,
     AppIcons.assignments,
-    AppIcons.grade,
-    // AppIcons.navUser,
+    AppIcons.assignments,
+    AppIcons.assignments,
 
   ];
 
@@ -128,11 +129,11 @@ class _UserNavBarState extends State<StudentNavBar> {
           Get.offAll(() => StudentAssignmentScreen());
           break;
         case 3:
-          Get.offAll(() => StudentGradeScreen());
+          Get.offAll(() => StudentMyClassesScreen());
           break;
-        // case 4:
-        //   Get.to(() => ProfileScreen());
-        //   break;
+        case 4:
+          Get.to(() => StudentProfile());
+          break;
       }
     }
   }
