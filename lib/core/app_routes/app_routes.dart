@@ -7,6 +7,8 @@ import '../../view/screen/role_screen/parents/views/parents_profile_screen/chang
 import '../../view/screen/role_screen/parents/views/parents_profile_screen/edit_profile_screen.dart';
 import '../../view/screen/role_screen/student/view/student_home/student_home_screen.dart';
 import '../../view/screen/role_screen/student/view/student_profile/view/schedule_list_screen.dart';
+import '../../view/screen/role_screen/student/view/student_profile/view/student_grade_screen.dart';
+import '../../view/screen/role_screen/student/view/student_profile/view/student_support_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_home/teachers_home_screen.dart';
 
 class AppRoutes {
@@ -22,6 +24,8 @@ class AppRoutes {
   ///=================== Students Part ======================
   static const String studentHomeScreen ="/StudentHomeScreen";
   static const String resourceListScreen ="/ResourceListScreen";
+  static const String studentGradeScreen ="/StudentGradeScreen";
+  static const String contactUsScreen ="/ContactUsScreen";
 
   ///=================== Teachers Part ======================
   static const String teachersHomeScreen ="/TeachersHomeScreen";
@@ -45,16 +49,18 @@ class AppRoutes {
     ///===================== Student Part================
     GetPage(name: studentHomeScreen, page: () => StudentHomeScreen()),
     GetPage(name: resourceListScreen, page: () => ResourceListScreen()),
+    GetPage(name: studentGradeScreen, page: () => StudentGradeScreen()),
+    GetPage(name: contactUsScreen, page: () => ContactUsScreen()),
 
 
-    ///===================== Student Part================
+    ///===================== Teachers Part================
     GetPage(name: teachersHomeScreen, page: () => TeachersHomeScreen()),
 
 
    ///===================== Student Part================
     GetPage(name: institutionHomeScreen, page: () => InstitutionHomeScreen()),
 
-  ///===================== Student Part================
+  ///===================== Parents Part================
     GetPage(name: parentsHomeScreen, page: () => ParentsHomeScreen()),
     GetPage(name: editScreen, page: () => EditScreen()),
     GetPage(name: changePassScreen, page: () => ChangePassScreen()),

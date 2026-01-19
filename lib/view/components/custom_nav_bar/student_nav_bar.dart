@@ -83,10 +83,10 @@ class _UserNavBarState extends State<StudentNavBar> {
                       gradient: index == bottomNavIndex
                           ? const LinearGradient(
                         colors: [
-                          Color(0xFFFDFFA8),
+                         AppColors.primary,
                           Color(0xFFC8E6C9),
                         ],
-                        begin: Alignment.topLeft,
+                        begin: Alignment.centerRight,
                         end: Alignment.bottomRight,
                       )
                           : null,
@@ -138,3 +138,69 @@ class _UserNavBarState extends State<StudentNavBar> {
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
+//
+// class RoleBasedScreen extends StatelessWidget {
+//   final Widget child;
+//   final int navIndex;
+//   // final String role; // propertyOwner, provider, guest
+//   final PreferredSizeWidget? appBar;
+//
+//   const RoleBasedScreen({
+//     required this.child,
+//     required this.navIndex,
+//     // required this.role,
+//     this.appBar,
+//     super.key,
+//   });
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final authController = Get.find<AuthController>();
+//     // final String currentRole = authController.selectedRole.value;
+//     return WillPopScope(
+//       onWillPop: () async {
+//         if (navIndex != 0) {
+//           _navigateToHome(authController.selectedRole.value);
+//           return false;
+//         }
+//         return true;
+//       },
+//       child: Scaffold(
+//         appBar: appBar,
+//         body: child,
+//         bottomNavigationBar: NavBar(currentIndex: navIndex),
+//       ),
+//     );
+//   }
+//
+//   void _navigateToHome(String role) {
+//     print("Navigating Back based on Role: $role");
+//     switch (role) {
+//       case 'propertyOwner':
+//         Get.offAll(() => PropertyOwnerHomeScreen());
+//         break;
+//       case 'serviceProvider':
+//         Get.offAll(() => ServiceProviderHomeScreen());
+//         break;
+//       case 'guest':
+//         Get.offAll(() => GuestHomeScreen());
+//         break;
+//       default:
+//         Get.offAll(() => PropertyOwnerHomeScreen());
+//     }
+//   }
+// }

@@ -42,13 +42,11 @@ class CustomSubjectGradeCard extends StatelessWidget {
               color: brandColor,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Text(
-              gradeLetter ??"",
-              style: const TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
+            child: CustomText(
+              text: gradeLetter ?? "",
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
             ),
           ),
           const SizedBox(width: 16),

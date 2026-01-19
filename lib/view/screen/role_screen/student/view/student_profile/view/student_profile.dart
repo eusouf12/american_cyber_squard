@@ -53,7 +53,7 @@ class StudentProfile extends StatelessWidget {
                     SizedBox(height: 24),
                     CustomFieldCard(
                       titleKey: 'Grades & Exams',
-                      // onTap: () => Get.toNamed(AppRoutes.gradesAndExamsScreen),
+                      onTap: () => Get.toNamed(AppRoutes.studentGradeScreen),
                     ),
                     SizedBox(height: 15),
                     CustomFieldCard(
@@ -68,7 +68,7 @@ class StudentProfile extends StatelessWidget {
                     SizedBox(height: 15),
                     CustomFieldCard(
                       titleKey: 'Support',
-                      // onTap: () => Get.toNamed(AppRoutes.chatListScreen),
+                      onTap: () => Get.toNamed(AppRoutes.contactUsScreen),
                     ),
                     SizedBox(height: 15),
                     CustomFieldCard(
@@ -99,7 +99,7 @@ class StudentProfile extends StatelessWidget {
                                 showColumnButton: true,
                                 showCloseButton: true,
                                 rightOnTap: () => Get.back(),
-                                //leftOnTap: () => Get.offAllNamed(AppRoutes.loginScreen),
+                                leftOnTap: () => Get.offAllNamed(AppRoutes.demo),
                               ),
                             ),
                           ),
