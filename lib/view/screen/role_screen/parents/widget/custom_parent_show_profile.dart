@@ -1,4 +1,6 @@
+import 'package:america_ayber_squad/view/components/custom_button/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../components/custom_text/custom_text.dart';
 
 class CustomParentShowProfile extends StatelessWidget {
@@ -90,24 +92,12 @@ class CustomParentShowProfile extends StatelessWidget {
           ),
 
           const SizedBox(height: 20),
-          SizedBox(
-            width: 140,
-            child: ElevatedButton(
-              onPressed: onViewProfile,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFF00A86B),
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 12),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                elevation: 0,
-              ),
-              child: const Text(
-                "View Profile",
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              ),
-            ),
+          CustomButton(
+            onTap: () {},
+            title: "View Profile",
+            height: 48,
+            width: 130,
+            fontSize: 10.sp,
           ),
         ],
       ),

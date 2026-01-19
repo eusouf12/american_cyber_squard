@@ -27,7 +27,7 @@ class CustomPrimaryCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.green.shade200,
+        color: AppColors.primary,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
@@ -43,7 +43,7 @@ class CustomPrimaryCard extends StatelessWidget {
           // Title
           CustomText(
             text: title,
-            fontSize: 20.sp,
+            fontSize: 18.sp,
             fontWeight: FontWeight.bold,
             color: Colors.white,
             textAlign: TextAlign.start,
@@ -62,7 +62,7 @@ class CustomPrimaryCard extends StatelessWidget {
           isInbox== true ? Container(
             padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
             decoration: BoxDecoration(
-              color: AppColors.primary.withOpacity(0.2),
+              color: AppColors.white.withOpacity(0.1),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Row(
@@ -70,7 +70,7 @@ class CustomPrimaryCard extends StatelessWidget {
                 Icon(icon ?? Icons.group,color: Colors.white,),
                 SizedBox(width: 12.w,),
                 CustomText(text: inboxTitle ?? "2 Students Linked",
-                  fontSize: 14.sp,fontWeight: FontWeight.w600,color: Colors.white,
+                  fontSize: 12.sp,fontWeight: FontWeight.w600,color: Colors.white,
                 )
               ],
             ),

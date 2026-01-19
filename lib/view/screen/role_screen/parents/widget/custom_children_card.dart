@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../components/custom_button/custom_button.dart';
 import '../../../../components/custom_text/custom_text.dart';
 
 class CustomChildrenCard extends StatelessWidget {
@@ -130,21 +132,12 @@ class CustomChildrenCard extends StatelessWidget {
 
                 const SizedBox(height: 25),
                 // View Profile
-                SizedBox(
-                  width: 140,
-                  child: ElevatedButton(
-                    onPressed: onViewProfile,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF00A86B),
-                      foregroundColor: Colors.white,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 12),
-                    ),
-                    child: const Text("View Profile"),
-                  ),
+                CustomButton(
+                  onTap: () {},
+                  title: "View Profile",
+                  height: 48,
+                  width: 130,
+                  fontSize: 10.sp,
                 ),
               ],
             ),

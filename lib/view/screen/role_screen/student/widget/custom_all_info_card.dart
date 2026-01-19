@@ -22,10 +22,10 @@ class CustomAllInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 120.h,
-      width: 230,
+      width: 210.w,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.primary2,
+        color: AppColors.primary,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(

@@ -1,5 +1,6 @@
 import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
 import 'package:america_ayber_squad/view/components/custom_nav_bar/navbar.dart';
+import 'package:america_ayber_squad/view/components/custom_nav_bar/student_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -51,8 +52,23 @@ class StudentProfile extends StatelessWidget {
                     ),
                     SizedBox(height: 24),
                     CustomFieldCard(
-                      titleKey: 'Chat',
-                      onTap: () => Get.toNamed(AppRoutes.chatListScreen),
+                      titleKey: 'Grades & Exams',
+                      // onTap: () => Get.toNamed(AppRoutes.gradesAndExamsScreen),
+                    ),
+                    SizedBox(height: 15),
+                    CustomFieldCard(
+                      titleKey: 'Schedule',
+                      // onTap: () => Get.toNamed(AppRoutes.chatListScreen),
+                    ),
+                    SizedBox(height: 15),
+                    CustomFieldCard(
+                      titleKey: 'Materials',
+                      // onTap: () => Get.toNamed(AppRoutes.chatListScreen),
+                    ),
+                    SizedBox(height: 15),
+                    CustomFieldCard(
+                      titleKey: 'Support',
+                      // onTap: () => Get.toNamed(AppRoutes.chatListScreen),
                     ),
                     SizedBox(height: 15),
                     CustomFieldCard(
@@ -101,7 +117,7 @@ class StudentProfile extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: Navbar(currentIndex: 4),
+        bottomNavigationBar: StudentNavBar(currentIndex: 4),
       ),
     );
   }
@@ -119,7 +135,7 @@ class StudentProfile extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: AppColors.primary1.withOpacity(1),
+          color: AppColors.primary.withOpacity(0.2),
         ),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -138,7 +154,7 @@ class StudentProfile extends StatelessWidget {
                   width: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: AppColors.primary.withOpacity(0.7),
+                    color: AppColors.primary,
                   ),
                   child: Icon(
                     Icons.keyboard_arrow_right,

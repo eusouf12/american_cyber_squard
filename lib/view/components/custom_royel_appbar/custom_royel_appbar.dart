@@ -8,6 +8,7 @@ import '../custom_text/custom_text.dart';
 class CustomRoyelAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String? titleName;
   final String? rightIcon;
+  final double? leftSpace;
   final Color? color;
   final Color? leftIconColor;
   //final void Function()? leftOnTap;
@@ -25,6 +26,7 @@ class CustomRoyelAppbar extends StatelessWidget implements PreferredSizeWidget {
     this.rightOnTap,
     this.leftIcon = false,
     this.centerTitleEnable = true,
+    this.leftSpace,
   });
 
   @override
@@ -59,7 +61,8 @@ class CustomRoyelAppbar extends StatelessWidget implements PreferredSizeWidget {
             : Alignment.centerLeft,
         child: CustomText(
           text: titleName ?? "",
-          fontSize: 20.w,
+          left: leftSpace ?? 0,
+          fontSize: 18.w,
           fontWeight: FontWeight.w600,
           color: color ?? AppColors.black,
         ),

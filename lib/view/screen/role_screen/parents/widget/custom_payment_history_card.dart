@@ -55,7 +55,7 @@ class CustomInvoiceCard extends StatelessWidget {
               fontSize: isHeader ? 14.sp : 12.sp,
               fontWeight: isHeader ? FontWeight.w600 : FontWeight.w600,
               color: isHeader ? const Color(0xFF64748B) : const Color(0xFF00A86B),
-              textAlign: TextAlign.end,
+              textAlign: TextAlign.center,
               maxLines: 2,
             ),
           ),

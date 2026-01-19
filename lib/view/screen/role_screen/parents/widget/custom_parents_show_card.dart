@@ -1,3 +1,4 @@
+import 'package:america_ayber_squad/utils/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../components/custom_text/custom_text.dart';
@@ -19,17 +20,12 @@ class CustomParentsShowCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 130.h,
-      width: 250,
-      padding: const EdgeInsets.all(16),
+      height: 120.h,
+      width: 200.w,
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: AppColors.primary,
         borderRadius: BorderRadius.circular(16),
-        gradient: LinearGradient(
-          colors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.03),
@@ -38,42 +34,48 @@ class CustomParentsShowCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: iconColor?.withOpacity(0.1) ??Color(0xFF00A86B).withOpacity(0.1),
+              color: iconColor?.withOpacity(0.1) ??
+                  Colors.white.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
               icon,
-              color: iconColor ??Color(0xFF00A86B),
+              color: iconColor ?? AppColors.white,
               size: 24,
             ),
           ),
-          const SizedBox(width: 16),
-          Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
+            mainAxisAlignment:MainAxisAlignment.center,
             children: [
-              // Amount/Count Text
-              CustomText(
-                text: count ?? '',
-                fontSize: 20.sp,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-                textAlign: TextAlign.start,
-              ),
-              const SizedBox(height: 4),
-              // Label Text
-              CustomText(
-                text: label ?? '',
-                fontSize: 14.sp,
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
-                textAlign: TextAlign.start,
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // Amount/Count Text
+                    CustomText(
+                      text: count ?? '',
+                      fontSize: 16.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.white,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(height: 4),
+                    // Label Text
+                    CustomText(
+                      text: label ?? '',
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.white.withOpacity(0.8),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

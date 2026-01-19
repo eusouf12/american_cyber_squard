@@ -83,7 +83,7 @@ class ParentsProfileScreen extends StatelessWidget {
                                 showColumnButton: true,
                                 showCloseButton: true,
                                 rightOnTap: () => Get.back(),
-                                //leftOnTap: () => Get.offAllNamed(AppRoutes.loginScreen),
+                                leftOnTap: () => Get.offAllNamed(AppRoutes.demo),
                               ),
                             ),
                           ),
@@ -119,7 +119,7 @@ class ParentsProfileScreen extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: AppColors.primary1.withOpacity(1),
+          color: AppColors.primary.withOpacity(0.2),
         ),
         child: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -138,7 +138,7 @@ class ParentsProfileScreen extends StatelessWidget {
                   width: 40,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: AppColors.primary.withOpacity(0.7),
+                    color: AppColors.primary,
                   ),
                   child: Icon(
                     Icons.keyboard_arrow_right,

@@ -1,6 +1,8 @@
 import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
 import 'package:flutter/material.dart';
+import '../../../../../utils/app_const/app_const.dart';
 import '../../../../components/custom_nav_bar/navbar.dart';
+import '../../../../components/custom_netwrok_image/custom_network_image.dart';
 import '../../../../components/custom_text/custom_text.dart';
 import '../widget/custom_parent_show_profile.dart';
 import '../widget/custom_parents_show_card.dart';
@@ -14,46 +16,107 @@ class ParentsHomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomGradient(
       child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          scrolledUnderElevation: 0,
+          surfaceTintColor: Colors.transparent,
+          elevation: 0,
+          automaticallyImplyLeading: false,
+          titleSpacing: 0,
+          title: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    ClipOval(
+                      child: CustomNetworkImage(
+                        imageUrl: AppConstants.profileImage,
+                        height: 45,
+                        width: 45,
+                      ),
+                    ),
+                    const SizedBox(width: 12),
+                    CustomText(
+                      text: "Sarah Johnson",
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+
+                Stack(
+                  children: [
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.notifications_none,
+                        size: 28,
+                        color: Colors.black,
+                      ),
+                    ),
+                    Positioned(
+                      right: 6,
+                      top: 6,
+                      child: Container(
+                        padding: const EdgeInsets.all(4),
+                        decoration: const BoxDecoration(
+                          color: Colors.red,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Text(
+                          '2',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
           body: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                 child: Column(
                   children: [
-                    SizedBox(height: 40),
-                    CustomPrimaryCard(
-                      title: "Good Morning,\n Eusouf",
-                      description:
-                      "Here's a summary of your children's performance and school updates.",
-                    ),
-                    SizedBox(height: 12),
+
                     //card show
                     SingleChildScrollView(
                       scrollDirection: Axis.horizontal,
                       child: Row(
                         children: [
                           CustomParentsShowCard(
-                            count: "\$450.00",
-                            label: "Total Fees Due",
+                            count: "Total Fees Due",
+                            label: "\$ 450",
                             icon: Icons.credit_card,
                           ),
                           SizedBox(width: 12),
                           //Children
                           CustomParentsShowCard(
-                            count: "2",
-                            label: "Children",
+                            count: "Children",
+                            label: "2",
                             icon: Icons.people,
                           ),
                           SizedBox(width: 12),
                           //Ave Attendance
                           CustomParentsShowCard(
-                            count: "95 %",
-                            label: "Ave Attendance",
+                            count: "Ave Attendance",
+                            label: "95 %",
                             icon: Icons.trending_up,
                           ),
                           SizedBox(width: 12),
                           CustomParentsShowCard(
-                            count: "2",
-                            label: "Pending Notices",
+                            count: "Pending Notices",
+                            label: "2",
                             icon: Icons.warning,
                           ),
                         ],

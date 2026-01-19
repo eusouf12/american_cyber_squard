@@ -45,13 +45,13 @@ class EditScreen extends StatelessWidget {
                       ),
                     ),
                     Positioned(
-                      right: 120.w,
+                      right: 110.w,
                       bottom: 10.w,
                       child: Container(
                         height: 35,
                         width: 35,
                         decoration: BoxDecoration(
-                          color: AppColors.primary1,
+                          color: AppColors.primary,
                           shape: BoxShape.circle,
                         ),
                         child: Icon(Icons.edit, size: 15, color: AppColors.white,),
