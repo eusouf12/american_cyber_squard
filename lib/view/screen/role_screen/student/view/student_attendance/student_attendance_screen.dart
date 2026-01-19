@@ -32,25 +32,21 @@ class StudentAttendanceScreen extends StatelessWidget {
                       CustomGradeSummaryCard(
                         count: "92%",
                         label: "Average Attendance",
-                        gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
                       ),
                       const SizedBox(width: 10),
                       CustomGradeSummaryCard(
                         count: "3",
                         label: "Days Present",
-                        gradientColors: [Color(0xFFFFF9C4), Color(0xFFB2DFDB)],
                       ),
                       const SizedBox(width: 10),
                       CustomGradeSummaryCard(
                         count: "12",
                         label: "Late",
-                        gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
                       ),
                       const SizedBox(width: 10),
                       CustomGradeSummaryCard(
                         count: "12",
                         label: "Days Absent",
-                        gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
                       ),
                     ],
                   ),

@@ -1,7 +1,9 @@
+import 'package:america_ayber_squad/utils/app_colors/app_colors.dart';
 import 'package:america_ayber_squad/utils/app_const/app_const.dart';
 import 'package:america_ayber_squad/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import '../../../../../components/custom_gradient/custom_gradient.dart';
 import '../../../../../components/custom_nav_bar/student_nav_bar.dart';
 import '../../controller/student_home_controller.dart';
 import '../../widget/custom_all_info_card.dart';
@@ -16,55 +18,95 @@ class StudentHomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Header Section
-              Row(
+    return CustomGradient(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+          appBar: AppBar(
+            backgroundColor: Colors.white,
+            scrolledUnderElevation: 0,
+            surfaceTintColor: Colors.transparent,
+            elevation: 0,
+            automaticallyImplyLeading: false,
+            titleSpacing: 0,
+            title: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Row(
                     children: [
-                      ClipOval(child: CustomNetworkImage(imageUrl: AppConstants.profileImage, height: 50, width: 50)),
+                      ClipOval(
+                        child: CustomNetworkImage(
+                          imageUrl: AppConstants.profileImage,
+                          height: 45,
+                          width: 45,
+                        ),
+                      ),
                       const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           const Text(
                             "Sarah Johnson",
-                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
                           ),
                           Text(
                             "Grade 11 - Section A",
-                            style: TextStyle(color: Colors.grey[600], fontSize: 14),
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 13,
+                            ),
                           ),
                         ],
                       ),
                     ],
                   ),
+
                   Stack(
                     children: [
-                      IconButton(onPressed: () {}, icon: const Icon(Icons.notifications_none, size: 28)),
+                      IconButton(
+                        onPressed: () {},
+                        icon: const Icon(
+                          Icons.notifications_none,
+                          size: 28,
+                          color: Colors.black,
+                        ),
+                      ),
                       Positioned(
-                        right: 8,
-                        top: 8,
+                        right: 6,
+                        top: 6,
                         child: Container(
                           padding: const EdgeInsets.all(4),
-                          decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-                          child: const Text('2', style: TextStyle(color: Colors.white, fontSize: 10)),
+                          decoration: const BoxDecoration(
+                            color: Colors.red,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Text(
+                            '2',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 10,
+                            ),
+                          ),
                         ),
-                      )
+                      ),
                     ],
-                  )
+                  ),
                 ],
               ),
-              const SizedBox(height: 20),
-
+            ),
+          ),
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+        
               // Summary Cards (Classes & GPA)
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
@@ -75,7 +117,6 @@ class StudentHomeScreen extends StatelessWidget {
                       subtitle: "Overall attendance rate",
                       count: "92%",
                       icon: Icons.check_circle_outline,
-                      cardColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9),],
                       textColor: Colors.grey[800]!,
                     ),
                     const SizedBox(width: 8),
@@ -84,7 +125,6 @@ class StudentHomeScreen extends StatelessWidget {
                       subtitle: "Assignments due soon",
                       count: "3",
                       icon: Icons.assignment_late,
-                      cardColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9),],
                       textColor: Colors.grey[800]!,
                     ),
                     const SizedBox(width: 8),
@@ -93,7 +133,6 @@ class StudentHomeScreen extends StatelessWidget {
                       subtitle: "Exams scheduled soon",
                       count: "2",
                       icon: Icons.school_outlined,
-                      cardColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9),],
                       textColor: Colors.grey[800]!,
                     ),
                     const SizedBox(width: 8),
@@ -102,19 +141,18 @@ class StudentHomeScreen extends StatelessWidget {
                       subtitle: "Recent grades received",
                       count: "4",
                       icon: Icons.grade_outlined,
-                      cardColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9),],
-                      textColor: Colors.grey[800]!,
+                      textColor: AppColors.white,
                     ),
                   ],
                 ),
               ),
-
+        
               const SizedBox(height: 25),
-
+        
               // Today's Schedule
               _buildSectionTitle("Today's Schedule", "View Week"),
               const SizedBox(height: 15),
-
+        
               CustomScheduleItem(
                 subject: "Mathematics",
                 details: "Room 201 • Mr. Anderson",
@@ -142,7 +180,7 @@ class StudentHomeScreen extends StatelessWidget {
                 isActive: false,
                 onTap: () {},
               ),
-
+        
               // Upcoming Assignments (Example)
               _buildSectionTitle("Upcoming Assignments", "View All"),
               const SizedBox(height: 15),
@@ -152,14 +190,14 @@ class StudentHomeScreen extends StatelessWidget {
                 bgColor: Colors.purple.shade50,
                 chapterDetails: "Chapter 5: Quadratic Equations",
               ),
-
-
+        
+        
               const SizedBox(height: 20),
             ],
           ),
         ),
+          bottomNavigationBar: StudentNavBar(currentIndex: 0)
       ),
-        bottomNavigationBar: StudentNavBar(currentIndex: 0)
     );
   }
 
@@ -171,7 +209,7 @@ class StudentHomeScreen extends StatelessWidget {
         if (actionText.isNotEmpty)
           TextButton(
             onPressed: () {},
-            child: Text(actionText, style: const TextStyle(color: Colors.purple)),
+            child: Text(actionText, style: const TextStyle(color: AppColors.primary) ),
           )
       ],
     );

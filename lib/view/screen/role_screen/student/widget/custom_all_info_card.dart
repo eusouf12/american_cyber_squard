@@ -1,3 +1,4 @@
+import 'package:america_ayber_squad/utils/app_colors/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -6,7 +7,6 @@ class CustomAllInfoCard extends StatelessWidget {
   final String subtitle;
   final String count;
   final IconData icon;
-  final List<Color> cardColors;
   final Color textColor;
 
   const CustomAllInfoCard({
@@ -15,10 +15,6 @@ class CustomAllInfoCard extends StatelessWidget {
     required this.subtitle,
     required this.count,
     required this.icon,
-    this.cardColors = const [
-      Color(0xFFFDFFA8),
-      Color(0xFFC8E6C9),
-    ],
     this.textColor = Colors.black,
   }) : super(key: key);
 
@@ -29,11 +25,7 @@ class CustomAllInfoCard extends StatelessWidget {
       width: 230,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: cardColors,
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
+        color: AppColors.primary2,
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
@@ -52,13 +44,13 @@ class CustomAllInfoCard extends StatelessWidget {
               Icon(
                 icon,
                 size: 20,
-                color: textColor,
+                color: AppColors.white,
               ),
               SizedBox(width: 8,),
               Text(
                 title,
                 style: TextStyle(
-                  color: textColor,
+                  color: AppColors.white,
                   fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
                 ),
@@ -69,8 +61,8 @@ class CustomAllInfoCard extends StatelessWidget {
           Text(
             subtitle,
             style: TextStyle(
-              color: Colors.grey[700],
               fontSize: 12.sp,
+                color: AppColors.white
             ),
           ),
           const SizedBox(height: 10),
@@ -79,6 +71,7 @@ class CustomAllInfoCard extends StatelessWidget {
             style:  TextStyle(
               fontSize: 20.sp,
               fontWeight: FontWeight.bold,
+              color: AppColors.white
             ),
           ),
         ],
