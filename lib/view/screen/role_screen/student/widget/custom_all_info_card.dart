@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAllInfoCard extends StatelessWidget {
   final String title;
@@ -24,6 +25,8 @@ class CustomAllInfoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 120.h,
+      width: 230,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -44,19 +47,19 @@ class CustomAllInfoCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Icon(
                 icon,
                 size: 20,
                 color: textColor,
               ),
-              SizedBox(width: 5,),
+              SizedBox(width: 8,),
               Text(
                 title,
                 style: TextStyle(
                   color: textColor,
-                  fontSize: 14,
+                  fontSize: 14.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),
@@ -67,14 +70,14 @@ class CustomAllInfoCard extends StatelessWidget {
             subtitle,
             style: TextStyle(
               color: Colors.grey[700],
-              fontSize: 12,
+              fontSize: 12.sp,
             ),
           ),
           const SizedBox(height: 10),
           Text(
             count,
-            style: const TextStyle(
-              fontSize: 28,
+            style:  TextStyle(
+              fontSize: 20.sp,
               fontWeight: FontWeight.bold,
             ),
           ),
