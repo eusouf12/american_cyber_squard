@@ -47,7 +47,7 @@ class StudentAssignmentScreen extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.green.shade200,
+                color: Colors.grey.withOpacity(0.2),
                 borderRadius: BorderRadius.circular(16),
                 boxShadow: [
                   BoxShadow(

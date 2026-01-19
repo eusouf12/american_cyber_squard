@@ -30,7 +30,7 @@ class CustomGradeSummaryCard extends StatelessWidget {
         ],
       ),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center, // Vertically center the content
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           // Count Text (Bold)
           Text(

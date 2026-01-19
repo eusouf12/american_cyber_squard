@@ -1,19 +1,24 @@
+import 'package:america_ayber_squad/view/components/custom_button/custom_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../../utils/app_colors/app_colors.dart';
 import '../../../../components/custom_text/custom_text.dart';
 
 
 class CustomPrimaryCard extends StatelessWidget {
   final String title;
+  final String? inboxTitle;
+  final bool? isInbox;
+  final IconData? icon;
   final String description;
-  final String statusText;
-  final IconData icon;
 
   const CustomPrimaryCard({
     super.key,
     required this.title,
+    this.isInbox = false,
+    this.inboxTitle,
+    this.icon,
     required this.description,
-    required this.statusText,
-    required this.icon,
   });
 
   @override
@@ -22,7 +27,7 @@ class CustomPrimaryCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Theme.of(context).primaryColor, // আপনার অ্যাপের Primary Color
+        color: Colors.green.shade200,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
@@ -35,55 +40,44 @@ class CustomPrimaryCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Title using CustomText
+          // Title
           CustomText(
             text: title,
-            fontSize: 24,
+            fontSize: 20.sp,
             fontWeight: FontWeight.bold,
             color: Colors.white,
             textAlign: TextAlign.start,
           ),
 
-          // Description using CustomText
+          // Description
           CustomText(
             text: description,
-            fontSize: 14,
-            fontWeight: FontWeight.w400,
+            fontSize: 11.sp,
             color: Colors.white.withOpacity(0.9),
             top: 8,
-            maxLines: 2,
+            bottom: 20,
+            maxLines: 4,
             textAlign: TextAlign.start,
           ),
-
-          const SizedBox(height: 20),
-
-          // Status Box
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          isInbox== true ? Container(
+            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
-              borderRadius: BorderRadius.circular(12),
+              color: AppColors.primary.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(16),
             ),
             child: Row(
-              mainAxisSize: MainAxisSize.min,
               children: [
-                Icon(
-                  icon,
-                  color: Colors.white,
-                  size: 20,
-                ),
-                const SizedBox(width: 8),
-                // Status Text using CustomText
-                CustomText(
-                  text: statusText,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
-                  textAlign: TextAlign.start,
-                ),
+                Icon(icon ?? Icons.group,color: Colors.white,),
+                SizedBox(width: 12.w,),
+                CustomText(text: inboxTitle ?? "2 Students Linked",
+                  fontSize: 14.sp,fontWeight: FontWeight.w600,color: Colors.white,
+                )
               ],
             ),
-          ),
+
+          )
+          : SizedBox.shrink(),
+          const SizedBox(height: 16),
         ],
       ),
     );
