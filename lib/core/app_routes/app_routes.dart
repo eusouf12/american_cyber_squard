@@ -8,6 +8,7 @@ import '../../view/screen/role_screen/parents/views/parents_profile_screen/edit_
 import '../../view/screen/role_screen/student/view/student_home/student_home_screen.dart';
 import '../../view/screen/role_screen/student/view/student_profile/view/schedule_list_screen.dart';
 import '../../view/screen/role_screen/student/view/student_profile/view/student_grade_screen.dart';
+import '../../view/screen/role_screen/student/view/student_profile/view/student_schedule_screen.dart';
 import '../../view/screen/role_screen/student/view/student_profile/view/student_support_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_home/teachers_home_screen.dart';
 
@@ -26,6 +27,7 @@ class AppRoutes {
   static const String resourceListScreen ="/ResourceListScreen";
   static const String studentGradeScreen ="/StudentGradeScreen";
   static const String contactUsScreen ="/ContactUsScreen";
+  static const String studentScheduleScreen ="/StudentScheduleScreen";
 
   ///=================== Teachers Part ======================
   static const String teachersHomeScreen ="/TeachersHomeScreen";
@@ -51,6 +53,7 @@ class AppRoutes {
     GetPage(name: resourceListScreen, page: () => ResourceListScreen()),
     GetPage(name: studentGradeScreen, page: () => StudentGradeScreen()),
     GetPage(name: contactUsScreen, page: () => ContactUsScreen()),
+    GetPage(name: studentScheduleScreen, page: () => StudentScheduleScreen()),
 
 
     ///===================== Teachers Part================
