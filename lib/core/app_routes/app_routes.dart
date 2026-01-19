@@ -1,13 +1,19 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import '../../view/screen/role_screen/demo/demo.dart';
 import '../../view/screen/role_screen/institution/institution_home/institution_home_screen.dart';
+import '../../view/screen/role_screen/parents/views/parent_chat_screen/view/parents_chat_list_screen.dart';
 import '../../view/screen/role_screen/parents/views/parents_home_screen.dart';
+import '../../view/screen/role_screen/parents/views/parents_profile_screen/change_password_screen.dart';
+import '../../view/screen/role_screen/parents/views/parents_profile_screen/edit_profile_screen.dart';
 import '../../view/screen/role_screen/student/view/student_home/student_home_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_home/teachers_home_screen.dart';
 
 class AppRoutes {
   ///=========================== Student Part ===============
   static const String splashScreen = "/SplashScreen";
+  static const String editScreen = "/EditScreen";
+  static const String changePassScreen = "/ChangePassScreen";
+  static const String chatListScreen = "/ChatListScreen";
 
   static const String demo = "/Demo";
 
@@ -47,6 +53,9 @@ class AppRoutes {
 
   ///===================== Student Part================
     GetPage(name: parentsHomeScreen, page: () => ParentsHomeScreen()),
+    GetPage(name: editScreen, page: () => EditScreen()),
+    GetPage(name: changePassScreen, page: () => ChangePassScreen()),
+    GetPage(name: chatListScreen, page: () => ChatListScreen()),
 
 
 

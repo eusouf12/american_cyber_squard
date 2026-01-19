@@ -3,11 +3,12 @@ import 'package:america_ayber_squad/view/components/custom_nav_bar/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../../../utils/app_colors/app_colors.dart';
-import '../../../../../../utils/app_const/app_const.dart';
-import '../../../../components/custom_netwrok_image/custom_network_image.dart';
-import '../../../../components/custom_show_dialog/custom_show_dialog.dart';
-import '../../../../components/custom_text/custom_text.dart';
+import '../../../../../../../utils/app_colors/app_colors.dart';
+import '../../../../../../../utils/app_const/app_const.dart';
+import '../../../../../../core/app_routes/app_routes.dart';
+import '../../../../../components/custom_netwrok_image/custom_network_image.dart';
+import '../../../../../components/custom_show_dialog/custom_show_dialog.dart';
+import '../../../../../components/custom_text/custom_text.dart';
 
 class ParentsProfileScreen extends StatelessWidget {
   const ParentsProfileScreen({super.key});
@@ -51,17 +52,17 @@ class ParentsProfileScreen extends StatelessWidget {
                     SizedBox(height: 24),
                     CustomFieldCard(
                       titleKey: 'Chat',
-                      //onTap: () => Get.toNamed(AppRoutes.notificationScreen),
+                      onTap: () => Get.toNamed(AppRoutes.chatListScreen),
                     ),
                     SizedBox(height: 15),
                     CustomFieldCard(
                       titleKey: 'Edit Profile',
-                      //onTap: () => Get.toNamed(AppRoutes.editScreen),
+                      onTap: () => Get.toNamed(AppRoutes.editScreen),
                     ),
                     SizedBox(height: 15),
                     CustomFieldCard(
                       titleKey: 'Change Password',
-                      //onTap: () => Get.toNamed(AppRoutes.securityScreen),
+                      onTap: () => Get.toNamed(AppRoutes.changePassScreen),
                     ),
 
                     SizedBox(height: 15),

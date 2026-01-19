@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../utils/app_colors/app_colors.dart';
+import '../custom_image/custom_image.dart';
 import '../custom_text/custom_text.dart';
 
 class CustomButton extends StatelessWidget {
@@ -19,14 +20,20 @@ class CustomButton extends StatelessWidget {
     this.fontSize,
     this.borderWidth,
     this.borderRadius,
-    this.icon,
+    this.borderColor =AppColors.primary,
+    this.showSocialButton = false,
+    this.imageSrc,
+    this.fontWeight,
+    this.icon
+    //required bool isLoading,
   });
 
   final double height;
   final double? width;
   final Color? fillColor;
   final Color textColor;
-  final VoidCallback onTap;
+  final Color borderColor;
+  final VoidCallback? onTap;
   final String title;
   final double marginVertical;
   final double marginHorizontal;
@@ -34,14 +41,17 @@ class CustomButton extends StatelessWidget {
   final double? fontSize;
   final double? borderWidth;
   final double? borderRadius;
-  final IconData? icon;
+  final bool showSocialButton;
+  final String? imageSrc;
+  final Icon? icon;
+  final FontWeight? fontWeight;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 0.h),
+        padding: EdgeInsets.symmetric(vertical: 0.0),
         margin: EdgeInsets.symmetric(
             vertical: marginVertical, horizontal: marginHorizontal),
         alignment: Alignment.center,
@@ -49,32 +59,44 @@ class CustomButton extends StatelessWidget {
         width: width,
         decoration: BoxDecoration(
           border: isBorder
-              ? Border.all(color: textColor, width: borderWidth ?? .05)
+              ? Border.all(color: borderColor, width: borderWidth ?? .05)
               : null,
-          borderRadius: BorderRadius.circular(borderRadius ?? 4),
+          borderRadius: BorderRadius.circular(borderRadius ?? 12),
           color: fillColor,
         ),
-        child: Row(
+        child: showSocialButton ? Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (icon != null) ...[
-              SizedBox(width: 12.w),
-              Icon(
-                icon ?? Icons.ac_unit,
-                color: textColor,
-                size: 20.sp,
-              ),
-              SizedBox(width: 8.w),
-            ],
+            CustomImage(imageSrc: imageSrc ?? ""),
             CustomText(
-              fontSize: fontSize ?? 18.sp,
-              fontWeight: FontWeight.w500,
+              left: 8,
+              fontSize: fontSize ?? 16.sp,
+              fontWeight: fontWeight ?? FontWeight.w700,
               color: textColor,
               textAlign: TextAlign.center,
               text: title,
 
             ),
           ],
+        ) : Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            icon != null
+                ? Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: icon, // Display icon if provided
+            )
+                : SizedBox.shrink(),
+            CustomText(
+              fontSize: fontSize ?? 18.sp,
+              fontWeight: FontWeight.w700,
+              color: textColor,
+              textAlign: TextAlign.center,
+              text: title,
+            ),
+          ],
         ),
+
       ),
     );
   }

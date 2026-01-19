@@ -25,6 +25,7 @@ class Demo extends StatelessWidget {
                 },
                 title: "Parents",
                 borderRadius: 30,
+                textColor: Colors.white,
               ),
               SizedBox(height: 20,),
               CustomButton(

@@ -7,7 +7,7 @@ import '../../../utils/app_icons/app_icons.dart';
 import '../../screen/role_screen/parents/views/academic_progress_screen.dart';
 import '../../screen/role_screen/parents/views/fee_management_screen.dart';
 import '../../screen/role_screen/parents/views/parents_home_screen.dart';
-import '../../screen/role_screen/parents/views/parents_profile_screen.dart';
+import '../../screen/role_screen/parents/views/parents_profile_screen/parents_profile_screen.dart';
 import '../../screen/role_screen/parents/views/parents_students_screen.dart';
 
 
