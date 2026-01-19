@@ -36,8 +36,6 @@ class StudentAssignmentScreen extends StatelessWidget {
                 children: [
                   CustomGradeSummaryCard(
                     count: "8",
-
-
                     label: "Completed",
                     gradientColors: [Color(0xFFFDFFA8), Color(0xFFC8E6C9)],
                   ),
