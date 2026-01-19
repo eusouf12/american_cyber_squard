@@ -6,6 +6,7 @@ import '../../view/screen/role_screen/parents/views/parents_home_screen.dart';
 import '../../view/screen/role_screen/parents/views/parents_profile_screen/change_password_screen.dart';
 import '../../view/screen/role_screen/parents/views/parents_profile_screen/edit_profile_screen.dart';
 import '../../view/screen/role_screen/student/view/student_home/student_home_screen.dart';
+import '../../view/screen/role_screen/student/view/student_profile/view/schedule_list_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_home/teachers_home_screen.dart';
 
 class AppRoutes {
@@ -20,6 +21,7 @@ class AppRoutes {
 
   ///=================== Students Part ======================
   static const String studentHomeScreen ="/StudentHomeScreen";
+  static const String resourceListScreen ="/ResourceListScreen";
 
   ///=================== Teachers Part ======================
   static const String teachersHomeScreen ="/TeachersHomeScreen";
@@ -42,6 +44,7 @@ class AppRoutes {
 
     ///===================== Student Part================
     GetPage(name: studentHomeScreen, page: () => StudentHomeScreen()),
+    GetPage(name: resourceListScreen, page: () => ResourceListScreen()),
 
 
     ///===================== Student Part================

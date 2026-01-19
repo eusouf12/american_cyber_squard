@@ -8,7 +8,7 @@ import '../../../utils/app_icons/app_icons.dart';
 import '../../screen/role_screen/student/view/student_assignment/student_assignment_screen.dart';
 import '../../screen/role_screen/student/view/student_home/student_home_screen.dart';
 import '../../screen/role_screen/student/view/student_my_classes_screen/student_my_classes_screen.dart';
-import '../../screen/role_screen/student/view/student_profile/student_profile.dart';
+import '../../screen/role_screen/student/view/student_profile/view/student_profile.dart';
 
 
 class StudentNavBar extends StatefulWidget {
