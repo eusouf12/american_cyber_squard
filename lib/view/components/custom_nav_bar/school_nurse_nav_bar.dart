@@ -7,7 +7,7 @@ import '../../../utils/app_icons/app_icons.dart';
 import '../../screen/role_screen/school_nurse/view/immunization/school_nurse_immunization_screen.dart';
 import '../../screen/role_screen/school_nurse/view/school_nurse_communication/school_nurse_communication_screen.dart';
 import '../../screen/role_screen/school_nurse/view/school_nurse_health/school_nurse_health_screen.dart';
-import '../../screen/role_screen/school_nurse/view/school_nurse_home/school_nurse_home_screen.dart';
+import '../../screen/role_screen/school_nurse/view/school_nurse_home/view/school_nurse_home_screen.dart';
 import '../../screen/role_screen/school_nurse/view/school_nurse_profile/school_nurse_profile_screen.dart';
 import '../../screen/role_screen/teachers/teachers_assignment/teachers_assignment_screen.dart';
 import '../../screen/role_screen/teachers/teachers_profile/teachers_profile_screen.dart';

@@ -122,7 +122,7 @@ class StudentGradeScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: const EdgeInsets.only(bottom: 12),
-                            child: CustomCard(
+                            child: CustomResult(
                               subject: 'Physics - Chapter 4 Quiz ',
                               date: 'Nov 20, 2024',
                               score: '18/20',

@@ -41,11 +41,21 @@ class TeachersProfileScreen extends StatelessWidget {
                           width: 80.w,
                         ),
                         SizedBox(width: 15),
-                        CustomText(
-                          text: 'Debbendu Paul',
-                          fontSize: 20.sp,
-                          fontWeight: FontWeight.w700,
-                          color: AppColors.black,
+                        Column(
+                          children: [
+                            CustomText(
+                              text: 'Debbendu',
+                              fontSize: 20.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.black,
+                            ),
+                            CustomText(
+                              text: '(Teachers Profile)',
+                              fontSize: 10.sp,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.black,
+                            ),
+                          ],
                         ),
                       ],
                     ),

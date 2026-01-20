@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../components/custom_text/custom_text.dart';
 
-class CustomCard extends StatelessWidget {
+class CustomResult extends StatelessWidget {
   final String? subject;
   final String? date;
   final String? score;
   final String? grade;
   final String? status;
 
-  CustomCard({
+  CustomResult({
     this.subject,
     this.date,
     this.score,

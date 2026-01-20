@@ -15,7 +15,7 @@ class CustomButton extends StatelessWidget {
     this.marginVertical = 0,
     this.marginHorizontal = 0,
     this.fillColor = AppColors.primary,
-    this.textColor = AppColors.white,
+    this.textColor,
     this.isBorder = false,
     this.fontSize,
     this.borderWidth,
@@ -31,7 +31,7 @@ class CustomButton extends StatelessWidget {
   final double height;
   final double? width;
   final Color? fillColor;
-  final Color textColor;
+  final Color? textColor;
   final Color borderColor;
   final VoidCallback? onTap;
   final String title;
@@ -72,7 +72,7 @@ class CustomButton extends StatelessWidget {
               left: 8,
               fontSize: fontSize ?? 16.sp,
               fontWeight: fontWeight ?? FontWeight.w700,
-              color: textColor,
+              color: textColor ?? AppColors.white,
               textAlign: TextAlign.center,
               text: title,
 
@@ -90,7 +90,7 @@ class CustomButton extends StatelessWidget {
             CustomText(
               fontSize: fontSize ?? 18.sp,
               fontWeight: FontWeight.w700,
-              color: textColor,
+              color: textColor ?? AppColors.white,
               textAlign: TextAlign.center,
               text: title,
             ),
