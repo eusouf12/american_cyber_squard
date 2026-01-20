@@ -1,3 +1,4 @@
+import 'package:america_ayber_squad/view/components/custom_nav_bar/teacher_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class TeachersHomeScreen extends StatelessWidget {
@@ -12,6 +13,7 @@ class TeachersHomeScreen extends StatelessWidget {
       body: const Center(
         child: Text("TeachersHomeScreen Home Screen"),
       ),
+      bottomNavigationBar: TeacherNavBar(currentIndex: 0),
     );
   }
 }

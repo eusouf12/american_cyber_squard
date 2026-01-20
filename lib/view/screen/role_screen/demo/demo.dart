@@ -14,47 +14,60 @@ class Demo extends StatelessWidget {
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomText(text: "This is the Demo purpose"),
-              SizedBox(height: 20,),
-              CustomButton(
-                onTap: () {
-                  Get.toNamed(AppRoutes.parentsHomeScreen);
-                },
-                title: "Parents",
-                borderRadius: 30,
-                textColor: Colors.white,
-              ),
-              SizedBox(height: 20,),
-              CustomButton(
-                onTap: () {
-                  Get.toNamed(AppRoutes.studentHomeScreen);
-
-                },
-                title: "Student",
-                borderRadius: 30,
-              ),
-              SizedBox(height: 20,),
-              CustomButton(
-                onTap: () {
-                  Get.toNamed(AppRoutes.institutionHomeScreen);
-                },
-                title: "Institution",
-                borderRadius: 30,
-              ),
-              SizedBox(height: 20,),
-              CustomButton(
-                onTap: () {
-                  Get.toNamed(AppRoutes.teachersHomeScreen);
-                },
-                title: "Teachers",
-                borderRadius: 30,
-              ),
-
-            ]
-          ),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            CustomText(text: "This is the Demo purpose"),
+            SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+              onTap: () {
+                Get.toNamed(AppRoutes.parentsHomeScreen);
+              },
+              title: "Parents",
+              borderRadius: 30,
+              textColor: Colors.white,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+              onTap: () {
+                Get.toNamed(AppRoutes.studentHomeScreen);
+              },
+              title: "Student",
+              borderRadius: 30,
+            ),
+            // SizedBox(
+            //   height: 20,
+            // ),
+            // CustomButton(
+            //   onTap: () {
+            //     Get.toNamed(AppRoutes.institutionHomeScreen);
+            //   },
+            //   title: "Institution",
+            //   borderRadius: 30,
+            // ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+              onTap: () {
+                Get.toNamed(AppRoutes.teachersHomeScreen);
+              },
+              title: "Teachers",
+              borderRadius: 30,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+              onTap: () {
+                Get.toNamed(AppRoutes.schoolNurseHomeScreen);
+              },
+              title: "School Nurse",
+              borderRadius: 30,
+            ),
+          ]),
         ),
       ),
     );
