@@ -1,85 +1,119 @@
-import 'package:america_ayber_squad/view/components/custom_button/custom_button.dart';
-import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../../../../../../utils/app_colors/app_colors.dart';
+
 class CustomScheduleCard extends StatelessWidget {
-  final String? title;
-  final String? subtitle;
-  final String? buttonText;
-  final VoidCallback? onPressed;
-  final Color? cardColor;
-  final bool online;
-  final bool offline;
-  final bool breakTime;
-
-
-
   const CustomScheduleCard({
-    Key? key,
-    this.title,
-    this.subtitle,
-    this.buttonText,
-    this.onPressed,
-    this.cardColor,
-    this.offline=false,
-    this.online=false,
-    this.breakTime=false,
-  }) : super(key: key);
+    super.key,
+    required this.status,
+    this.subject,
+    this.teacher,
+    this.room,
+  });
+
+  final ClassStatus status;
+  final String? subject;
+  final String? teacher;
+  final String? room;
 
   @override
   Widget build(BuildContext context) {
+    switch (status) {
+      case ClassStatus.breakTime:
+        return customOfflineCard(
+          bgColor: Colors.amber.shade100.withOpacity(0.4),
+          borderColor: Colors.amber.withOpacity(0.2),
+        );
+
+      case ClassStatus.free:
+        return customOfflineCard(
+          bgColor: Colors.grey.shade100,
+          borderColor: Colors.grey.withOpacity(0.2),
+        );
+
+      case ClassStatus.online:
+        return customOfflineCard(
+          bgColor: AppColors.primary.withOpacity(0.2),
+          icon: Icons.videocam,
+          iconColor: AppColors.primary,
+          borderColor: AppColors.primary.withOpacity(0.2),
+        );
+
+      case ClassStatus.offline:
+        return customOfflineCard(
+          bgColor: Colors.red.withOpacity(0.1),
+          icon: Icons.location_on,
+          iconColor: Colors.red,
+          borderColor: Colors.red.withOpacity(0.2),
+        );
+    }
+  }
+
+  Widget customOfflineCard({
+     Color? bgColor,
+     IconData? icon,
+     Color? iconColor,
+    Color? borderColor,
+  }) {
     return Container(
+      height: 140.h,
+      padding: EdgeInsets.all(16.w),
+      margin: EdgeInsets.only(bottom: 12.h),
       decoration: BoxDecoration(
-        color: Colors.green.shade50,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.shade300,
-            offset: Offset(0, 2),
-            blurRadius: 4,
-          ),
-        ],
+        color: bgColor,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(
+          color: borderColor ?? Colors.transparent,
+          width: 1.2,
+        ),
       ),
-      margin: EdgeInsets.all(8),
-      padding: EdgeInsets.all(16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomText(text: title ?? "History", fontSize: 16.sp, fontWeight: FontWeight.bold, color: Colors.green.shade700),
-              Icon(Icons.location_on, color: Colors.green.shade700, size: 20.sp),
-            ],
+          Text(
+            subject ?? "",
+            style: TextStyle(
+              fontSize: 16.sp,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+          SizedBox(height: 4.h),
+          Text(
+            teacher ?? "",
+            style: TextStyle(
+              fontSize: 14.sp,
+              color: Colors.black54,
+            ),
           ),
           SizedBox(height: 8.h),
-          CustomText(text: subtitle ?? "Mr. Wilson", fontSize: 12.sp, color: Colors.green.shade600),
-          SizedBox(height: 16),
-          online == true
-              ? CustomButton(
-            height: 40.h,
-            width: 100.w,
-            icon: Icon( Icons.videocam, color: Colors.white, size: 20.sp),
-            onTap: onPressed,
-            title: buttonText ?? "Join Zoom",
-            fontSize: 10.sp,
-          ): SizedBox.shrink(),
-          offline == false
-              ? CustomButton(
-            height: 40.h,
-            width: 150.w,
-            onTap: onPressed,
-            icon: Icon(Icons.location_on, color: Colors.white, size: 20.sp),
-            title: buttonText ?? "Room 105",
-            fontSize: 12.sp,
-          ): SizedBox(),
-          breakTime == false
-              ? SizedBox() : SizedBox(),
+          Row(
+            children: [
+              Icon(icon, color: iconColor, size: 18.sp),
+              SizedBox(width: 6.w),
+              Text(
+                (status == ClassStatus.offline)
+                    ? (room ?? "")
+                    : (status == ClassStatus.free || status == ClassStatus.breakTime)
+                    ? ""
+                    : "Join Zoom",
+
+                style: TextStyle(
+                  fontSize: 14.sp,
+                  color: iconColor,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 }
-
-//hi eusouf
+enum ClassStatus {
+  free,
+  breakTime,
+  online,
+  offline,
+}

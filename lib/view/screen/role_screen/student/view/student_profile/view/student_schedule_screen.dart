@@ -1,7 +1,10 @@
 import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_royel_appbar.dart';
+import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../widgets/custom_schedule_card.dart';
+import '../widgets/custom_time _card.dart';
 
 class StudentScheduleScreen extends StatelessWidget {
   const StudentScheduleScreen({Key? key}) : super(key: key);
@@ -17,91 +20,93 @@ class StudentScheduleScreen extends StatelessWidget {
         padding: EdgeInsets.all(16),
         child: Column(
           children: [
+            //title
+             Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Title
+            CustomText(text: "Weekly Timetable",fontSize: 16.sp,fontWeight: FontWeight.w600,color: Colors.black,),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // First Card: Free Period
-                Expanded(
-                  child: CustomScheduleCard(
-                    title: "Free Period",
-                    breakTime: true,
-                    offline: false,
-                    online: false,
-                    cardColor: Colors.yellow,
-                  ),
+                Icon(Icons.videocam_outlined,color: Colors.green,size: 20,),
+                CustomText(text: "Online",fontSize: 12.sp,color: Colors.grey,left: 5,),
+              ],
+            ),
+            Row(
+              children: [
+                Icon(Icons.location_on_outlined,color: Colors.grey,size: 20,),
+                CustomText(text: "Offline",fontSize: 12.sp,color: Colors.grey,left: 5,),
+              ],
+            ),
+          ],
+        ),
+            SizedBox(height: 20),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTimeCard(
+                  time: "8:45 - 9:30",
                 ),
-                SizedBox(width: 16), // Spacing between cards
-                // Second Card: History
+                SizedBox(width: 12),
                 Expanded(
                   child: CustomScheduleCard(
-                    title: "History",
-                    subtitle: "Mr. Wilson",
-                    cardColor: Colors.red,
-                    buttonText: "Join Zoom",
-                    onPressed: () {},
-                    online: true,
+                    status: ClassStatus.online,
+                    subject: "English",
+                    teacher: "Ms. Davis",
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20), // Space between rows
+            //
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Third Card: English
-                Expanded(
-                  child: CustomScheduleCard(
-                    title: "English",
-                    subtitle: "Ms. Davis",
-                    cardColor: Colors.green,
-                    buttonText: "Join Zoom",
-                    onPressed: () {},
-                    online: true,
-                  ),
+                CustomTimeCard(
+                  time: "8:45 - 9:30",
                 ),
-                SizedBox(width: 16), // Spacing between cards
-                // Fourth Card: Science
+                SizedBox(width: 12),
                 Expanded(
                   child: CustomScheduleCard(
-                    title: "Science",
-                    subtitle: "Mr. Adams",
-                    cardColor: Colors.blue,
-                    buttonText: "Room 204",
-                    onPressed: () {},
-                    offline: true,
+                    status: ClassStatus.free,
+                    subject: "Free Period",
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20), // Space between rows
+            //
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Fifth Card: Math
-                Expanded(
-                  child: CustomScheduleCard(
-                    title: "Math",
-                    subtitle: "Ms. Lee",
-                    cardColor: Colors.purple,
-                    buttonText: "Room 105",
-                    onPressed: () {},
-                    offline: true,
-                  ),
+                CustomTimeCard(
+                  time: "8:45 - 9:30",
                 ),
-                SizedBox(width: 16), // Spacing between cards
-                // Sixth Card: Art
+                SizedBox(width: 12),
                 Expanded(
                   child: CustomScheduleCard(
-                    title: "Art",
-                    subtitle: "Mr. Black",
-                    cardColor: Colors.orange,
-                    buttonText: "Join Zoom",
-                    onPressed: () {},
-                    online: true,
+                    status: ClassStatus.breakTime,
+                    subject: "Break",
                   ),
                 ),
               ],
             ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomTimeCard(
+                  time: "8:45 - 9:30",
+                ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: CustomScheduleCard(
+                    status: ClassStatus.offline,
+                    subject: "History",
+                    teacher: "Mr. Wilson",
+                    room: "Room 105",
+                  ),
+                ),
+              ],
+            ),
+
           ],
         ),
       ),

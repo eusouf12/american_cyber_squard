@@ -31,6 +31,7 @@ class Demo extends StatelessWidget {
               CustomButton(
                 onTap: () {
                   Get.toNamed(AppRoutes.studentHomeScreen);
+
                 },
                 title: "Student",
                 borderRadius: 30,
