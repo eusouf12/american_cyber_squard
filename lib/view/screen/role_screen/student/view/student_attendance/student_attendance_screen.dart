@@ -17,14 +17,11 @@ class StudentAttendanceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return CustomGradient(
       child: Scaffold(
-        appBar: CustomRoyelAppbar(
-          titleName: "Attendance",
-          leftSpace: 60,
-        ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
+              SizedBox(height: 40,),
               // Horizontal Scrolling for Cards (Summary Cards)
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal, // Make it horizontally scrollable

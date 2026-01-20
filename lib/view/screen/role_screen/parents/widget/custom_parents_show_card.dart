@@ -60,7 +60,7 @@ class CustomParentsShowCard extends StatelessWidget {
                     // Amount/Count Text
                     CustomText(
                       text: count ?? '',
-                      fontSize: 16.sp,
+                      fontSize: 15.sp,
                       fontWeight: FontWeight.w500,
                       color: AppColors.white,
                       textAlign: TextAlign.center,

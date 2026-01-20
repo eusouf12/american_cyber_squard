@@ -1,10 +1,11 @@
 import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
-import 'package:america_ayber_squad/view/components/custom_nav_bar/teacher_nav_bar.dart';
 import 'package:flutter/material.dart';
-import '../../parents/widget/custom_parents_show_card.dart';
 
-class TeachersAssignmentScreen extends StatelessWidget {
-  const TeachersAssignmentScreen({super.key});
+import '../../../../../components/custom_nav_bar/school_nurse_nav_bar.dart';
+import '../../../parents/widget/custom_parents_show_card.dart';
+
+class SchoolNurseHealthScreen extends StatelessWidget {
+  const SchoolNurseHealthScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,23 +23,30 @@ class TeachersAssignmentScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       CustomParentsShowCard(
-                        count: "Active Assignments",
+                        count: "Total Students",
                         label: "3",
-                        icon: Icons.assignment,
+                        icon: Icons.person,
                       ),
                       SizedBox(width: 12),
                       //Children
                       CustomParentsShowCard(
-                        count: "Submissions today",
+                        count: "Critical Cases",
                         label: "2",
-                        icon: Icons.people,
+                        icon: Icons.error,
                       ),
                       SizedBox(width: 12),
                       //Ave Attendance
                       CustomParentsShowCard(
-                        count: "Pending Reviews",
+                        count: "Condition",
                         label: "95",
-                        icon: Icons.error,
+                        icon: Icons.favorite,
+                      ),
+                      SizedBox(width: 12),
+                      //Ave Attendance
+                      CustomParentsShowCard(
+                        count: "Allergies",
+                        label: "95",
+                        icon: Icons.show_chart,
                       ),
                     ],
                   ),
@@ -49,7 +57,7 @@ class TeachersAssignmentScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: TeacherNavBar(currentIndex: 2),
+        bottomNavigationBar: SchoolNurseNavBar(currentIndex: 1),
       ),
     );
   }

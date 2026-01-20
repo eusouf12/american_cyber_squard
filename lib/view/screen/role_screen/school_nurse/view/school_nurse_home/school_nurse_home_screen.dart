@@ -1,12 +1,14 @@
 import 'package:america_ayber_squad/utils/app_const/app_const.dart';
-import 'package:america_ayber_squad/view/components/custom_nav_bar/teacher_nav_bar.dart';
+import 'package:america_ayber_squad/view/components/custom_nav_bar/school_nurse_nav_bar.dart';
 import 'package:america_ayber_squad/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:flutter/material.dart';
-import '../../../../components/custom_gradient/custom_gradient.dart';
+
+import '../../../../../components/custom_gradient/custom_gradient.dart';
+import '../../../parents/widget/custom_parents_show_card.dart';
 
 
-class TeachersHomeScreen extends StatelessWidget {
-  TeachersHomeScreen({super.key});
+class SchoolNurseHomeScreen extends StatelessWidget {
+  SchoolNurseHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -98,11 +100,43 @@ class TeachersHomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
+                SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: [
+                      CustomParentsShowCard(
+                        count: "Total Visits",
+                        label: "3",
+                        icon: Icons.people,
+                      ),
+                      SizedBox(width: 12),
+                      //Children
+                      CustomParentsShowCard(
+                        count: "Active Cases",
+                        label: "2",
+                        icon: Icons.show_chart,
+                      ),
+                      SizedBox(width: 12),
+                      //Ave Attendance
+                      CustomParentsShowCard(
+                        count: "Pending Reviews",
+                        label: "95",
+                        icon: Icons.thermostat,
+                      ),
+                      SizedBox(width: 12),
+                      //Ave Attendance
+                      CustomParentsShowCard(
+                        count: "Pending Reviews",
+                        label: "95",
+                        icon: Icons.warning,
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
-          bottomNavigationBar: TeacherNavBar(currentIndex: 0)
+          bottomNavigationBar: SchoolNurseNavBar(currentIndex: 0)
       ),
     );
   }

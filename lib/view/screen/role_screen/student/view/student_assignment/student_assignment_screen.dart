@@ -14,11 +14,11 @@ class StudentAssignmentScreen extends StatelessWidget {
     return CustomGradient(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: CustomRoyelAppbar(titleName: "Assignments", leftSpace: 60,),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
+              SizedBox(height: 40,),
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
