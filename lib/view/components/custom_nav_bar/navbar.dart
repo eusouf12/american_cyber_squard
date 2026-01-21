@@ -83,7 +83,7 @@ class _NavBarState extends State<Navbar> {
                       gradient: index == bottomNavIndex
                           ? const LinearGradient(
                         colors: [
-                          Color(0xFFFDFFA8),
+                          AppColors.primary,
                           Color(0xFFC8E6C9),
                         ],
                         begin: Alignment.topLeft,

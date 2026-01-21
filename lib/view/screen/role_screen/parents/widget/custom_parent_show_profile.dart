@@ -93,7 +93,7 @@ class CustomParentShowProfile extends StatelessWidget {
 
           const SizedBox(height: 20),
           CustomButton(
-            onTap: () {},
+            onTap: onViewProfile,
             title: "View Profile",
             height: 48,
             width: 130,

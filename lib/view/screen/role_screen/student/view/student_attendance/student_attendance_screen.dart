@@ -53,11 +53,11 @@ class StudentAttendanceScreen extends StatelessWidget {
               const SizedBox(height: 25),
 
               CustomPrimaryCard(
-                title: "Assignments",
-                description: "Track your homework and project \n deadlines",
+                title: "Attendance Record",
+                description: "Track your daily attendance \n status",
                 isInbox: true,
-                icon: Icons.assignment,
-                inboxTitle: "2 Due Today",
+                icon: Icons.calendar_today_outlined,
+                inboxTitle: "Total Days: 50",
               ),
 
               const SizedBox(height: 30),

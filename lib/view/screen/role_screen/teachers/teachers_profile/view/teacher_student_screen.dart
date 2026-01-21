@@ -3,12 +3,9 @@ import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_r
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../../../utils/app_colors/app_colors.dart';
 import '../../../../../components/custom_text/custom_text.dart';
 import '../../../parents/widget/custom_parents_show_card.dart';
 import '../controller/teacher_student_controller.dart';
-import '../controller/teachers_material_controller.dart';
-import '../widget/custom_teacher_exam_card.dart';
 import '../widget/teacher_my_student_card.dart';
 
 class TeacherStudentScreen extends StatelessWidget {

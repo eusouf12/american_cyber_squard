@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../../components/custom_nav_bar/navbar.dart';
 import '../controller/academic_controller.dart';
 import '../widget/custom_gread_card.dart';
+import '../widget/custom_student_progress.dart';
 import '../widget/custom_welcome_card.dart';
 
 class AcademicProgressScreen extends StatelessWidget {
@@ -97,8 +98,7 @@ class AcademicProgressScreen extends StatelessWidget {
                 }),
 
                 //Current Grades
-
-
+                AttendanceTrendContainer(controller: controller),
               ],
             ),
           ),

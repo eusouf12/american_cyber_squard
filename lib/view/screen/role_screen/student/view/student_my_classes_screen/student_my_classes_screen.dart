@@ -49,7 +49,7 @@ class StudentMyClassesScreen extends StatelessWidget {
                 description: "Access your course material and details",
                 isInbox: true,
                 icon: Icons.assignment,
-                inboxTitle: "2 Due Today",
+                inboxTitle: "6 Active Course",
               ),
 
               SizedBox(
