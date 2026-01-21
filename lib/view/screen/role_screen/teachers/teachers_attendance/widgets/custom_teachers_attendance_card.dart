@@ -21,7 +21,7 @@ class CustomTeachersAttendanceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100.h,
+      height: 120.h,
       width: 100.w,
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
@@ -42,8 +42,7 @@ class CustomTeachersAttendanceCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color:
-                  iconColor?.withOpacity(0.1) ?? Colors.white.withOpacity(0.1),
+              color: iconColor?.withOpacity(0.1) ?? Colors.white.withOpacity(0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
@@ -54,6 +53,13 @@ class CustomTeachersAttendanceCard extends StatelessWidget {
           ),
           CustomText(
             text: count ?? '',
+            fontSize: 16.sp,
+            fontWeight: FontWeight.w500,
+            color: AppColors.white,
+            textAlign: TextAlign.center,
+          ),
+          CustomText(
+            text: label ?? '',
             fontSize: 16.sp,
             fontWeight: FontWeight.w500,
             color: AppColors.white,

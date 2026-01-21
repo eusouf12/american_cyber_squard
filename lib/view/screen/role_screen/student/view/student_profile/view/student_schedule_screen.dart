@@ -59,27 +59,34 @@ class StudentScheduleScreen extends StatelessWidget {
                 SizedBox(width: 10),
 
                 // Dropdown for Day selection with different colors
-                Obx(() {
-                  return DropdownButton<String>(
-                    value: dayController.selectedDay.value,
-                    icon: Icon(Icons.arrow_drop_down),
-                    style: TextStyle(fontSize: 14.sp, color: Colors.black),  // Text color for dropdown
-                    onChanged: (String? newValue) {
-                      dayController.selectedDay.value = newValue!;
-                    },
-                    items: dayController.days.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: TextStyle(
-                            color: Colors.black, // Change color for each day
+                Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey),
+                    borderRadius: BorderRadius.circular(16.r),
+                  ),
+                  child: Obx(() {
+                    return DropdownButton<String>(
+                      value: dayController.selectedDay.value,
+                      icon: Icon(Icons.arrow_drop_down),
+                      style: TextStyle(fontSize: 14.sp, color: Colors.black),  // Text color for dropdown
+                      onChanged: (String? newValue) {
+                        dayController.selectedDay.value = newValue!;
+                      },
+                      items: dayController.days.map<DropdownMenuItem<String>>((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
                           ),
-                        ),
-                      );
-                    }).toList(),
-                  );
-                }),
+                        );
+                      }).toList(),
+                    );
+                  }),
+                ),
               ],
             ),
             SizedBox(height: 20),
