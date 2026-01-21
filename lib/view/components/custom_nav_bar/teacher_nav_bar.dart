@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_icons/app_icons.dart';
-import '../../screen/role_screen/teachers/teachers_assignment/teachers_assignment_screen.dart';
+import '../../screen/role_screen/teachers/teachers_assignment/views/teachers_assignment_screen.dart';
 import '../../screen/role_screen/teachers/teachers_attendance/teachers_attendance_screen.dart';
 import '../../screen/role_screen/teachers/teachers_home/teachers_home_screen.dart';
 import '../../screen/role_screen/teachers/teachers_profile/teachers_profile_screen.dart';

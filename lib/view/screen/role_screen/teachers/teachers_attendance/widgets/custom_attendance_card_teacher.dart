@@ -114,7 +114,7 @@ class CustomAttendanceCardTeacher extends StatelessWidget {
 
           SizedBox(height: 20),
 
-          /// Buttons (same layout)
+          // Buttons
           Row(
             children: [
               Expanded(
