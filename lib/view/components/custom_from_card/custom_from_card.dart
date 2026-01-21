@@ -52,7 +52,9 @@ class CustomFormCard extends StatelessWidget {
     this.onChanged,
     this.enabled,
     this.fillBorderRadius,
-    this.fieldBorderColor, this.inputTextColor, this.curserColor
+    this.fieldBorderColor,
+    this.inputTextColor,
+    this.curserColor
   });
 
   @override
