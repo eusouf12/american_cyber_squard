@@ -3,13 +3,13 @@ import 'package:america_ayber_squad/view/components/custom_nav_bar/navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../../../../utils/app_colors/app_colors.dart';
-import '../../../../../../../utils/app_const/app_const.dart';
-import '../../../../../../core/app_routes/app_routes.dart';
-import '../../../../../components/custom_nav_bar/school_nurse_nav_bar.dart';
-import '../../../../../components/custom_netwrok_image/custom_network_image.dart';
-import '../../../../../components/custom_show_dialog/custom_show_dialog.dart';
-import '../../../../../components/custom_text/custom_text.dart';
+import '../../../../../../../../utils/app_colors/app_colors.dart';
+import '../../../../../../../../utils/app_const/app_const.dart';
+import '../../../../../../../core/app_routes/app_routes.dart';
+import '../../../../../../components/custom_nav_bar/school_nurse_nav_bar.dart';
+import '../../../../../../components/custom_netwrok_image/custom_network_image.dart';
+import '../../../../../../components/custom_show_dialog/custom_show_dialog.dart';
+import '../../../../../../components/custom_text/custom_text.dart';
 
 class SchoolNurseProfileScreen extends StatelessWidget {
   const SchoolNurseProfileScreen({super.key});
@@ -63,7 +63,7 @@ class SchoolNurseProfileScreen extends StatelessWidget {
                     SizedBox(height: 24),
                     CustomFieldCard(
                       titleKey: 'Incident Reporting',
-                      // onTap: () => Get.toNamed(AppRoutes.),
+                      onTap: () => Get.toNamed(AppRoutes.schoolNurseIncidentReporting),
                     ),
                     SizedBox(height: 15),
                     CustomFieldCard(

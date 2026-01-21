@@ -20,7 +20,7 @@ class CustomButton extends StatelessWidget {
     this.fontSize,
     this.borderWidth,
     this.borderRadius,
-    this.borderColor =AppColors.primary,
+    this.borderColor = AppColors.primary,
     this.showSocialButton = false,
     this.imageSrc,
     this.fontWeight,

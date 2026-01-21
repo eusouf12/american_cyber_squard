@@ -6,19 +6,19 @@ import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_r
 import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../components/custom_nav_bar/school_nurse_nav_bar.dart';
+import '../../../../../../components/custom_nav_bar/school_nurse_nav_bar.dart';
+import '../widget/custom_recent_communication_card.dart';
 
 class SchoolNurseCommunicationScreen extends StatelessWidget {
   const SchoolNurseCommunicationScreen({super.key});
-
-
 
   @override
   Widget build(BuildContext context) {
     return CustomGradient(
       child: Scaffold(
         appBar: CustomRoyelAppbar(
-          titleName: "Quick Communication", leftSpace: 50,
+          titleName: "Quick Communication",
+          leftSpace: 50,
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -51,7 +51,8 @@ class SchoolNurseCommunicationScreen extends StatelessWidget {
 
                       // Content Text
                       CustomText(
-                        text: "Welcome to the School Nurse Communication Screen. Here, you can quickly reach out to students, parents, and staff regarding health-related matters. Whether it's sending reminders for medication, scheduling health check-ups, or sharing important health tips, this platform is designed to facilitate effective communication within the school community.",
+                        text:
+                            "Welcome to the School Nurse Communication Screen. Here, you can quickly reach out to students, parents, and staff regarding health-related matters. Whether it's sending reminders for medication, scheduling health check-ups, or sharing important health tips, this platform is designed to facilitate effective communication within the school community.",
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w500,
                         color: Colors.grey,
@@ -60,9 +61,9 @@ class SchoolNurseCommunicationScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10.h),
                       CustomFormCard(
-                          title: "Selected Student",
-                          hintText: "Search student name",
-                          controller: TextEditingController(),
+                        title: "Selected Student",
+                        hintText: "Search student name",
+                        controller: TextEditingController(),
                         fillBorderRadius: 10,
                         fieldBorderColor: Colors.grey.withOpacity(0.2),
                       ),
@@ -83,13 +84,15 @@ class SchoolNurseCommunicationScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 20.h),
                       CustomButton(
-                          onTap: (){},
-                          title: "Send Notification",
+                        onTap: () {},
+                        title: "Send Notification",
                       )
                     ],
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
                 Container(
                   padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
@@ -116,7 +119,8 @@ class SchoolNurseCommunicationScreen extends StatelessWidget {
 
                       // Content Text
                       CustomText(
-                        text: "Welcome to the School Nurse Communication Screen. Here, you can quickly reach out to students, parents, and staff regarding health-related matters.",
+                        text:
+                            "Welcome to the School Nurse Communication Screen. Here, you can quickly reach out to students, parents, and staff regarding health-related matters.",
                         fontSize: 10.sp,
                         fontWeight: FontWeight.w500,
                         color: Colors.grey,
@@ -125,36 +129,85 @@ class SchoolNurseCommunicationScreen extends StatelessWidget {
                       ),
                       SizedBox(height: 10.h),
                       CustomFormCard(
-                          title: "Recipient",
-                          hintText: "Enter paarent/staff name",
-                          controller: TextEditingController(),
+                        title: "Recipient",
+                        hintText: "Enter paarent/staff name",
+                        controller: TextEditingController(),
                         fillBorderRadius: 10,
                         fieldBorderColor: Colors.grey.withOpacity(0.2),
                       ),
                       CustomFormCard(
-                          title: "Subjet",
-                          hintText: "Regarding",
-                          controller: TextEditingController(),
+                        title: "Subjet",
+                        hintText: "Regarding",
+                        controller: TextEditingController(),
                         fillBorderRadius: 10,
                         fieldBorderColor: Colors.grey.withOpacity(0.2),
                       ),
                       CustomFormCard(
-                          title: "Message",
-                          hintText: "Type your message here",
-                          controller: TextEditingController(),
+                        title: "Message",
+                        hintText: "Type your message here",
+                        controller: TextEditingController(),
                         fillBorderRadius: 10,
                         fieldBorderColor: Colors.grey.withOpacity(0.2),
                       ),
                       SizedBox(height: 20.h),
-
                       CustomButton(
-                          onTap: (){},
-                          title: "Send Notification",
+                        onTap: () {},
+                        title: "Send Notification",
                       )
                     ],
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(
+                  height: 20,
+                ),
+                Container(
+                  padding: EdgeInsets.all(16.w),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.1),
+                        blurRadius: 6,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Title
+                        CustomText(
+                          text: "Custom Message",
+                          fontSize: 16.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        SizedBox(height: 10.h),
+                        Column(
+                          children: [
+                            ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 3,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  children: [
+                                    CustomRecentCommunicationCard(
+                                      recipient:
+                                          "Parent ${index + 1} (Mother)",
+                                      studentName: "Student ${index + 1}",
+                                      reason: "Medicine Reminder",
+                                      time: "10:${index}0 AM",
+                                    ),
+                                    SizedBox(height: 10.h),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ]),
+                )
               ],
             ),
           ),

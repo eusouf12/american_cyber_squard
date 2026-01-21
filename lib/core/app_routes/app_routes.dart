@@ -5,6 +5,7 @@ import '../../view/screen/role_screen/parents/views/parents_home_screen.dart';
 import '../../view/screen/role_screen/parents/views/parents_profile_screen/change_password_screen.dart';
 import '../../view/screen/role_screen/parents/views/parents_profile_screen/edit_profile_screen.dart';
 import '../../view/screen/role_screen/school_nurse/view/school_nurse_home/view/school_nurse_home_screen.dart';
+import '../../view/screen/role_screen/school_nurse/view/school_nurse_profile/view/school_nurse_incident_reporting.dart';
 import '../../view/screen/role_screen/student/view/student_home/student_home_screen.dart';
 import '../../view/screen/role_screen/student/view/student_profile/view/schedule_list_screen.dart';
 import '../../view/screen/role_screen/student/view/student_profile/view/student_grade_screen.dart';
@@ -34,6 +35,7 @@ class AppRoutes {
 
   ///=================== School Nurse Part ======================
   static const String schoolNurseHomeScreen ="/SchoolNurseHomeScreen";
+  static const String schoolNurseIncidentReporting ="/SchoolNurseIncidentReporting";
 
   ///=================== Students Part ======================
   static const String parentsHomeScreen ="/ParentsHomeScreen";
@@ -62,6 +64,7 @@ class AppRoutes {
 
    ///===================== School Nurse Part================
     GetPage(name: schoolNurseHomeScreen, page: () => SchoolNurseHomeScreen()),
+    GetPage(name: schoolNurseIncidentReporting, page: () => SchoolNurseIncidentReporting()),
 
   ///===================== Parents Part================
     GetPage(name: parentsHomeScreen, page: () => ParentsHomeScreen()),

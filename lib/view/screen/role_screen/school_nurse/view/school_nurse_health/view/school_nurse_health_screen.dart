@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
 import 'package:america_ayber_squad/view/screen/role_screen/school_nurse/view/school_nurse_health/widget/custom_health_card.dart';
-import '../../../../../../utils/app_colors/app_colors.dart';
-import '../../../../../components/custom_nav_bar/school_nurse_nav_bar.dart';
-import '../../../../../components/custom_text/custom_text.dart';
-import '../../../parents/widget/custom_parents_show_card.dart';
+import '../../../../../../../utils/app_colors/app_colors.dart';
+import '../../../../../../components/custom_nav_bar/school_nurse_nav_bar.dart';
+import '../../../../../../components/custom_text/custom_text.dart';
+import '../../../../parents/widget/custom_parents_show_card.dart';
 
 class SchoolNurseHealthScreen extends StatelessWidget {
   const SchoolNurseHealthScreen({super.key});
@@ -131,6 +131,7 @@ class SchoolNurseHealthScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         ListView.builder(
+                          padding: EdgeInsets.zero,
                           physics: NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: 3,
