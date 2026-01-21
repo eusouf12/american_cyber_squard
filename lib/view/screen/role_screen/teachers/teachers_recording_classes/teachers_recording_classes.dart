@@ -1,9 +1,11 @@
 import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
 import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_recording_classes/widget/custom_teacher_record_card.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../utils/app_colors/app_colors.dart';
 import '../../../../components/custom_nav_bar/teacher_nav_bar.dart';
+import '../../../../components/custom_text/custom_text.dart';
 import '../../../../components/custom_text_field/custom_text_field.dart';
 
 class TeachersRecordingClasses extends StatelessWidget {
@@ -58,6 +60,28 @@ class TeachersRecordingClasses extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    GestureDetector(
+                        onTap: (){
+
+                        },
+                        child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 6,vertical: 10),
+                            decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(Icons.add, color: AppColors.white,size: 20,),
+                                SizedBox(width: 5),
+                                CustomText(text: "Upload Recording", fontSize: 14.sp, fontWeight: FontWeight.w500,color: AppColors.white,),
+                              ],
+                            )
+                        )
+                    ),
+                    SizedBox(height: 20.h),
                     ListView.builder(
                         padding: EdgeInsets.zero,
                         physics: NeverScrollableScrollPhysics(),
