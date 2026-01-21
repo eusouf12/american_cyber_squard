@@ -78,7 +78,7 @@ class TeachersProfileScreen extends StatelessWidget {
                     SizedBox(height: 15),
                     CustomFieldCard(
                       titleKey: 'Schedule',
-                      // onTap: () => Get.toNamed(AppRoutes.),
+                       onTap: () => Get.toNamed(AppRoutes.teacherScheduleScreen),
                     ),
                     SizedBox(height: 15),
                     CustomFieldCard(
