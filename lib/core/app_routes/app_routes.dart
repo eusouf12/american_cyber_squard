@@ -12,6 +12,7 @@ import '../../view/screen/role_screen/student/view/student_profile/view/student_
 import '../../view/screen/role_screen/student/view/student_profile/view/student_schedule_screen.dart';
 import '../../view/screen/role_screen/student/view/student_profile/view/student_support_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_home/teachers_home_screen.dart';
+import '../../view/screen/role_screen/teachers/teachers_profile/view/teachers_material.dart';
 
 class AppRoutes {
   ///=========================== Student Part ===============
@@ -32,6 +33,7 @@ class AppRoutes {
 
   ///=================== Teachers Part ======================
   static const String teachersHomeScreen ="/TeachersHomeScreen";
+  static const String teachersMaterial ="/TeachersMaterial";
 
   ///=================== School Nurse Part ======================
   static const String schoolNurseHomeScreen ="/SchoolNurseHomeScreen";
@@ -60,6 +62,7 @@ class AppRoutes {
 
     ///===================== Teachers Part================
     GetPage(name: teachersHomeScreen, page: () => TeachersHomeScreen()),
+    GetPage(name: teachersMaterial, page: () => TeachersMaterial()),
 
 
    ///===================== School Nurse Part================
