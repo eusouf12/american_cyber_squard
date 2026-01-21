@@ -67,7 +67,8 @@ class AcademicProgressScreen extends StatelessWidget {
                         )
                       ],
                     );
-                  } else  {
+                  }
+                  else  {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,

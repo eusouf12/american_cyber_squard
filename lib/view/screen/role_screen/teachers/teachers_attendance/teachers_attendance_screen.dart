@@ -200,9 +200,9 @@ class TeachersAttendanceScreen extends StatelessWidget {
                         SizedBox(height: 20),
                         Obx(
                               () => ListView(
+                                padding: EdgeInsets.zero,
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
-
                                 children: [
                                   CustomAttendanceCardTeacher(
                                     parentsName: "Mr. Rahman",
