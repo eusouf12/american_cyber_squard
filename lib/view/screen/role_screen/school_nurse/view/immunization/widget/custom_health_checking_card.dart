@@ -49,72 +49,64 @@ class CustomHealthCheckingCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           //Student info
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              CustomText(
+                text: name ?? "",
+                fontWeight: FontWeight.w600,
+                fontSize: 13.sp,
+              ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      CustomText(
-                        text: name ?? "",
-                        fontWeight: FontWeight.w600,
-                        fontSize: 13.sp,
-                      ),
-                      CustomText(
-                        text: grade ?? "",
-                        fontSize: 12.sp,
-                        color: Colors.black.withOpacity(0.7),
-                      ),
-                      Row(
-                        children: [
-                          CustomText(
-                            text: "Vaccine Name : " ?? "-",
-                            fontSize: 12.sp,
-                            color: Colors.black,
-                          ),
-                          CustomText(
-                            text: "${vaccineName}" ?? "",
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.red,
-                          ),
-                        ],
-                      ),
-                      CustomText(
-                        text: "Due Date : ${lastCheckupDate ?? ""}",
-                        fontSize: 12.sp,
-                        color: Colors.grey,
-                      ),
-                    ],
+                  CustomText(
+                    text: grade ?? "",
+                    fontSize: 12.sp,
+                    color: Colors.black.withOpacity(0.7),
                   ),
+                  Container(
+                        padding:
+                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                        decoration: BoxDecoration(
+                          color: status == "Upcoming"
+                              ? Colors.blue.withOpacity(0.2)
+                              : Colors.red.withOpacity(0.2),
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                        child: Row(
+                          children: [
+                            CustomText(
+                              text: status ?? "",
+                              color: status == "Upcoming"
+                                  ? Color(0xFF2563EB)
+                                  : AppColors.red,
+                              fontSize: 12.sp,
+                            ),
+                          ],
+                        ),
+                      ),
                 ],
               ),
               Row(
                 children: [
-                  Container(
-                    padding:
-                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
-                    decoration: BoxDecoration(
-                      color: status == "Upcoming"
-                          ? Colors.blue.withOpacity(0.2)
-                          : Colors.red.withOpacity(0.2),
-                      borderRadius: BorderRadius.circular(16),
-                    ),
-                    child: Row(
-                      children: [
-                        CustomText(
-                          text: status ?? "",
-                          color: status == "Upcoming"
-                              ? Color(0xFF2563EB)
-                              : AppColors.red,
-                          fontSize: 12.sp,
-                        ),
-                      ],
-                    ),
+                  CustomText(
+                    text: "Vaccine Name : " ?? "-",
+                    fontSize: 12.sp,
+                    color: Colors.black,
+                  ),
+                  CustomText(
+                    text: "${vaccineName}" ?? "",
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.red,
                   ),
                 ],
+              ),
+              CustomText(
+                text: "Due Date : ${lastCheckupDate ?? ""}",
+                fontSize: 12.sp,
+                color: Colors.grey,
               ),
             ],
           ),
