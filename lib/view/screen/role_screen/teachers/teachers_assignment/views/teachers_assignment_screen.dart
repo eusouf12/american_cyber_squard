@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../../utils/app_colors/app_colors.dart';
 import '../../../../../components/custom_tab_selected/custom_fill_tab_bar.dart';
-import '../../../../../components/custom_tab_selected/custom_tab_bar.dart';
 import '../../../../../components/custom_text/custom_text.dart';
 import '../../../parents/widget/custom_parents_show_card.dart';
-import '../../teachers_home/widget/custom_homework_card.dart';
 import '../controller/teacher_create_controller.dart';
 import 'package:get/get.dart';
 
