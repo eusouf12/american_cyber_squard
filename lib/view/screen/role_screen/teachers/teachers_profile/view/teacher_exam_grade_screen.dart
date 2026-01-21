@@ -2,76 +2,24 @@ import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_r
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../../../../../utils/app_colors/app_colors.dart';
 import '../../../../../components/custom_text/custom_text.dart';
 import '../../../parents/widget/custom_parents_show_card.dart';
-import '../../teachers_attendance/controller/teacher_attendence_controller.dart';
 import '../controller/teachers_material_controller.dart';
 import '../model/teachers_resource_model.dart';
+import '../widget/custom_teacher_exam_card.dart';
 import '../widget/custom_teachers_material_card.dart';
 
-class TeachersMaterial extends StatelessWidget {
-  TeachersMaterial({super.key});
+class TeacherExamGradeScreen extends StatelessWidget {
+  TeacherExamGradeScreen({super.key});
 
   final TeachersMaterialController teachersMaterialController = Get.put(TeachersMaterialController());
 
   @override
   Widget build(BuildContext context) {
-    final List<TeachersResourceModel> resources = [
-      TeachersResourceModel(
-        fileName: "Mathematics Formula Sheet",
-        size: "1.2 MB",
-        subject: "Mathematics",
-        type: "PDF",
-        date: "Dec 01, 2024",
-        icon: Icons.description_outlined,
-        color: Colors.green,
-      ),
-      TeachersResourceModel(
-        fileName: "Physics Lecture: Newton's Laws",
-        size: "450 MB",
-        subject: "Physics",
-        type: "Video",
-        date: "Nov 28, 2024",
-        icon: Icons.videocam_outlined,
-        color: Colors.teal,
-      ),
-      TeachersResourceModel(
-        fileName: "Chemistry Lab Safety Guidelines",
-        size: "800 KB",
-        subject: "Chemistry",
-        type: "PDF",
-        date: "Sep 15, 2024",
-        icon: Icons.description_outlined,
-        color: Colors.green,
-      ),
-      TeachersResourceModel(
-        fileName: "Shakespeare's Works Archive",
-        size: "N/A",
-        subject: "English",
-        type: "Link",
-        date: "Oct 10, 2024",
-        icon: Icons.link,
-        color: Colors.blue,
-      ),
-      TeachersResourceModel(
-        fileName: "Programming Basics 101",
-        size: "15 MB",
-        subject: "Computer Science",
-        type: "ZIP",
-        date: "Nov 05, 2024",
-        icon: Icons.folder_open_outlined,
-        color: Colors.orange,
-      ),
-    ];
-
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
-      appBar: CustomRoyelAppbar(
-        titleName: "Learning Materials",
-        leftIcon: true,
-      ),
+      appBar: CustomRoyelAppbar(titleName: "Exam & Grades ", leftIcon: true,),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -83,29 +31,29 @@ class TeachersMaterial extends StatelessWidget {
                 child: Row(
                   children: [
                     CustomParentsShowCard(
-                      count: "PDF Document",
+                      count: "Upcoming Exams",
                       label: "3",
-                      icon: Icons.assignment,
+                      icon: Icons.calendar_today_outlined,
                     ),
                     SizedBox(width: 12),
                     //Children
                     CustomParentsShowCard(
-                      count: "Word Document",
+                      count: "Completed",
                       label: "2",
-                      icon: Icons.description_outlined,
+                      icon: Icons.access_time,
                     ),
                     SizedBox(width: 12),
                     //Ave Attendance
                     CustomParentsShowCard(
-                      count: "Play File",
+                      count: "Pending Grading",
                       label: "95",
-                      icon: Icons.play_arrow_outlined,
+                      icon: Icons.access_time,
                     ),
                     SizedBox(width: 12),
                     CustomParentsShowCard(
-                      count: "External link",
+                      count: "Total Students",
                       label: "95",
-                      icon: Icons.link,
+                      icon: Icons.people,
                     ),
                   ],
                 ),
@@ -201,14 +149,15 @@ class TeachersMaterial extends StatelessWidget {
                             border: Border.all(color: Colors.grey.shade300),
                           ),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Icon(Icons.calendar_today_outlined, size: 20.sp, color: Colors.black87),
-                              SizedBox(width: 12.w),
                               CustomText(
-                                text: "January 21st, 2026",
+                                text: "Section A",
                                 fontSize: 14.sp,
                                 color: Colors.black87,
                               ),
+                              SizedBox(width: 12.w),
+                              Icon(Icons.keyboard_arrow_down, size: 20.sp, color: Colors.grey),
                             ],
                           ),
                         ),
@@ -218,7 +167,7 @@ class TeachersMaterial extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 20,),
-              //Course material
+              //Exam & Grades
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -234,36 +183,45 @@ class TeachersMaterial extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CustomText(text: "Course Materials", fontSize: 16, fontWeight: FontWeight.w600),
-                          Spacer(),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-                            decoration: BoxDecoration(
-                              color: AppColors.primary,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.add, size: 18, color: Colors.white,),
-                                CustomText(text: "Add New Materials", fontSize: 12, left: 5, color: Colors.white, fontWeight: FontWeight.w500),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10,),
-                        ],
+                      CustomText(text: "Exam & Grades Managements", fontSize: 14.sp, fontWeight: FontWeight.w600),
+                      SizedBox(height: 20),
+                      GestureDetector(
+                          onTap: (){
+
+                          },
+                          child: Container(
+                              padding: EdgeInsets.symmetric(horizontal: 6,vertical: 10),
+                              decoration: BoxDecoration(
+                                color: AppColors.primary,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.add, color: AppColors.white,size: 20,),
+                                  SizedBox(width: 5),
+                                  CustomText(text: "Create Exam", fontSize: 14.sp, fontWeight: FontWeight.w500,color: AppColors.white,),
+                                ],
+                              )
+                          )
                       ),
-                      SizedBox(height: 10,),
+                      SizedBox(height: 20),
                       ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: 3,
-                          itemBuilder: (context, index) {
-                          final item = resources[index];
-                          return CustomTeachersMaterialCard(item: item);
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: 3,
+                        itemBuilder: (context, index) {
+                          return CustomTeacherExamCard(
+                            submission: index== 0 || index == 4 ?"28/28" :index== 1 ? "0/28" : "25/28",
+                            status: index== 0 || index == 4 ?"Completed" :index== 1 ? "Pending" : "Upcoming",
+                            date: "March 15,2026",
+                            subject:index== 0 || index == 4 ?"Quiz _ Algebra" :index== 1 ? "Final Exam" : "Mid-term Mathematics",
+                            grade: "Chapter 1-5",
+                            onTapView: () {  },
+                          );
                         },
                       ),
                     ],

@@ -73,7 +73,7 @@ class TeachersProfileScreen extends StatelessWidget {
                     SizedBox(height: 15),
                     CustomFieldCard(
                       titleKey: 'Grades & Exams',
-                      // onTap: () => Get.toNamed(AppRoutes.),
+                       onTap: () => Get.toNamed(AppRoutes.teacherExamGradeScreen),
                     ),
                     SizedBox(height: 15),
                     CustomFieldCard(
