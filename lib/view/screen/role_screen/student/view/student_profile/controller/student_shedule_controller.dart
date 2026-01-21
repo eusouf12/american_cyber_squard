@@ -15,3 +15,4 @@ class StudentSheduleController extends GetxController {
     "Friday"
   ];
 }
+
