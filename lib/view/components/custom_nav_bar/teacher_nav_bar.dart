@@ -27,8 +27,8 @@ class _UserNavBarState extends State<TeacherNavBar> {
     AppIcons.home,
     AppIcons.attendance,
     AppIcons.assignments,
-    AppIcons.assignments,
-    AppIcons.attendance,
+    AppIcons.zoom,
+    AppIcons.profile,
 
   ];
 

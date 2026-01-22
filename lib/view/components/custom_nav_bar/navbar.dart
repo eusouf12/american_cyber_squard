@@ -25,10 +25,10 @@ class _NavBarState extends State<Navbar> {
 
   final List<String> icons = [
     AppIcons.home,
-    AppIcons.attendance,
-    AppIcons.assignments,
-    AppIcons.assignments,
-     AppIcons.attendance,
+    AppIcons.children,
+    AppIcons.pay,
+    AppIcons.progress,
+     AppIcons.profile,
 
   ];
 

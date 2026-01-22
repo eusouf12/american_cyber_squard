@@ -26,5 +26,13 @@ class AppIcons {
   static const String training = "$basePath/training.png";
   static const String profile = "$basePath/profile.svg";
   static const String arrowIcon = "$basePath/arrowIcon.svg";
+  static const String children = "$basePath/children.svg";
+  static const String progress = "$basePath/progress.svg";
+  static const String pay = "$basePath/pay.svg";
+  static const String student = "$basePath/student.svg";
+  static const String myClass = "$basePath/my_class.svg";
+  static const String zoom = "$basePath/zoom.svg";
+  static const String health = "$basePath/health.svg";
+  static const String chat = "$basePath/chat.svg";
 
 }
