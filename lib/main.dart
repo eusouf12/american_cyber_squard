@@ -10,9 +10,9 @@ import 'utils/app_colors/app_colors.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-    statusBarColor: AppColors.white, // Set visible background color
-    statusBarIconBrightness: Brightness.dark, // Android: dark icons
-    statusBarBrightness: Brightness.light, // iOS: light background
+    statusBarColor: AppColors.white,
+    statusBarIconBrightness: Brightness.dark,
+    statusBarBrightness: Brightness.light,
   ));
   DependencyInjection di = DependencyInjection();
   di.dependencies();
