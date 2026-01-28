@@ -9,6 +9,7 @@ import '../../../parents/widget/custom_parents_show_card.dart';
 import '../controller/teacher_create_controller.dart';
 import 'package:get/get.dart';
 
+import '../widget/custom_create_assignment.dart';
 import '../widget/custom_create_assignment_card.dart';
 
 
@@ -82,7 +83,7 @@ class TeachersAssignmentScreen extends StatelessWidget {
                         SizedBox(height: 20),
                         GestureDetector(
                             onTap: (){
-
+                              showCreateAssignmentPopup(context);
                             },
                             child: Container(
                                 padding: EdgeInsets.symmetric(horizontal: 6,vertical: 10),

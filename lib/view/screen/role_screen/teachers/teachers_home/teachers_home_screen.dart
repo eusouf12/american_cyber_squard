@@ -6,6 +6,8 @@ import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_ho
 import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_home/widget/custom_today_schedule_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import '../../../../../core/app_routes/app_routes.dart';
 import '../../../../../utils/app_colors/app_colors.dart';
 import '../../../../components/custom_gradient/custom_gradient.dart';
 import '../../../../components/custom_text/custom_text.dart';
@@ -17,10 +19,10 @@ class TeachersHomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Map<String, dynamic>> gridItems = [
-      {'title': 'Mark Attendance', 'icon': Icons.assignment_turned_in_outlined},
-      {'title': 'New Assignment', 'icon': Icons.add},
-      {'title': 'Grade Papers', 'icon': Icons.description_outlined},
-      {'title': 'Schedule Class', 'icon': Icons.calendar_today_outlined},
+      {'title': 'Mark Attendance', 'icon': Icons.assignment_turned_in_outlined,'route': AppRoutes.teachersAttendanceScreen,},
+      {'title': 'New Assignment', 'icon': Icons.add,'route': AppRoutes.teachersAssignmentScreen,},
+      {'title': 'Grade Papers', 'icon': Icons.description_outlined,'route': AppRoutes.teacherExamGradeScreen,},
+      {'title': 'Schedule Class', 'icon': Icons.calendar_today_outlined,'route': AppRoutes.teacherScheduleScreen,},
     ];
 
     return CustomGradient(
@@ -199,8 +201,8 @@ class TeachersHomeScreen extends StatelessWidget {
                             return CustomQuickCard(
                               title: gridItems[index]['title'],
                               icon: gridItems[index]['icon'],
-                              onTap: () {
-                                print("${gridItems[index]['title']} clicked");
+                              onTap: (){
+                                Get.toNamed(gridItems[index]['route']);
                               },
                             );
                           },

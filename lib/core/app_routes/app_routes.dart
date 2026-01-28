@@ -12,6 +12,8 @@ import '../../view/screen/role_screen/student/view/student_profile/view/schedule
 import '../../view/screen/role_screen/student/view/student_profile/view/student_grade_screen.dart';
 import '../../view/screen/role_screen/student/view/student_profile/view/student_schedule_screen.dart';
 import '../../view/screen/role_screen/student/view/student_profile/view/student_support_screen.dart';
+import '../../view/screen/role_screen/teachers/teachers_assignment/views/teachers_assignment_screen.dart';
+import '../../view/screen/role_screen/teachers/teachers_attendance/teachers_attendance_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_home/teachers_home_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teacher_exam_grade_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teacher_schedule_screen.dart';
@@ -41,6 +43,8 @@ class AppRoutes {
   static const String teacherExamGradeScreen ="/TeacherExamGradeScreen";
   static const String teacherScheduleScreen ="/TeacherScheduleScreen";
   static const String teacherStudentScreen ="/TeacherStudentScreen";
+  static const String teachersAssignmentScreen ="/TeachersAssignmentScreen";
+  static const String teachersAttendanceScreen ="/TeachersAttendanceScreen";
 
   ///=================== School Nurse Part ======================
   static const String schoolNurseHomeScreen ="/SchoolNurseHomeScreen";
@@ -74,6 +78,8 @@ class AppRoutes {
     GetPage(name: teacherExamGradeScreen, page: () => TeacherExamGradeScreen()),
     GetPage(name: teacherScheduleScreen, page: () => TeacherScheduleScreen()),
     GetPage(name: teacherStudentScreen, page: () => TeacherStudentScreen()),
+    GetPage(name: teachersAssignmentScreen, page: () => TeachersAssignmentScreen()),
+    GetPage(name: teachersAttendanceScreen, page: () => TeachersAttendanceScreen()),
 
 
    ///===================== School Nurse Part================

@@ -1,3 +1,4 @@
+import 'package:america_ayber_squad/core/app_routes/app_routes.dart';
 import 'package:america_ayber_squad/utils/app_colors/app_colors.dart';
 import 'package:america_ayber_squad/utils/app_const/app_const.dart';
 import 'package:america_ayber_squad/view/components/custom_netwrok_image/custom_network_image.dart';
@@ -124,7 +125,7 @@ class StudentHomeScreen extends StatelessWidget {
                       title: "Pending Assignments",
                       subtitle: "Assignments due soon",
                       count: "3",
-                      icon: Icons.assignment_late,
+                      icon: Icons.assignment_late_outlined,
                       textColor: Colors.grey[800]!,
                     ),
                     const SizedBox(width: 8),

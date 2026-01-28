@@ -21,11 +21,11 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.hintText,
     this.hintStyle,
-    this.fillColor = AppColors.black_80,
+    this.fillColor = AppColors.white,
     this.suffixIcon,
     this.suffixIconColor,
     this.fieldBorderRadius = 16,
-    this.fieldBorderColor = Colors.transparent,
+    this.fieldBorderColor,
     this.isPassword = false,
     this.isPrefixIcon = true,
     this.readOnly = false,
@@ -55,7 +55,7 @@ class CustomTextField extends StatefulWidget {
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final double fieldBorderRadius;
-  final Color fieldBorderColor;
+  final Color? fieldBorderColor;
   final bool isPassword;
   final bool isPrefixIcon;
   final bool readOnly;
@@ -127,17 +127,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
         suffixIconColor: widget.suffixIconColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(widget.fieldBorderRadius),
-          borderSide: BorderSide(color: widget.fieldBorderColor, width: 1),
+          borderSide: BorderSide(color: widget.fieldBorderColor ?? Colors.grey.shade300, width: 1),
           gapPadding: 0,
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(widget.fieldBorderRadius),
-          borderSide: BorderSide(color: widget.fieldBorderColor, width: 1),
+          borderSide: BorderSide(color: widget.fieldBorderColor ?? AppColors.primary, width: 1),
           gapPadding: 0,
         ),
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(widget.fieldBorderRadius),
-          borderSide: BorderSide(color: widget.fieldBorderColor, width: 1),
+          borderSide: BorderSide(color: widget.fieldBorderColor ??Colors.grey.shade300 , width: 1),
           gapPadding: 0,
         ),
       ),
