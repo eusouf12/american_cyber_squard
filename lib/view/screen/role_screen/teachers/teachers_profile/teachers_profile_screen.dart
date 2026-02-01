@@ -136,7 +136,6 @@ class TeachersProfileScreen extends StatelessWidget {
       ),
     );
   }
-
   Widget CustomFieldCard({
     required String titleKey,
     VoidCallback? onTap,
