@@ -73,6 +73,6 @@ class StudentMyClassesScreen extends StatelessWidget {
             ],
           ),
         ),
-        bottomNavigationBar: StudentNavBar(currentIndex: 3));
+        bottomNavigationBar: StudentNavBar(currentIndex: 4));
   }
 }

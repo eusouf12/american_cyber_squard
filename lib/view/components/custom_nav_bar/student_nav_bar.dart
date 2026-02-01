@@ -8,6 +8,7 @@ import '../../../utils/app_icons/app_icons.dart';
 import '../../screen/role_screen/student/view/student_assignment/student_assignment_screen.dart';
 import '../../screen/role_screen/student/view/student_home/student_home_screen.dart';
 import '../../screen/role_screen/student/view/student_my_classes_screen/student_my_classes_screen.dart';
+import '../../screen/role_screen/student/view/student_profile/view/student_grade_screen.dart';
 import '../../screen/role_screen/student/view/student_profile/view/student_profile.dart';
 
 
@@ -27,6 +28,7 @@ class _UserNavBarState extends State<StudentNavBar> {
     AppIcons.home,
     AppIcons.myClass,
     AppIcons.assignments,
+    AppIcons.exam,
     AppIcons.student,
     AppIcons.profile,
 
@@ -129,9 +131,12 @@ class _UserNavBarState extends State<StudentNavBar> {
           Get.offAll(() => StudentAssignmentScreen());
           break;
         case 3:
-          Get.offAll(() => StudentMyClassesScreen());
+          Get.offAll(() => StudentGradeScreen());
           break;
         case 4:
+          Get.offAll(() => StudentMyClassesScreen());
+          break;
+        case 5:
           Get.to(() => StudentProfile());
           break;
       }

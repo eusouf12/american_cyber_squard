@@ -2,13 +2,14 @@ import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_r
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../../../utils/app_colors/app_colors.dart';
-import '../../../../../components/custom_text/custom_text.dart';
-import '../../../parents/widget/custom_parents_show_card.dart';
-import '../controller/teachers_material_controller.dart';
-import '../model/teachers_resource_model.dart';
-import '../widget/custom_teacher_exam_card.dart';
-import '../widget/custom_teachers_material_card.dart';
+import '../../../../../utils/app_colors/app_colors.dart';
+import '../../../../components/custom_nav_bar/teacher_nav_bar.dart';
+import '../../../../components/custom_text/custom_text.dart';
+import '../../parents/widget/custom_parents_show_card.dart';
+import '../teachers_profile/controller/teachers_material_controller.dart';
+import '../teachers_profile/model/teachers_resource_model.dart';
+import '../teachers_profile/widget/custom_teacher_exam_card.dart';
+import '../teachers_profile/widget/custom_teachers_material_card.dart';
 
 class TeacherExamGradeScreen extends StatelessWidget {
   TeacherExamGradeScreen({super.key});
@@ -19,7 +20,7 @@ class TeacherExamGradeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
-      appBar: CustomRoyelAppbar(titleName: "Exam & Grades ", leftIcon: true,),
+      appBar: CustomRoyelAppbar(titleName: "Exam & Grades ", leftIcon: false,),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -232,6 +233,7 @@ class TeacherExamGradeScreen extends StatelessWidget {
           ),
         ),
       ),
+        bottomNavigationBar: TeacherNavBar(currentIndex: 3)
     );
   }
 }

@@ -15,7 +15,7 @@ import '../../view/screen/role_screen/student/view/student_profile/view/student_
 import '../../view/screen/role_screen/teachers/teachers_assignment/views/teachers_assignment_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_attendance/teachers_attendance_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_home/teachers_home_screen.dart';
-import '../../view/screen/role_screen/teachers/teachers_profile/view/teacher_exam_grade_screen.dart';
+import '../../view/screen/role_screen/teachers/teacher_exam_secren/teacher_exam_grade_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teacher_schedule_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teacher_student_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teachers_material.dart';

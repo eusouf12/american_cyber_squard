@@ -1,3 +1,4 @@
+import 'package:america_ayber_squad/view/screen/role_screen/teachers/teacher_exam_secren/teacher_exam_grade_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -27,6 +28,7 @@ class _UserNavBarState extends State<TeacherNavBar> {
     AppIcons.home,
     AppIcons.attendance,
     AppIcons.assignments,
+    AppIcons.exam,
     AppIcons.zoom,
     AppIcons.profile,
 
@@ -129,9 +131,12 @@ class _UserNavBarState extends State<TeacherNavBar> {
           Get.offAll(() => TeachersAssignmentScreen());
           break;
         case 3:
-          Get.offAll(() => TeachersRecordingClasses());
+          Get.offAll(() => TeacherExamGradeScreen());
           break;
         case 4:
+          Get.offAll(() => TeachersRecordingClasses());
+          break;
+        case 5:
           Get.to(() => TeachersProfileScreen());
           break;
       }

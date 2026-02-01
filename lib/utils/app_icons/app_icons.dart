@@ -34,5 +34,6 @@ class AppIcons {
   static const String zoom = "$basePath/zoom.svg";
   static const String health = "$basePath/health.svg";
   static const String chat = "$basePath/chat.svg";
+  static const String exam = "$basePath/exam.svg";
 
 }

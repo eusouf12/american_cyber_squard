@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+import '../../../../../../components/custom_nav_bar/student_nav_bar.dart';
 import '../../../../parents/widget/custom_gread_card.dart';
 import '../../../../parents/widget/custom_welcome_card.dart';
 import '../widgets/custom_result.dart';
@@ -20,7 +21,7 @@ class StudentGradeScreen extends StatelessWidget {
       child: Scaffold(
         appBar: CustomRoyelAppbar(
           titleName: "Grade & Exams",
-          leftIcon: true,
+          leftIcon: false,
         ),
         body: SingleChildScrollView(
           child: Padding(
@@ -140,6 +141,7 @@ class StudentGradeScreen extends StatelessWidget {
             ),
           ),
         ),
+        bottomNavigationBar: StudentNavBar(currentIndex: 3),
       ),
     );
   }

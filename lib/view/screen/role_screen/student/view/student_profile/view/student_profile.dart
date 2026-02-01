@@ -127,7 +127,7 @@ class StudentProfile extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: StudentNavBar(currentIndex: 4),
+        bottomNavigationBar: StudentNavBar(currentIndex: 5),
       ),
     );
   }

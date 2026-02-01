@@ -72,11 +72,6 @@ class TeachersProfileScreen extends StatelessWidget {
                     ),
                     SizedBox(height: 15),
                     CustomFieldCard(
-                      titleKey: 'Grades & Exams',
-                       onTap: () => Get.toNamed(AppRoutes.teacherExamGradeScreen),
-                    ),
-                    SizedBox(height: 15),
-                    CustomFieldCard(
                       titleKey: 'Schedule',
                        onTap: () => Get.toNamed(AppRoutes.teacherScheduleScreen),
                     ),
@@ -137,7 +132,7 @@ class TeachersProfileScreen extends StatelessWidget {
             ),
           ),
         ),
-        bottomNavigationBar: TeacherNavBar(currentIndex: 4),
+        bottomNavigationBar: TeacherNavBar(currentIndex: 5),
       ),
     );
   }

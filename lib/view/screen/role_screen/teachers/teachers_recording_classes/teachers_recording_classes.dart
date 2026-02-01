@@ -106,7 +106,7 @@ class TeachersRecordingClasses extends StatelessWidget {
             )
           ),
         ),
-        bottomNavigationBar: TeacherNavBar(currentIndex: 3),
+        bottomNavigationBar: TeacherNavBar(currentIndex: 4),
       ),
     );
   }
