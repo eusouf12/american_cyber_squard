@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../core/app_routes/app_routes.dart';
+import '../../../../utils/app_colors/app_colors.dart';
 import '../../../components/custom_button/custom_button.dart';
 
 class Demo extends StatelessWidget {
@@ -66,6 +67,18 @@ class Demo extends StatelessWidget {
               },
               title: "School Nurse",
               borderRadius: 30,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            CustomButton(
+              onTap: () {
+                Get.toNamed(AppRoutes.loginScreen);
+              },
+              title: "Login Screen",
+              borderRadius: 30,
+              fillColor: AppColors.primary,
+              textColor: Colors.white,
             ),
           ]),
         ),
