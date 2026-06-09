@@ -1,5 +1,4 @@
 import 'package:get/get_navigation/src/routes/get_route.dart';
-import '../../view/screen/role_screen/demo/demo.dart';
 import '../../view/screen/role_screen/parents/views/parent_chat_screen/view/parents_chat_list_screen.dart';
 import '../../view/screen/role_screen/parents/views/parents_home_screen.dart';
 import '../../view/screen/role_screen/parents/views/parents_profile_screen/change_password_screen.dart';
@@ -59,10 +58,7 @@ class AppRoutes {
 
   static List<GetPage> routes = [
     ///=========================== Student Part ==============
-    // GetPage(name: splashScreen, page: () => SplashScreen()),
-
-
-    GetPage(name: demo, page: () => Demo()),
+    
     GetPage(name: loginScreen, page: () => const LoginScreen()),
 
     ///===================== Student Part================
