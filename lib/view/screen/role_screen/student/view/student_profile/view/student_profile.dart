@@ -1,180 +1,356 @@
-import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
-import 'package:america_ayber_squad/view/components/custom_nav_bar/navbar.dart';
 import 'package:america_ayber_squad/view/components/custom_nav_bar/student_nav_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import '../../../../../../../../utils/app_colors/app_colors.dart';
 import '../../../../../../../../utils/app_const/app_const.dart';
 import '../../../../../../../core/app_routes/app_routes.dart';
 import '../../../../../../components/custom_netwrok_image/custom_network_image.dart';
 import '../../../../../../components/custom_show_dialog/custom_show_dialog.dart';
-import '../../../../../../components/custom_text/custom_text.dart';
 
 class StudentProfile extends StatelessWidget {
   const StudentProfile({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return CustomGradient(
-      child: Scaffold(
+  static const List<_ProfileMenuItem> _menuItems = [
+    _ProfileMenuItem(
+      title: 'Grades & Exams',
+      subtitle: 'View your results & scores',
+      icon: Icons.grade_rounded,
+      gradientColors: [Color(0xFF7C3AED), Color(0xFFA78BFA)],
+    ),
+    _ProfileMenuItem(
+      title: 'Schedule',
+      subtitle: 'Class timetable & events',
+      icon: Icons.calendar_month_rounded,
+      gradientColors: [Color(0xFF1D4ED8), Color(0xFF3B82F6)],
+    ),
+    _ProfileMenuItem(
+      title: 'Materials',
+      subtitle: 'Lessons & resources',
+      icon: Icons.folder_open_rounded,
+      gradientColors: [Color(0xFFD97706), Color(0xFFFBBF24)],
+    ),
+    _ProfileMenuItem(
+      title: 'Support',
+      subtitle: 'Help & contact us',
+      icon: Icons.headset_mic_rounded,
+      gradientColors: [Color(0xFF0891B2), Color(0xFF22D3EE)],
+    ),
+    _ProfileMenuItem(
+      title: 'Edit Profile',
+      subtitle: 'Update your information',
+      icon: Icons.edit_rounded,
+      gradientColors: [Color(0xFF059669), Color(0xFF34D399)],
+    ),
+    _ProfileMenuItem(
+      title: 'Change Password',
+      subtitle: 'Security settings',
+      icon: Icons.lock_rounded,
+      gradientColors: [Color(0xFF4B5563), Color(0xFF9CA3AF)],
+    ),
+  ];
+
+  void _handleMenuTap(int index) {
+    switch (index) {
+      case 0:
+        Get.toNamed(AppRoutes.studentGradeScreen);
+      case 1:
+        Get.toNamed(AppRoutes.studentScheduleScreen);
+      case 2:
+        Get.toNamed(AppRoutes.resourceListScreen);
+      case 3:
+        Get.toNamed(AppRoutes.contactUsScreen);
+      case 4:
+        Get.toNamed(AppRoutes.editScreen);
+      case 5:
+        Get.toNamed(AppRoutes.changePassScreen);
+    }
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
         backgroundColor: AppColors.white,
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          width: MediaQuery.of(context).size.width,
-
-          child: Padding(
-            padding: const EdgeInsets.only(left: 24,right: 24, top: 30),
-            child: SingleChildScrollView(
-              child: SafeArea(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 20,),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        CustomNetworkImage(
-                          imageUrl: AppConstants.girlsPhoto,
-                          boxShape: BoxShape.circle,
-                          height: 80.h,
-                          width: 80.w,
-                        ),
-                        SizedBox(width: 15),
-                        Column(
-                          children: [
-                            CustomText(
-                              text: 'Paul',
-                              fontSize: 20.sp,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.black,
-                            ),
-                            CustomText(
-                              text: '(Student Profile)',
-                              fontSize: 10.sp,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.black,
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    SizedBox(height: 24),
-                    CustomFieldCard(
-                      titleKey: 'Grades & Exams',
-                      onTap: () => Get.toNamed(AppRoutes.studentGradeScreen),
-                    ),
-                    SizedBox(height: 15),
-                    CustomFieldCard(
-                      titleKey: 'Schedule',
-                      onTap: () => Get.toNamed(AppRoutes.studentScheduleScreen),
-                    ),
-                    SizedBox(height: 15),
-                    CustomFieldCard(
-                      titleKey: 'Materials',
-                      onTap: () => Get.toNamed(AppRoutes.resourceListScreen),
-                    ),
-                    SizedBox(height: 15),
-                    CustomFieldCard(
-                      titleKey: 'Support',
-                      onTap: () => Get.toNamed(AppRoutes.contactUsScreen),
-                    ),
-                    SizedBox(height: 15),
-                    CustomFieldCard(
-                      titleKey: 'Edit Profile',
-                      onTap: () => Get.toNamed(AppRoutes.editScreen),
-                    ),
-                    SizedBox(height: 15),
-                    CustomFieldCard(
-                      titleKey: 'Change Password',
-                      onTap: () => Get.toNamed(AppRoutes.changePassScreen),
-                    ),
-
-                    SizedBox(height: 15),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (ctx) => AlertDialog(
-                            backgroundColor: AppColors.white,
-                            insetPadding: EdgeInsets.all(8),
-                            contentPadding: EdgeInsets.all(8),
-                            content: SizedBox(
-                              width: MediaQuery.sizeOf(context).width,
-                              child: CustomShowDialog(
-                                textColor: AppColors.black,
-                                title: 'Are You Sure',
-                                discription: 'Logout Your Account',
-                                showColumnButton: true,
-                                showCloseButton: true,
-                                rightOnTap: () => Get.back(),
-                                leftOnTap: () => Get.offAllNamed(AppRoutes.demo),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                      child: CustomFieldCard(
-                        titleKey: 'Logout',
-                        color: AppColors.red,
-                        showArrow: true,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
+        insetPadding: const EdgeInsets.all(8),
+        contentPadding: const EdgeInsets.all(8),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        content: SizedBox(
+          width: MediaQuery.sizeOf(context).width,
+          child: CustomShowDialog(
+            textColor: AppColors.black,
+            title: 'Are You Sure',
+            discription: 'Logout Your Account',
+            showColumnButton: true,
+            showCloseButton: true,
+            rightOnTap: () => Get.back(),
+            leftOnTap: () => Get.offAllNamed(AppRoutes.loginScreen),
           ),
         ),
-        bottomNavigationBar: StudentNavBar(currentIndex: 5),
       ),
     );
   }
 
-  Widget CustomFieldCard({
-    required String titleKey,
-    VoidCallback? onTap,
-    Color? color,
-    bool showArrow = true,
-  }) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        height: 56,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: AppColors.primary.withOpacity(0.2),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            children: [
-              CustomText(
-                text: titleKey.tr,
-                fontSize: 14,
-                fontWeight: FontWeight.w500,
-                color: color ?? AppColors.black,
-              ),
-              Spacer(),
-              if (showArrow)
-                Container(
-                  height: 45,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: AppColors.primary,
-                  ),
-                  child: Icon(
-                    Icons.keyboard_arrow_right,
-                    color: AppColors.white,
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color(0xFFF0FDF4),
+      body: Stack(
+        children: [
+          Positioned(
+            top: -60, right: -40,
+            child: _GlowCircle(size: 220, color: AppColors.primary.withValues(alpha: 0.18)),
+          ),
+          Positioned(
+            top: 120, left: -60,
+            child: _GlowCircle(size: 160, color: AppColors.primary2.withValues(alpha: 0.10)),
+          ),
+          Positioned(
+            top: 260, right: 20,
+            child: _GlowCircle(size: 80, color: AppColors.primary.withValues(alpha: 0.08)),
+          ),
+          SafeArea(
+            child: CustomScrollView(
+              physics: const BouncingScrollPhysics(),
+              slivers: [
+                SliverToBoxAdapter(child: _buildHeader(context)),
+                SliverPadding(
+                  padding: EdgeInsets.fromLTRB(20.w, 8.h, 20.w, 0),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) => _MenuTile(
+                        item: _menuItems[index],
+                        onTap: () => _handleMenuTap(index),
+                      ),
+                      childCount: _menuItems.length,
+                    ),
                   ),
                 ),
+                SliverPadding(
+                  padding: EdgeInsets.fromLTRB(20.w, 12.h, 20.w, 24.h),
+                  sliver: SliverToBoxAdapter(child: _buildLogoutButton(context)),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: StudentNavBar(currentIndex: 5),
+    );
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.fromLTRB(20.w, 24.h, 20.w, 20.h),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(28.r),
+        gradient: const LinearGradient(
+          colors: [Color(0xFF088F55), Color(0xFF10B981)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        boxShadow: [
+          BoxShadow(color: AppColors.primary.withValues(alpha: 0.35), blurRadius: 30, offset: const Offset(0, 14)),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(28.r),
+        child: Stack(
+          children: [
+            Positioned(top: -30, right: -20, child: _GlowCircle(size: 130, color: Colors.white.withValues(alpha: 0.12))),
+            Positioned(bottom: -20, left: 30, child: _GlowCircle(size: 80, color: Colors.white.withValues(alpha: 0.08))),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 22.w, vertical: 22.h),
+              child: Row(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white.withValues(alpha: 0.6), width: 2.5),
+                      boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.15), blurRadius: 14, offset: const Offset(0, 6))],
+                    ),
+                    child: CustomNetworkImage(imageUrl: AppConstants.girlsPhoto, boxShape: BoxShape.circle, height: 72.h, width: 72.w),
+                  ),
+                  SizedBox(width: 16.w),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Paul', style: TextStyle(fontSize: 22.sp, fontWeight: FontWeight.w800, color: Colors.white, letterSpacing: 0.3)),
+                        SizedBox(height: 5.h),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                          decoration: BoxDecoration(color: Colors.white.withValues(alpha: 0.22), borderRadius: BorderRadius.circular(20.r)),
+                          child: Text('✦  Student', style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w600, color: Colors.white, letterSpacing: 0.5)),
+                        ),
+                        SizedBox(height: 12.h),
+                        Row(
+                          children: [
+                            _StatBadge(label: 'Courses', value: '6'),
+                            SizedBox(width: 10.w),
+                            _StatBadge(label: 'Grade', value: 'A+'),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 40.h, width: 40.w,
+                    decoration: BoxDecoration(
+                      color: Colors.white.withValues(alpha: 0.18),
+                      borderRadius: BorderRadius.circular(12.r),
+                      border: Border.all(color: Colors.white.withValues(alpha: 0.30), width: 1),
+                    ),
+                    child: Icon(Icons.notifications_none_rounded, color: Colors.white, size: 20.sp),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLogoutButton(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _showLogoutDialog(context),
+      child: Container(
+        height: 58.h,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(18.r),
+          color: const Color(0xFFFFEEEE),
+          border: Border.all(color: const Color(0xFFFFCCCC), width: 1.2),
+          boxShadow: [BoxShadow(color: Colors.red.withValues(alpha: 0.08), blurRadius: 12, offset: const Offset(0, 4))],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 34.h, width: 34.w,
+              decoration: BoxDecoration(
+                color: const Color(0xFFFF5555).withValues(alpha: 0.12),
+                borderRadius: BorderRadius.circular(10.r),
+              ),
+              child: Icon(Icons.logout_rounded, color: const Color(0xFFE53935), size: 18.sp),
+            ),
+            SizedBox(width: 12.w),
+            Text('Logout', style: TextStyle(fontSize: 15.sp, fontWeight: FontWeight.w700, color: const Color(0xFFE53935), letterSpacing: 0.3)),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Shared widgets ──────────────────────────────────────────────────────
+
+class _StatBadge extends StatelessWidget {
+  final String label;
+  final String value;
+  const _StatBadge({required this.label, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.18),
+        borderRadius: BorderRadius.circular(10.r),
+        border: Border.all(color: Colors.white.withValues(alpha: 0.25), width: 1),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(value, style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w800, color: Colors.white)),
+          Text(label, style: TextStyle(fontSize: 9.sp, fontWeight: FontWeight.w500, color: Colors.white.withValues(alpha: 0.75))),
+        ],
+      ),
+    );
+  }
+}
+
+class _MenuTile extends StatelessWidget {
+  final _ProfileMenuItem item;
+  final VoidCallback onTap;
+  const _MenuTile({required this.item, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(bottom: 12.h),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 68.h,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(18.r),
+            boxShadow: [BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 16, offset: const Offset(0, 4))],
+          ),
+          child: Row(
+            children: [
+              SizedBox(width: 14.w),
+              Container(
+                height: 44.h, width: 44.w,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: item.gradientColors, begin: Alignment.topLeft, end: Alignment.bottomRight),
+                  borderRadius: BorderRadius.circular(13.r),
+                  boxShadow: [BoxShadow(color: item.gradientColors[0].withValues(alpha: 0.35), blurRadius: 10, offset: const Offset(0, 4))],
+                ),
+                child: Icon(item.icon, color: Colors.white, size: 20.sp),
+              ),
+              SizedBox(width: 14.w),
+              Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(item.title.tr, style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w700, color: const Color(0xFF0E0E0E))),
+                    SizedBox(height: 2.h),
+                    Text(item.subtitle, style: TextStyle(fontSize: 11.sp, fontWeight: FontWeight.w400, color: const Color(0xFF9CA3AF))),
+                  ],
+                ),
+              ),
+              Container(
+                height: 34.h, width: 34.w,
+                margin: EdgeInsets.only(right: 14.w),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFF0FDF4),
+                  borderRadius: BorderRadius.circular(10.r),
+                  border: Border.all(color: AppColors.primary.withValues(alpha: 0.20), width: 1),
+                ),
+                child: Icon(Icons.arrow_forward_ios_rounded, color: AppColors.primary, size: 13.sp),
+              ),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ProfileMenuItem {
+  final String title;
+  final String subtitle;
+  final IconData icon;
+  final List<Color> gradientColors;
+  const _ProfileMenuItem({required this.title, required this.subtitle, required this.icon, required this.gradientColors});
+}
+
+class _GlowCircle extends StatelessWidget {
+  final double size;
+  final Color color;
+  const _GlowCircle({required this.size, required this.color});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: size, width: size,
+      decoration: BoxDecoration(shape: BoxShape.circle, color: color),
     );
   }
 }

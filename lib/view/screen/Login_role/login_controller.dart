@@ -76,6 +76,17 @@ class LoginController extends GetxController {
         else {
           Get.offAllNamed(AppRoutes.schoolNurseHomeScreen);
         }
+      } else {
+        // Parse server error message (e.g. 404 "User not found")
+        try {
+          Map<String, dynamic> errorResponse =
+              response.body is String ? jsonDecode(response.body) : response.body;
+          final String message =
+              errorResponse['message']?.toString() ?? 'Login failed. Please try again.';
+          showCustomSnackBar(message, isError: true);
+        } catch (_) {
+          showCustomSnackBar('Login failed. Please try again.', isError: true);
+        }
       }
         
      }catch(e){

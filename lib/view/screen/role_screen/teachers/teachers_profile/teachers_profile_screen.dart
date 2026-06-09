@@ -95,7 +95,7 @@ class TeachersProfileScreen extends StatelessWidget {
             showColumnButton: true,
             showCloseButton: true,
             rightOnTap: () => Get.back(),
-            leftOnTap: () => Get.offAllNamed(AppRoutes.demo),
+            leftOnTap: () => Get.offAllNamed(AppRoutes.loginScreen),
           ),
         ),
       ),
