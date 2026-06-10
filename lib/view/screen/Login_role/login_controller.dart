@@ -14,6 +14,11 @@ import '../../../utils/app_const/app_const.dart';
 import 'model/my_profile_model.dart';
 
 class LoginController extends GetxController {
+  @override
+  void onInit() {
+    super.onInit();
+    getMyProfile();
+  }
   // ======== Login Controller =================
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -96,6 +101,182 @@ class LoginController extends GetxController {
     }
   }
 
+  // ======== Forgot Password =================
+  final forgotPasswordEmailController = TextEditingController();
+  RxBool forgotPasswordLoading = false.obs;
+
+  Future<void> forgotPassword() async {
+    final email = forgotPasswordEmailController.text.trim();
+    if (email.isEmpty) {
+      showCustomSnackBar("Email is required.", isError: true);
+      return;
+    }
+
+    forgotPasswordLoading.value = true;
+    Map<String, String> body = {
+      'email': email,
+    };
+
+    try {
+      var response = await ApiClient.postData(ApiUrl.forgotPassword, body);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Map<String, dynamic> jsonResponse =
+            response.body is String ? jsonDecode(response.body) : response.body;
+        showCustomSnackBar(
+          jsonResponse['message'] ?? "OTP sent to your email",
+          isError: false,
+        );
+        Get.toNamed(AppRoutes.verificationOtpForgetPass); // Navigate to OTP screen
+      } else {
+        try {
+          Map<String, dynamic> errorResponse =response.body is String ? jsonDecode(response.body) : response.body;
+          final String message = errorResponse['message']?.toString() ?? 'Request failed. Please try again.';
+          showCustomSnackBar(message, isError: true);
+        } catch (_) {
+          showCustomSnackBar('Request failed. Please try again.', isError: true);
+        }
+      }
+    } catch (e) {
+      debugPrint("Forgot password error: $e");
+      showCustomSnackBar("Something went wrong", isError: true);
+    } finally {
+      forgotPasswordLoading.value = false;
+    }
+  }
+
+  // ======== Verify OTP Forgot Password =================
+  final otpForgetPassController = TextEditingController();
+  RxBool verifyOtpLoading = false.obs;
+
+  Future<void> verifyOtpForgetPass() async {
+    final otp = otpForgetPassController.text.trim();
+    
+    if (otp.isEmpty) {
+      showCustomSnackBar("OTP is required.", isError: true);
+      return;
+    }
+
+    verifyOtpLoading.value = true;
+    Map<String, dynamic> body = {
+      'verificationCode': int.tryParse(otp) ?? 0,
+    };
+
+    try {
+      var response = await ApiClient.postData(ApiUrl.verificationOtpForgetPass, jsonEncode(body));
+
+      verifyOtpLoading.value = false;
+      refresh();
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Map<String, dynamic> jsonResponse = response.body is String
+            ? jsonDecode(response.body)
+            : response.body as Map<String, dynamic>;
+
+        showCustomSnackBar(
+          jsonResponse['message']?.toString() ?? "Account verified successfully!",
+          isError: false,
+        );
+
+        otpForgetPassController.clear();
+
+        if (jsonResponse['data'] != null) {
+          String accessToken = '';
+          if (jsonResponse['data'] is String) {
+            accessToken = jsonResponse['data'];
+          } else if (jsonResponse['data'] is Map && jsonResponse['data']['accessToken'] != null) {
+            accessToken = jsonResponse['data']['accessToken'].toString();
+          }
+
+          if (accessToken.isNotEmpty) {
+            // Save access token
+            await SharePrefsHelper.setString(AppConstants.bearerToken, accessToken);
+
+            // Decode JWT to get id & role
+            Map<String, dynamic> decodedToken = JwtDecoder.decode(accessToken);
+            String userId = decodedToken['id']?.toString() ?? "";
+            String userRole = decodedToken['role']?.toString() ?? "";
+
+            // Save user id & role
+            await SharePrefsHelper.setString(AppConstants.userId, userId);
+            await SharePrefsHelper.setString(AppConstants.role, userRole);
+          }
+        }
+
+        Get.toNamed(AppRoutes.resetPasswordScreen);
+      } else {
+        try {
+          Map<String, dynamic> errorResponse = response.body is String ? jsonDecode(response.body) : response.body;
+          final String message = errorResponse['message']?.toString() ?? 'Verification failed';
+          showCustomSnackBar(message, isError: true);
+        } catch (_) {
+          showCustomSnackBar('Verification failed', isError: true);
+        }
+      }
+    } catch (e) {
+      verifyOtpLoading.value = false;
+      refresh();
+      debugPrint("Verify OTP error: $e");
+      showCustomSnackBar("Something went wrong", isError: true);
+    }
+  }
+
+  // ======== Reset Password =================
+  final resetPasswordController = TextEditingController();
+  final confirmResetPasswordController = TextEditingController();
+  RxBool resetPasswordLoading = false.obs;
+
+  Future<void> resetPassword() async {
+    final resetPassword = resetPasswordController.text.trim();
+    final confirmPassword = confirmResetPasswordController.text.trim();
+
+    if (resetPassword.isEmpty || confirmPassword.isEmpty) {
+      showCustomSnackBar("All fields are required.", isError: true);
+      return;
+    }
+    if (resetPassword != confirmPassword) {
+      showCustomSnackBar("Passwords do not match.", isError: true);
+      return;
+    }
+
+    resetPasswordLoading.value = true;
+    refresh();
+
+    String userId = await SharePrefsHelper.getString(AppConstants.userId);
+    debugPrint("RESET PASS +++++++++++++========$userId");
+
+    Map<String, dynamic> body = {
+      'userId': userId,
+      'password': resetPassword,
+    };
+
+    try {
+      var response = await ApiClient.postData(ApiUrl.resetPassword, jsonEncode(body));
+
+      resetPasswordLoading.value = false;
+      refresh();
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        Map<String, dynamic> jsonResponse = response.body is String ? jsonDecode(response.body) : response.body as Map<String, dynamic>;
+        showCustomSnackBar(jsonResponse['message']?.toString() ?? "Password reset successfully. Please login.", isError: false);
+        
+        Get.offAllNamed(AppRoutes.loginScreen);
+      } else {
+        try {
+          Map<String, dynamic> errorResponse = response.body is String ? jsonDecode(response.body) : response.body;
+          final String message = errorResponse['message']?.toString() ?? 'Password reset failed';
+          showCustomSnackBar(message, isError: true);
+        } catch (_) {
+          showCustomSnackBar('Password reset failed', isError: true);
+        }
+      }
+    } catch (e) {
+      resetPasswordLoading.value = false;
+      refresh();
+      debugPrint("Reset password error: $e");
+      showCustomSnackBar("Something went wrong", isError: true);
+    }
+  }
 
   //  ======== passwordChange Controller =================
   final oldPasswordController = TextEditingController();

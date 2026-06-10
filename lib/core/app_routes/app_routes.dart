@@ -19,6 +19,9 @@ import '../../view/screen/role_screen/teachers/teachers_profile/view/teacher_sch
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teacher_student_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teachers_material.dart';
 import '../../view/screen/Login_role/login.dart';
+import '../../view/screen/Login_role/forgot_password_screen.dart';
+import '../../view/screen/Login_role/verification_otp_forget_pass_screen.dart';
+import '../../view/screen/Login_role/reset_password_screen.dart';
 
 class AppRoutes {
   ///=========================== Student Part ===============
@@ -29,6 +32,9 @@ class AppRoutes {
 
   static const String demo = "/Demo";
   static const String loginScreen = "/LoginScreen";
+  static const String forgotPasswordScreen = "/ForgotPasswordScreen";
+  static const String verificationOtpForgetPass = "/VerificationOtpForgetPassScreen";
+  static const String resetPasswordScreen = "/ResetPasswordScreen";
 
   ///=================== Students Part ======================
   static const String studentHomeScreen ="/StudentHomeScreen";
@@ -89,8 +95,10 @@ class AppRoutes {
     GetPage(name: changePassScreen, page: () => ChangePassScreen()),
     GetPage(name: chatListScreen, page: () => ChatListScreen()),
     GetPage(name: praentsStudentViewProfile, page: () => PraentsStudentViewProfile()),
-
-
-
+    
+    // Auth Routes
+    GetPage(name: forgotPasswordScreen, page: () => const ForgotPasswordScreen()),
+    GetPage(name: verificationOtpForgetPass, page: () => const VerificationOtpForgetPassScreen()),
+    GetPage(name: resetPasswordScreen, page: () => const ResetPasswordScreen()),
   ];
 }

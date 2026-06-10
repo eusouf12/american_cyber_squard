@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-
+import '../../../core/app_routes/app_routes.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../components/custom_button/custom_button.dart';
 import '../../components/custom_loader/custom_loader.dart';
@@ -215,6 +215,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                     return null;
                   },
+                ),
+                SizedBox(height: 12.h),
+
+                // Forgot Password Button
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.forgotPasswordScreen);
+                    },
+                    child: CustomText(
+                      text: "Forgot Password?",
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.primary,
+                    ),
+                  ),
                 ),
                 SizedBox(height: 40.h),
 

@@ -9,20 +9,18 @@ class ApiUrl {
   static const String newPassword = "/api/v1/users/change_password";
   static const String myProfile = "/api/v1/auth/my-profile";
   static const String updateProfile = "/api/v1/auth/update_my_profile";
+ static const String forgotPassword = "/api/v1/users/forgot_password";
+  static const String verificationOtpForgetPass = "/api/v1/users/verification_forgot_user";
+  static const String resetPassword = "/api/v1/users/reset_password";
 
-
-  static const String signUp = "/api/v1/user/create_user";
-  static const String refreshToken = "/api/v1/auth/refresh-token";
-  static const String verificationOtp = "/api/v1/user/user_verification";
-  static const String verificationOtpForgetPass = "/api/v1/user/verification_forgot_user";
   
-  static const String forgotPassword = "/api/v1/user/forgot_password";
+  
   
   
   
   static const String termsCondition = "/api/v1/setting/find_by_terms_conditions";
   static const String privacyPolicy = "/api/v1/setting/find_by_privacy_policys";
-  static const String changePassword = "/api/v1/user/change_password";
+  
   static const String googleAuth = "/api/v1/user/google_auth";
   static  String  deleteAccount({required String userId})=> "/api/v1/auth/delete_account/$userId";
 
