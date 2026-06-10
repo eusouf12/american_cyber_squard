@@ -7,12 +7,16 @@ import '../../../../../components/custom_button/custom_button.dart';
 import '../../../../../components/custom_from_card/custom_from_card.dart';
 import '../../../../../components/custom_gradient/custom_gradient.dart';
 import '../../../../../components/custom_royel_appbar/custom_royel_appbar.dart';
+import '../../../../../components/custom_text/custom_text.dart';
+import '../../../../Login_role/login_controller.dart';
 
 class ChangePassScreen extends StatelessWidget {
   const ChangePassScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final LoginController controller = Get.find<LoginController>();
+
     return CustomGradient(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -68,7 +72,7 @@ class ChangePassScreen extends StatelessWidget {
                   SizedBox(height: 8.h),
                   _PasswordField(
                     hintText: 'Enter current password',
-                    controller: TextEditingController(),
+                    controller: controller.oldPasswordController,
                   ),
 
                   SizedBox(height: 20.h),
@@ -77,7 +81,7 @@ class ChangePassScreen extends StatelessWidget {
                   SizedBox(height: 8.h),
                   _PasswordField(
                     hintText: 'Enter new password',
-                    controller: TextEditingController(),
+                    controller: controller.newPasswordController,
                   ),
 
                   SizedBox(height: 20.h),
@@ -86,7 +90,7 @@ class ChangePassScreen extends StatelessWidget {
                   SizedBox(height: 8.h),
                   _PasswordField(
                     hintText: 'Re-enter new password',
-                    controller: TextEditingController(),
+                    controller: controller.confirmPasswordController,
                   ),
 
                   SizedBox(height: 12.h),
@@ -97,7 +101,7 @@ class ChangePassScreen extends StatelessWidget {
                   SizedBox(height: 36.h),
 
                   // ── Submit button ───────────────────────────────────
-                  _buildSubmitButton(),
+                  _buildSubmitButton(controller),
 
                   SizedBox(height: 24.h),
                 ],
@@ -161,23 +165,20 @@ class ChangePassScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 12.h),
-                Text(
-                  'Reset Your Password',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.white,
-                    letterSpacing: 0.3,
-                  ),
+                CustomText(
+                  text: 'Reset Your Password',
+                  fontSize: 16,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                  textAlign: TextAlign.center,
                 ),
                 SizedBox(height: 4.h),
-                Text(
-                  'Create a strong & secure password',
-                  style: TextStyle(
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.white.withValues(alpha: 0.75),
-                  ),
+                CustomText(
+                  text: 'Create a strong & secure password',
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.white.withValues(alpha: 0.75),
+                  textAlign: TextAlign.center,
                 ),
               ],
             ),
@@ -208,13 +209,12 @@ class ChangePassScreen extends StatelessWidget {
           ),
           SizedBox(width: 10.w),
           Expanded(
-            child: Text(
-              'Use 8+ characters with letters, numbers & symbols.',
-              style: TextStyle(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w400,
-                color: AppColors.primary,
-              ),
+            child: CustomText(
+              text: 'Use 8+ characters with letters, numbers & symbols.',
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: AppColors.primary,
+              textAlign: TextAlign.left,
             ),
           ),
         ],
@@ -223,32 +223,38 @@ class ChangePassScreen extends StatelessWidget {
   }
 
   // ── Submit button ─────────────────────────────────────────────────────
-  Widget _buildSubmitButton() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(16.r),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF088F55), Color(0xFF10B981)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: AppColors.primary.withValues(alpha: 0.38),
-            blurRadius: 20,
-            offset: const Offset(0, 8),
+  Widget _buildSubmitButton(LoginController controller) {
+    return Obx(
+      () => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16.r),
+          gradient: const LinearGradient(
+            colors: [Color(0xFF088F55), Color(0xFF10B981)],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
           ),
-        ],
-      ),
-      child: CustomButton(
-        onTap: () {},
-        title: 'Update Password',
-        fillColor: Colors.transparent,
-        textColor: AppColors.white,
-        fontSize: 16,
-        borderRadius: 16,
-        height: 56,
-        fontWeight: FontWeight.w700,
+          boxShadow: [
+            BoxShadow(
+              color: AppColors.primary.withValues(alpha: 0.38),
+              blurRadius: 20,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: CustomButton(
+          onTap: controller.changePasswordLoading.value
+              ? null
+              : () => controller.changePassword(),
+          title: controller.changePasswordLoading.value
+              ? 'Updating...'
+              : 'Update Password',
+          fillColor: Colors.transparent,
+          textColor: AppColors.white,
+          fontSize: 16,
+          borderRadius: 16,
+          height: 56,
+          fontWeight: FontWeight.w700,
+        ),
       ),
     );
   }
@@ -304,13 +310,12 @@ class _FieldLabel extends StatelessWidget {
           ),
         ),
         SizedBox(width: 8.w),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w600,
-            color: const Color(0xFF0E0E0E),
-          ),
+        CustomText(
+          text: label,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          color: const Color(0xFF0E0E0E),
+          textAlign: TextAlign.left,
         ),
       ],
     );

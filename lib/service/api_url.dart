@@ -1,11 +1,12 @@
 class ApiUrl {
-  static const String baseUrl = "https://boom-jungle-gnome-roads.trycloudflare.com";
+  static const String baseUrl = "https://trained-contributed-developments-tourist.trycloudflare.com";
   static const String imageUrl = baseUrl;
   static String socketUrl = baseUrl;
   static String mapKey = "AIzaSyBuSZJklSc1j0D4kqhkJcmyArcZbWujbXQ";
 
   ///========================= Authentication =========================
   static const String signIn = "/api/v1/auth/login";
+  static const String newPassword = "/api/v1/users/change_password";
 
 
   static const String signUp = "/api/v1/user/create_user";
@@ -14,7 +15,7 @@ class ApiUrl {
   static const String verificationOtpForgetPass = "/api/v1/user/verification_forgot_user";
   
   static const String forgotPassword = "/api/v1/user/forgot_password";
-  static const String newPassword = "/api/v1/user/reset_password";
+  
   static const String updateProfile = "/api/v1/auth/update_my_profile";
   static const String myProfile = "/api/v1/auth/myprofile";
   static const String termsCondition = "/api/v1/setting/find_by_terms_conditions";
