@@ -8,9 +8,12 @@ import '../../../../../../../../utils/app_const/app_const.dart';
 import '../../../../../../../core/app_routes/app_routes.dart';
 import '../../../../components/custom_netwrok_image/custom_network_image.dart';
 import '../../../../components/custom_show_dialog/custom_show_dialog.dart';
+import '../../../Login_role/login_controller.dart';
 
 class TeachersProfileScreen extends StatelessWidget {
-  const TeachersProfileScreen({super.key});
+  TeachersProfileScreen({super.key});
+
+  final loginController = Get.put(LoginController());
 
   static const List<_ProfileMenuItem> _menuItems = [
     _ProfileMenuItem(
@@ -229,12 +232,12 @@ class TeachersProfileScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: CustomNetworkImage(
-                      imageUrl: AppConstants.girlsPhoto,
+                    child: Obx(() => CustomNetworkImage(
+                      imageUrl: loginController.myProfileData.value?.photo ?? AppConstants.profileImage2,
                       boxShape: BoxShape.circle,
                       height: 72.h,
                       width: 72.w,
-                    ),
+                    )),
                   ),
                   SizedBox(width: 16.w),
 
@@ -243,15 +246,17 @@ class TeachersProfileScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Debbendu',
+                        Obx(() => Text(
+                          loginController.myProfileData.value?.teacherName ?? 'Teacher',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontSize: 22.sp,
                             fontWeight: FontWeight.w800,
                             color: Colors.white,
                             letterSpacing: 0.3,
                           ),
-                        ),
+                        )),
                         SizedBox(height: 5.h),
                         Container(
                           padding: EdgeInsets.symmetric(

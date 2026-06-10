@@ -9,12 +9,44 @@ import '../../../../../components/custom_gradient/custom_gradient.dart';
 import '../../../../../components/custom_netwrok_image/custom_network_image.dart';
 import '../../../../../components/custom_royel_appbar/custom_royel_appbar.dart';
 import '../../../../../components/custom_from_card/custom_from_card.dart';
+import '../../../../../components/custom_text/custom_text.dart';
+import '../../../../Login_role/login_controller.dart';
 
 class EditScreen extends StatelessWidget {
   const EditScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final LoginController loginController = Get.find<LoginController>();
+    
+    // Pre-populate data
+    void populateData() {
+      final profile = loginController.myProfileData.value;
+      if (profile != null) {
+        if (loginController.editNameController.text.isEmpty) {
+          loginController.editNameController.text = profile.teacherName;
+        }
+        if (loginController.editAddressController.text.isEmpty) {
+          loginController.editAddressController.text = profile.address;
+        }
+        if (loginController.editPhoneController.text.isEmpty) {
+          loginController.editPhoneController.text = profile.phoneNumber;
+        }
+        if (loginController.editEmailController.text.isEmpty) {
+          loginController.editEmailController.text = profile.email;
+        }
+      }
+    }
+
+    if (loginController.myProfileData.value == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await loginController.getMyProfile();
+        populateData();
+      });
+    } else {
+      populateData();
+    }
+
     return CustomGradient(
       child: Scaffold(
         backgroundColor: Colors.transparent,
@@ -52,7 +84,7 @@ class EditScreen extends StatelessWidget {
                   SizedBox(height: 8.h),
 
                   // ── Avatar section ────────────────────────────────
-                  _buildAvatarSection(),
+                  _buildProfileImage(loginController),
 
                   SizedBox(height: 28.h),
 
@@ -60,9 +92,9 @@ class EditScreen extends StatelessWidget {
                   const _FieldLabel(label: 'Full Name'),
                   SizedBox(height: 8.h),
                   _InputField(
-                    hintText: 'Debbendu Paul',
+                    hintText: 'Enter your full name',
                     icon: Icons.person_outline_rounded,
-                    controller: TextEditingController(),
+                    controller: loginController.editNameController,
                   ),
 
                   SizedBox(height: 18.h),
@@ -72,28 +104,18 @@ class EditScreen extends StatelessWidget {
                   _InputField(
                     hintText: 'Enter your email',
                     icon: Icons.email_outlined,
-                    controller: TextEditingController(),
+                    controller: loginController.editEmailController,
                     keyboardType: TextInputType.emailAddress,
+                    readOnly: true,
                   ),
-
                   SizedBox(height: 18.h),
 
-                  const _FieldLabel(label: 'Date of Birth'),
+                  const _FieldLabel(label: 'Address'),
                   SizedBox(height: 8.h),
                   _InputField(
-                    hintText: '28-11-1997',
-                    icon: Icons.cake_outlined,
-                    controller: TextEditingController(),
-                  ),
-
-                  SizedBox(height: 18.h),
-
-                  const _FieldLabel(label: 'Country'),
-                  SizedBox(height: 8.h),
-                  _InputField(
-                    hintText: 'United States',
-                    icon: Icons.flag_outlined,
-                    controller: TextEditingController(),
+                    hintText: 'Enter your address',
+                    icon: Icons.location_on_outlined,
+                    controller: loginController.editAddressController,
                   ),
 
                   SizedBox(height: 18.h),
@@ -101,16 +123,16 @@ class EditScreen extends StatelessWidget {
                   const _FieldLabel(label: 'Phone Number'),
                   SizedBox(height: 8.h),
                   _InputField(
-                    hintText: '+1 234 567 890',
+                    hintText: 'Enter your phone number',
                     icon: Icons.phone_outlined,
-                    controller: TextEditingController(),
+                    controller: loginController.editPhoneController,
                     keyboardType: TextInputType.phone,
                   ),
 
                   SizedBox(height: 36.h),
 
                   // ── Save button ───────────────────────────────────
-                  _buildSaveButton(),
+                  _buildSaveButton(loginController),
 
                   SizedBox(height: 24.h),
                 ],
@@ -122,8 +144,8 @@ class EditScreen extends StatelessWidget {
     );
   }
 
-  // ── Avatar with edit overlay ──────────────────────────────────────────
-  Widget _buildAvatarSection() {
+  // ── Profile Image ─────────────────────────────────────────────────────
+  Widget _buildProfileImage(LoginController loginController) {
     return Center(
       child: Stack(
         clipBehavior: Clip.none,
@@ -154,12 +176,29 @@ class EditScreen extends StatelessWidget {
                 color: Colors.white,
               ),
               padding: const EdgeInsets.all(3),
-              child: CustomNetworkImage(
-                imageUrl: AppConstants.profileImage,
-                height: 100.h,
-                width: 100.w,
-                boxShape: BoxShape.circle,
-              ),
+              child: Obx(() {
+                final localImage = loginController.profileImage.value;
+                final networkImage = loginController.myProfileData.value?.photo ?? AppConstants.profileImage2;
+                
+                if (localImage != null) {
+                  return Container(
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: FileImage(localImage),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  );
+                }
+                
+                return CustomNetworkImage(
+                  imageUrl: networkImage.isNotEmpty ? networkImage : AppConstants.profileImage,
+                  height: 100.h,
+                  width: 100.w,
+                  boxShape: BoxShape.circle,
+                );
+              }),
             ),
           ),
 
@@ -167,26 +206,31 @@ class EditScreen extends StatelessWidget {
           Positioned(
             bottom: 2,
             right: 2,
-            child: Container(
-              height: 32.h,
-              width: 32.w,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF088F55), Color(0xFF10B981)],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                ),
-                border: Border.all(color: Colors.white, width: 2),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.4),
-                    blurRadius: 8,
-                    offset: const Offset(0, 3),
+            child: GestureDetector(
+              onTap: () {
+                loginController.pickImage();
+              },
+              child: Container(
+                height: 32.h,
+                width: 32.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFF088F55), Color(0xFF10B981)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                ],
+                  border: Border.all(color: Colors.white, width: 2),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.4),
+                      blurRadius: 8,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: Icon(Icons.camera_alt_rounded, size: 14.sp, color: Colors.white),
               ),
-              child: Icon(Icons.camera_alt_rounded, size: 14.sp, color: Colors.white),
             ),
           ),
         ],
@@ -195,7 +239,7 @@ class EditScreen extends StatelessWidget {
   }
 
   // ── Save button ───────────────────────────────────────────────────────
-  Widget _buildSaveButton() {
+  Widget _buildSaveButton(LoginController loginController) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.r),
@@ -212,16 +256,20 @@ class EditScreen extends StatelessWidget {
           ),
         ],
       ),
-      child: CustomButton(
-        onTap: () => Get.back(),
-        title: 'Save Changes',
+      child: Obx(() => CustomButton(
+        onTap: () {
+          if (!loginController.updateProfileLoading.value) {
+             loginController.updateProfile();
+          }
+        },
+        title: loginController.updateProfileLoading.value ? 'Saving...' : 'Save Changes',
         fillColor: Colors.transparent,
         textColor: AppColors.white,
         fontSize: 16,
         borderRadius: 16,
         height: 56,
         fontWeight: FontWeight.w700,
-      ),
+      )),
     );
   }
 }
@@ -232,12 +280,14 @@ class _InputField extends StatelessWidget {
   final IconData icon;
   final TextEditingController controller;
   final TextInputType? keyboardType;
+  final bool readOnly;
 
   const _InputField({
     required this.hintText,
     required this.icon,
     required this.controller,
     this.keyboardType,
+    this.readOnly = false,
   });
 
   @override
@@ -248,6 +298,7 @@ class _InputField extends StatelessWidget {
       fillBorderRadius: 14,
       controller: controller,
       keyboardType: keyboardType,
+      readOnly: readOnly,
       fieldBorderColor: const Color(0xFFD1FAE5),
       prefixIcon: Padding(
         padding: EdgeInsets.all(12.w),
@@ -275,13 +326,11 @@ class _FieldLabel extends StatelessWidget {
           ),
         ),
         SizedBox(width: 8.w),
-        Text(
-          label,
-          style: TextStyle(
-            fontSize: 14.sp,
-            fontWeight: FontWeight.w600,
-            color: const Color(0xFF0E0E0E),
-          ),
+        CustomText(
+          text: label,
+          fontSize: 14,
+          fontWeight: FontWeight.w600,
+          color: const Color(0xFF0E0E0E),
         ),
       ],
     );

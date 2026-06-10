@@ -11,18 +11,44 @@ import '../../../../../core/app_routes/app_routes.dart';
 import '../../../../../utils/app_colors/app_colors.dart';
 import '../../../../components/custom_gradient/custom_gradient.dart';
 import '../../../../components/custom_text/custom_text.dart';
-import '../../school_nurse/view/school_nurse_home/widget/clinic_visit_card.dart';
+import '../../../Login_role/login_controller.dart';
 
 class TeachersHomeScreen extends StatelessWidget {
   TeachersHomeScreen({super.key});
 
+  final LoginController _controller = Get.find<LoginController>();
+
   @override
   Widget build(BuildContext context) {
+    // StatelessWidget equivalent of initState — called after first frame
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (_controller.myProfileData.value == null &&
+          !_controller.isMyProfileLoading.value) {
+        _controller.getMyProfile();
+      }
+    });
+
     final List<Map<String, dynamic>> gridItems = [
-      {'title': 'Mark Attendance', 'icon': Icons.assignment_turned_in_outlined,'route': AppRoutes.teachersAttendanceScreen,},
-      {'title': 'New Assignment', 'icon': Icons.add,'route': AppRoutes.teachersAssignmentScreen,},
-      {'title': 'Grade Papers', 'icon': Icons.description_outlined,'route': AppRoutes.teacherExamGradeScreen,},
-      {'title': 'Schedule Class', 'icon': Icons.calendar_today_outlined,'route': AppRoutes.teacherScheduleScreen,},
+      {
+        'title': 'Mark Attendance',
+        'icon': Icons.assignment_turned_in_outlined,
+        'route': AppRoutes.teachersAttendanceScreen,
+      },
+      {
+        'title': 'New Assignment',
+        'icon': Icons.add,
+        'route': AppRoutes.teachersAssignmentScreen,
+      },
+      {
+        'title': 'Grade Papers',
+        'icon': Icons.description_outlined,
+        'route': AppRoutes.teacherExamGradeScreen,
+      },
+      {
+        'title': 'Schedule Class',
+        'icon': Icons.calendar_today_outlined,
+        'route': AppRoutes.teacherScheduleScreen,
+      },
     ];
 
     return CustomGradient(
@@ -40,40 +66,46 @@ class TeachersHomeScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      ClipOval(
-                        child: CustomNetworkImage(
-                          imageUrl: AppConstants.profileImage,
-                          height: 45,
-                          width: 45,
+                  // ── Profile info (reactive) ───────────────────────
+                  Obx(() {
+                    final profile = _controller.myProfileData.value;
+                    final imageUrl = (profile?.photo != null &&
+                            profile!.photo!.isNotEmpty)
+                        ? profile.photo!
+                        : AppConstants.profileImage;
+
+                    return Row(
+                      children: [
+                        ClipOval(
+                          child: CustomNetworkImage(
+                            imageUrl: imageUrl,
+                            height: 45,
+                            width: 45,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          const Text(
-                            "Sarah Johnson",
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                        const SizedBox(width: 12),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomText(
+                              text: profile?.teacherName ?? '',
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight.w600,
                               color: Colors.black,
                             ),
-                          ),
-                          Text(
-                            "Grade 11 - Section A",
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 13,
+                            CustomText(
+                              text: profile?.branchName ?? '',
+                              fontSize: 12.sp,
+                              fontWeight: FontWeight.w400,
+                              color: Colors.black87,
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-
+                          ],
+                        ),
+                      ],
+                    );
+                  }),
+                  // ── Notification bell ─────────────────────────────
                   Stack(
                     children: [
                       IconButton(
@@ -113,7 +145,7 @@ class TeachersHomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 //today schedule
+                //today schedule
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -133,17 +165,25 @@ class TeachersHomeScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            CustomText(text: "Today's Schedule", fontSize: 16.sp, fontWeight: FontWeight.w600),
+                            CustomText(
+                                text: "Today's Schedule",
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.w600),
                             Spacer(),
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 6),
                               decoration: BoxDecoration(
                                 color: AppColors.primary1,
                                 borderRadius: BorderRadius.circular(6),
                               ),
                               child: Row(
                                 children: [
-                                  Icon(Icons.calendar_today, size: 18, color: AppColors.primary,),
+                                  Icon(
+                                    Icons.calendar_today,
+                                    size: 18,
+                                    color: AppColors.primary,
+                                  ),
                                 ],
                               ),
                             ),
@@ -156,17 +196,16 @@ class TeachersHomeScreen extends StatelessWidget {
                             itemCount: 3,
                             itemBuilder: (context, index) {
                               return CustomTodayScheduleCard(
-                                name: index == 0 ?"Physics" : "Mathematics",
+                                name: index == 0 ? "Physics" : "Mathematics",
                                 subject: "Grade 4-A",
                                 time: "11:00 - 12:00",
                               );
-                            }
-                        ),
+                            }),
                       ],
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: 20),
                 //quick actions
                 Container(
                   decoration: BoxDecoration(
@@ -185,12 +224,16 @@ class TeachersHomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomText(text: "Quick Actions", fontSize: 16.sp, fontWeight: FontWeight.w600),
+                        CustomText(
+                            text: "Quick Actions",
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600),
                         SizedBox(height: 20),
                         GridView.builder(
-                          shrinkWrap: true, 
+                          shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
                             crossAxisSpacing: 15,
                             mainAxisSpacing: 15,
@@ -201,7 +244,7 @@ class TeachersHomeScreen extends StatelessWidget {
                             return CustomQuickCard(
                               title: gridItems[index]['title'],
                               icon: gridItems[index]['icon'],
-                              onTap: (){
+                              onTap: () {
                                 Get.toNamed(gridItems[index]['route']);
                               },
                             );
@@ -211,7 +254,7 @@ class TeachersHomeScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 20,),
+                SizedBox(height: 20),
 
                 // assignment and homework
                 Container(
@@ -230,19 +273,22 @@ class TeachersHomeScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     child: Column(
                       children: [
-                        //Assignment
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            CustomText(text: "Assignment & HomeWork", fontSize: 15.sp, fontWeight: FontWeight.w600),
+                            CustomText(
+                                text: "Assignment & HomeWork",
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600),
                             Spacer(),
                             GestureDetector(
-                                onTap: (){
-
-                                },
-                                child: CustomText(text: "View All", fontSize: 12.sp, fontWeight: FontWeight.w600,color: AppColors.primary,)
-                            ),
-
+                                onTap: () {},
+                                child: CustomText(
+                                  text: "View All",
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primary,
+                                )),
                           ],
                         ),
                         SizedBox(height: 20),
@@ -252,28 +298,23 @@ class TeachersHomeScreen extends StatelessWidget {
                             itemCount: 3,
                             itemBuilder: (context, index) {
                               return CustomHomeworkCard(
-                                subject: index==0 ? "Quadratic Equations" : "NewTown's Laws Lab",
-                                chapter: index==0 ? "Chapter 5": "Report",
+                                subject: index == 0
+                                    ? "Quadratic Equations"
+                                    : "NewTown's Laws Lab",
+                                chapter: index == 0 ? "Chapter 5" : "Report",
                                 grade: "Grade 10-A • Mathematics",
                                 time: "Dec 15, 2024",
-                                onTap: () {
-
-                                },
+                                onTap: () {},
                               );
-                            }
-                        ),
+                            }),
                       ],
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
-          bottomNavigationBar: TeacherNavBar(currentIndex: 0)
-      ),
+          bottomNavigationBar: TeacherNavBar(currentIndex: 0)),
     );
   }
-
-
 }

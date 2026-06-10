@@ -57,6 +57,7 @@ dependencies:
   intl_utils: ^2.8.10
   fl_chart: ^0.66.0
   jwt_decoder: ^2.0.1
+  permission_handler: ^12.0.3
 
 dev_dependencies:
   flutter_test:
