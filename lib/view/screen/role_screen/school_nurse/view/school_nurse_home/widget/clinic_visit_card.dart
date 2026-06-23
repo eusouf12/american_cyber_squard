@@ -11,12 +11,12 @@ class ClinicVisitCard extends StatelessWidget {
   final VoidCallback? onTap;
 
   const ClinicVisitCard({
-    Key? key,
+    super.key,
     this.name,
     this.grade,
     this.time,
     this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +24,11 @@ class ClinicVisitCard extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 8),
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.greyLight.withOpacity(0.2),
+        color: AppColors.greyLight.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.09),
+            color: Colors.white.withValues(alpha: 0.09),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -44,7 +44,7 @@ class ClinicVisitCard extends StatelessWidget {
               children: [
                 CustomText(text: name ?? "", fontWeight: FontWeight.w500,fontSize: 14.sp,),
                 SizedBox(height: 4),
-                CustomText(text: grade ?? "", fontSize: 10.sp,color: Colors.black.withOpacity(0.7),),
+                CustomText(text: grade ?? "", fontSize: 10.sp,color: Colors.black.withValues(alpha: 0.7),),
                 SizedBox(height: 4),
                 Row(
                   children: [

@@ -9,11 +9,11 @@ class ComplianceRateCard extends StatelessWidget {
   final IconData icon;
 
   const ComplianceRateCard({
-    Key? key,
+    super.key,
     this.title,
     this.complianceRate,
     required this.icon,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class ComplianceRateCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 6,
             offset: const Offset(0, 4),
           ),
@@ -39,7 +39,7 @@ class ComplianceRateCard extends StatelessWidget {
               CustomText(
                 text: title ?? "Compliance Rate",
                 fontSize: 14.sp,
-                color: Colors.black.withOpacity(0.7),
+                color: Colors.black.withValues(alpha: 0.7),
               ),
               Spacer(),
               Icon(
@@ -59,12 +59,12 @@ class ComplianceRateCard extends StatelessWidget {
           SizedBox(width: 8.w),
           Column(
             children: [
-              Container(
+              SizedBox(
                 width: 300.w,
                 height: 8.h,
                 child: LinearProgressIndicator(
                   value: complianceRate! / 100,
-                  backgroundColor: Colors.grey.withOpacity(0.3),
+                  backgroundColor: Colors.grey.withValues(alpha: 0.3),
                   valueColor: AlwaysStoppedAnimation<Color>(AppColors.primary),
                 ),
               ),

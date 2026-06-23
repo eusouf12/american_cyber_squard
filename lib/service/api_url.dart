@@ -1,5 +1,5 @@
 class ApiUrl {
-  static const String baseUrl = "https://trained-contributed-developments-tourist.trycloudflare.com";
+  static const String baseUrl = "https://sheriff-interest-second-compaq.trycloudflare.com";
   static const String imageUrl = baseUrl;
   static String socketUrl = baseUrl;
   static String mapKey = "AIzaSyBuSZJklSc1j0D4kqhkJcmyArcZbWujbXQ";

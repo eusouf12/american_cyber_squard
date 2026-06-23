@@ -26,11 +26,11 @@ class CustomScheduleScriningCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.greyLight.withOpacity(0.2),
+        color: AppColors.greyLight.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.09),
+            color: Colors.white.withValues(alpha: 0.09),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -55,15 +55,15 @@ class CustomScheduleScriningCard extends StatelessWidget {
                   CustomText(
                     text: grade ?? "",
                     fontSize: 12.sp,
-                    color: Colors.black.withOpacity(0.7),
+                    color: Colors.black.withValues(alpha: 0.7),
                   ),
                   Container(
                     padding:
                     EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                     decoration: BoxDecoration(
                       color: status == "Upcoming"
-                          ? Colors.blue.withOpacity(0.2)
-                          : Colors.red.withOpacity(0.2),
+                          ? Colors.blue.withValues(alpha: 0.2)
+                          : Colors.red.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Row(
@@ -135,7 +135,7 @@ class CustomScheduleScriningCard extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.1),
+                      color: Colors.grey.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Column(
@@ -153,7 +153,7 @@ class CustomScheduleScriningCard extends StatelessWidget {
                               padding:
                               EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                               decoration: BoxDecoration(
-                                color: status == "Upcoming" ? Colors.blue.withOpacity(0.2) : Colors.red.withOpacity(0.2),
+                                color: status == "Upcoming" ? Colors.blue.withValues(alpha: 0.2) : Colors.red.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Row(

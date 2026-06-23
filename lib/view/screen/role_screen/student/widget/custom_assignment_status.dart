@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:america_ayber_squad/view/components/custom_button/custom_button.dart'; // Custom button import
+// Custom button import
 import '../../../../../utils/app_colors/app_colors.dart'; // Assuming this is where your colors are defined
 import '../../../../components/custom_text/custom_text.dart'; // Assuming your custom text widget
 
@@ -47,7 +47,7 @@ class CustomAssignmentCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(17),
           border: Border.all(color: Colors.grey.shade200),
           boxShadow: [
-            BoxShadow(color: Colors.grey.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, 5)),
+            BoxShadow(color: Colors.grey.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, 5)),
           ],
         ),
         child: Column(

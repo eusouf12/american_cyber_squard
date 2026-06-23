@@ -23,7 +23,7 @@ class CustomGradeSummaryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         color: AppColors.primary,
         boxShadow: [
-          BoxShadow(color: Colors.grey.withOpacity(0.1), blurRadius: 5, offset: const Offset(0, 3)),
+          BoxShadow(color: Colors.grey.withValues(alpha: 0.1), blurRadius: 5, offset: const Offset(0, 3)),
         ],
       ),
       child: Column(

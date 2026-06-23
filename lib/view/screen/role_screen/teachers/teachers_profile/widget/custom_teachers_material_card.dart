@@ -78,7 +78,7 @@ class CustomTeachersMaterialCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
-                  color: iconColor.withOpacity(0.1),
+                  color: iconColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
@@ -165,7 +165,7 @@ class CustomTeachersMaterialCard extends StatelessWidget {
                   fontSize: 9.sp,
                   height: 30.h,
                   width: 90.w,
-                  fillColor: Colors.grey.withOpacity(0.4),
+                  fillColor: Colors.grey.withValues(alpha: 0.4),
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -177,7 +177,7 @@ class CustomTeachersMaterialCard extends StatelessWidget {
                   fontSize: 9.sp,
                   height: 30.h,
                   width: 90.w,
-                  fillColor: Colors.red.withOpacity(0.8),
+                  fillColor: Colors.red.withValues(alpha: 0.8),
                   fontWeight: FontWeight.w400,
                 ),
               ),

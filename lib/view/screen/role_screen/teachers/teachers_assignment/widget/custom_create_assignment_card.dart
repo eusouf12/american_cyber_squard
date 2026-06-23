@@ -40,7 +40,7 @@ class CustomCreateAssignmentCard extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -70,7 +70,7 @@ class CustomCreateAssignmentCard extends StatelessWidget {
                 children: [
                   Icon(Icons.calendar_today,size: 16,color: Colors.black45,),
                   CustomText(
-                    text: "Due: $time" ??"",
+                    text: "Due: $time",
                     fontSize: 10.sp,
                     color: Colors.black87,
                     right: 10.sp,
@@ -82,7 +82,7 @@ class CustomCreateAssignmentCard extends StatelessWidget {
                 children: [
                   Icon(Icons.people,size: 18,color: Colors.black45,),
                   CustomText(
-                    text: "$submission Submitted" ??"",
+                    text: "$submission Submitted",
                     fontSize: 10.sp,
                     color: Colors.black87,
                     left: 10,
@@ -98,7 +98,7 @@ class CustomCreateAssignmentCard extends StatelessWidget {
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
                   decoration: BoxDecoration(
-                    color: status =="Active" ? AppColors.primary.withOpacity(0.2)  : Colors.blue.withOpacity(0.2),
+                    color: status =="Active" ? AppColors.primary.withValues(alpha: 0.2)  : Colors.blue.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: CustomText(text: status ?? "",fontSize: 10.sp, fontWeight: FontWeight.w600,color:status =="Active" ? AppColors.primary :Color(0xFF2563EB))
@@ -107,7 +107,7 @@ class CustomCreateAssignmentCard extends StatelessWidget {
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
                   decoration: BoxDecoration(
-                    color:  Colors.grey.withOpacity(0.4),
+                    color:  Colors.grey.withValues(alpha: 0.4),
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: CustomText(text: homeWork ?? "",fontSize: 10.sp, fontWeight: FontWeight.w600,color:Colors.black54)

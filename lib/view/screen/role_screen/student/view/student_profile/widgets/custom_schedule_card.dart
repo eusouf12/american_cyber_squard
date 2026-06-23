@@ -22,30 +22,30 @@ class CustomScheduleCard extends StatelessWidget {
     switch (status) {
       case ClassStatus.breakTime:
         return customOfflineCard(
-          bgColor: Colors.amber.shade100.withOpacity(0.4),
-          borderColor: Colors.amber.withOpacity(0.2),
+          bgColor: Colors.amber.shade100.withValues(alpha: 0.4),
+          borderColor: Colors.amber.withValues(alpha: 0.2),
         );
 
       case ClassStatus.free:
         return customOfflineCard(
           bgColor: Colors.grey.shade100,
-          borderColor: Colors.grey.withOpacity(0.2),
+          borderColor: Colors.grey.withValues(alpha: 0.2),
         );
 
       case ClassStatus.online:
         return customOfflineCard(
-          bgColor: AppColors.primary.withOpacity(0.2),
+          bgColor: AppColors.primary.withValues(alpha: 0.2),
           icon: Icons.videocam,
           iconColor: AppColors.primary,
-          borderColor: AppColors.primary.withOpacity(0.2),
+          borderColor: AppColors.primary.withValues(alpha: 0.2),
         );
 
       case ClassStatus.offline:
         return customOfflineCard(
-          bgColor: Colors.red.withOpacity(0.1),
+          bgColor: Colors.red.withValues(alpha: 0.1),
           icon: Icons.location_on,
           iconColor: Colors.red,
-          borderColor: Colors.red.withOpacity(0.2),
+          borderColor: Colors.red.withValues(alpha: 0.2),
         );
     }
   }

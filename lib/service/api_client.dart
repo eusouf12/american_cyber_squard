@@ -313,7 +313,7 @@ class ApiClient extends GetxService {
 
   var mainHeaders = {
     'Content-Type': 'application/json',
-    'Authorization': '$bearerToken'
+    'Authorization': bearerToken
   };
   try {
     debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');

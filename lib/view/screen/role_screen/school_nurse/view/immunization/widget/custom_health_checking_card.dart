@@ -34,11 +34,11 @@ class CustomHealthCheckingCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.greyLight.withOpacity(0.2),
+        color: AppColors.greyLight.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.09),
+            color: Colors.white.withValues(alpha: 0.09),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -63,15 +63,15 @@ class CustomHealthCheckingCard extends StatelessWidget {
                   CustomText(
                     text: grade ?? "",
                     fontSize: 12.sp,
-                    color: Colors.black.withOpacity(0.7),
+                    color: Colors.black.withValues(alpha: 0.7),
                   ),
                   Container(
                         padding:
                         EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                         decoration: BoxDecoration(
                           color: status == "Upcoming"
-                              ? Colors.blue.withOpacity(0.2)
-                              : Colors.red.withOpacity(0.2),
+                              ? Colors.blue.withValues(alpha: 0.2)
+                              : Colors.red.withValues(alpha: 0.2),
                           borderRadius: BorderRadius.circular(16),
                         ),
                         child: Row(
@@ -91,12 +91,12 @@ class CustomHealthCheckingCard extends StatelessWidget {
               Row(
                 children: [
                   CustomText(
-                    text: "Vaccine Name : " ?? "-",
+                    text: "Vaccine Name : ",
                     fontSize: 12.sp,
                     color: Colors.black,
                   ),
                   CustomText(
-                    text: "${vaccineName}" ?? "",
+                    text: "$vaccineName",
                     fontSize: 12.sp,
                     fontWeight: FontWeight.w500,
                     color: Colors.red,
@@ -139,7 +139,7 @@ class CustomHealthCheckingCard extends StatelessWidget {
                   fontSize: 9.sp,
                   height: 30.h,
                   width: 90.w,
-                  fillColor: Colors.grey.withOpacity(0.4),
+                  fillColor: Colors.grey.withValues(alpha: 0.4),
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -151,7 +151,7 @@ class CustomHealthCheckingCard extends StatelessWidget {
                   fontSize: 9.sp,
                   height: 30.h,
                   width: 90.w,
-                  fillColor: Colors.red.withOpacity(0.8),
+                  fillColor: Colors.red.withValues(alpha: 0.8),
                   fontWeight: FontWeight.w400,
                 ),
               ),
@@ -189,7 +189,7 @@ class CustomHealthCheckingCard extends StatelessWidget {
                     margin: const EdgeInsets.symmetric(vertical: 8),
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: Colors.grey.withOpacity(0.1),
+                      color: Colors.grey.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Column(
@@ -207,7 +207,7 @@ class CustomHealthCheckingCard extends StatelessWidget {
                               padding:
                               EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                               decoration: BoxDecoration(
-                                color: status == "Upcoming" ? Colors.blue.withOpacity(0.2) : Colors.red.withOpacity(0.2),
+                                color: status == "Upcoming" ? Colors.blue.withValues(alpha: 0.2) : Colors.red.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Row(
@@ -233,7 +233,7 @@ class CustomHealthCheckingCard extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.all(8.w),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                          border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Column(
@@ -241,13 +241,13 @@ class CustomHealthCheckingCard extends StatelessWidget {
                             CustomText(
                               text: "Vaccine Name",
                               fontSize: 10.sp,
-                              color: Colors.black.withOpacity(0.7),
+                              color: Colors.black.withValues(alpha: 0.7),
                             ),
                             CustomText(
                               text: vaccineName ?? "",
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w700,
-                              color: Colors.black.withOpacity(0.7),
+                              color: Colors.black.withValues(alpha: 0.7),
                             ),
                           ],
                         ),
@@ -260,7 +260,7 @@ class CustomHealthCheckingCard extends StatelessWidget {
                       child: Container(
                         padding: EdgeInsets.all(8.w),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                          border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Column(
@@ -268,13 +268,13 @@ class CustomHealthCheckingCard extends StatelessWidget {
                             CustomText(
                               text: "Last Checkup",
                               fontSize: 10.sp,
-                              color: Colors.black.withOpacity(0.7),
+                              color: Colors.black.withValues(alpha: 0.7),
                             ),
                             CustomText(
                               text: lastCheckupDate ?? "Jan 01, 2026",
                               fontSize: 14.sp,
                               fontWeight: FontWeight.w700,
-                              color: Colors.black.withOpacity(0.7),
+                              color: Colors.black.withValues(alpha: 0.7),
                             ),
                           ],
                         ),

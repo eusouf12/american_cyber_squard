@@ -3,7 +3,6 @@ import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../components/custom_nav_bar/navbar.dart';
-import '../widget/custom_children_card.dart';
 import '../widget/custom_payment_history_card.dart';
 import '../widget/custom_welcome_card.dart';
 

@@ -11,7 +11,7 @@ import '../widget/clinic_visit_card.dart';
 import '../widget/custom_medication_card.dart';
 
 class SchoolNurseHomeScreen extends StatelessWidget {
-  SchoolNurseHomeScreen({super.key});
+  const SchoolNurseHomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +144,7 @@ class SchoolNurseHomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 6,
                       offset: const Offset(0, 4),
                     ),
@@ -201,7 +201,7 @@ class SchoolNurseHomeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 6,
                       offset: Offset(0, 4),
                     ),

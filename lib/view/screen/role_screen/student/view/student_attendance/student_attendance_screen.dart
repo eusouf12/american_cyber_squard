@@ -1,7 +1,6 @@
 import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import '../../../../../components/custom_nav_bar/student_nav_bar.dart';
 import '../../../parents/widget/custom_welcome_card.dart';
 import '../../controller/student_attandance_controller.dart';
@@ -80,7 +79,7 @@ class StudentAttendanceScreen extends StatelessWidget {
                 status: "Present",
                 statusColor: Colors.green,
                 icon: Icons.check_circle,
-                iconBg: Colors.green.withOpacity(0.1),
+                iconBg: Colors.green.withValues(alpha: 0.1),
               ),
 
               HistoryItem(
@@ -89,7 +88,7 @@ class StudentAttendanceScreen extends StatelessWidget {
                 status: "Present",
                 statusColor: Colors.green,
                 icon: Icons.check_circle,
-                iconBg: Colors.green.withOpacity(0.1),
+                iconBg: Colors.green.withValues(alpha: 0.1),
               ),
 
               HistoryItem(
@@ -98,7 +97,7 @@ class StudentAttendanceScreen extends StatelessWidget {
                 status: "Late",
                 statusColor: Colors.orange,
                 icon: Icons.access_time_filled,
-                iconBg: Colors.orange.withOpacity(0.1),
+                iconBg: Colors.orange.withValues(alpha: 0.1),
               ),
 
               HistoryItem(
@@ -107,7 +106,7 @@ class StudentAttendanceScreen extends StatelessWidget {
                 status: "Absent",
                 statusColor: Colors.red,
                 icon: Icons.cancel,
-                iconBg: Colors.red.withOpacity(0.1),
+                iconBg: Colors.red.withValues(alpha: 0.1),
               ),
 
               HistoryItem(
@@ -116,7 +115,7 @@ class StudentAttendanceScreen extends StatelessWidget {
                 status: "Present",
                 statusColor: Colors.green,
                 icon: Icons.check_circle,
-                iconBg: Colors.green.withOpacity(0.1),
+                iconBg: Colors.green.withValues(alpha: 0.1),
               ),
             ],
           )

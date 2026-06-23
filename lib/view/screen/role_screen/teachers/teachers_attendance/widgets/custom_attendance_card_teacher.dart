@@ -46,7 +46,7 @@ class CustomAttendanceCardTeacher extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -91,7 +91,7 @@ class CustomAttendanceCardTeacher extends StatelessWidget {
                     text: name ?? "",
                     fontWeight: FontWeight.w500,
                     fontSize: 12.sp,
-                    color: Colors.black87.withOpacity(0.6),
+                    color: Colors.black87.withValues(alpha: 0.6),
                   ),
                 ],
               ),
@@ -141,7 +141,7 @@ class CustomAttendanceCardTeacher extends StatelessWidget {
                   fontSize: 10.sp,
                   fontWeight: FontWeight.w400,
                   fillColor: isAbsent
-                      ? AppColors.red.withOpacity(0.7)
+                      ? AppColors.red.withValues(alpha: 0.7)
                       : Colors.grey.shade300,
                   textColor:
                   isAbsent ? Colors.white : Colors.black54,

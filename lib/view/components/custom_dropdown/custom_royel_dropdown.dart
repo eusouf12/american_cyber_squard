@@ -67,7 +67,7 @@ class CustomRoyelDropdown extends StatelessWidget {
               hint: CustomText(
                   text: hintText,
                   fontSize: fontSize ?? 12.sp,
-                  color: Colors.grey.withOpacity(0.5),
+                  color: Colors.grey.withValues(alpha: 0.5),
                   fontWeight: FontWeight.w500,
                   right: 15.w,
               ),

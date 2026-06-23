@@ -34,11 +34,11 @@ class CustomHealthRecord extends StatelessWidget {
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: AppColors.greyLight.withOpacity(0.2),
+        color: AppColors.greyLight.withValues(alpha: 0.2),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.09),
+            color: Colors.white.withValues(alpha: 0.09),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -65,17 +65,17 @@ class CustomHealthRecord extends StatelessWidget {
                       CustomText(
                         text: grade ?? "",
                         fontSize: 12.sp,
-                        color: Colors.black.withOpacity(0.7),
+                        color: Colors.black.withValues(alpha: 0.7),
                       ),
                       Row(
                         children: [
                           CustomText(
-                            text: "Blood Group : " ?? "-",
+                            text: "Blood Group : ",
                             fontSize: 12.sp,
                             color: Colors.black,
                           ),
                           CustomText(
-                            text: "${bloodType}" ?? "",
+                            text: "$bloodType",
                             fontSize: 12.sp,
                             fontWeight: FontWeight.w500,
                             color: Colors.red,
@@ -92,7 +92,7 @@ class CustomHealthRecord extends StatelessWidget {
                     padding:
                         EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
                     decoration: BoxDecoration(
-                      color: Colors.red.withOpacity(0.3),
+                      color: Colors.red.withValues(alpha: 0.3),
                       borderRadius: BorderRadius.circular(16),
                     ),
                     child: Row(
@@ -140,7 +140,7 @@ class CustomHealthRecord extends StatelessWidget {
                               margin: const EdgeInsets.symmetric(vertical: 8),
                               padding: const EdgeInsets.all(16),
                               decoration: BoxDecoration(
-                                color: Colors.grey.withOpacity(0.1),
+                                color: Colors.grey.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Column(
@@ -158,7 +158,7 @@ class CustomHealthRecord extends StatelessWidget {
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 10.w, vertical: 4.h),
                                     decoration: BoxDecoration(
-                                      color: Colors.red.withOpacity(0.3),
+                                      color: Colors.red.withValues(alpha: 0.3),
                                       borderRadius: BorderRadius.circular(16),
                                     ),
                                     child: CustomText(
@@ -179,7 +179,7 @@ class CustomHealthRecord extends StatelessWidget {
                                 child: Container(
                                   padding: EdgeInsets.all(8.w),
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                                    border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Column(
@@ -187,13 +187,13 @@ class CustomHealthRecord extends StatelessWidget {
                                       CustomText(
                                         text: "Blood Type",
                                         fontSize: 10.sp,
-                                        color: Colors.black.withOpacity(0.7),
+                                        color: Colors.black.withValues(alpha: 0.7),
                                       ),
                                       CustomText(
                                         text: bloodType ?? "",
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
-                                        color: Colors.black.withOpacity(0.7),
+                                        color: Colors.black.withValues(alpha: 0.7),
                                       ),
                                     ],
                                   ),
@@ -206,7 +206,7 @@ class CustomHealthRecord extends StatelessWidget {
                                 child: Container(
                                   padding: EdgeInsets.all(8.w),
                                   decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.grey.withOpacity(0.3)),
+                                    border: Border.all(color: Colors.grey.withValues(alpha: 0.3)),
                                     borderRadius: BorderRadius.circular(12),
                                   ),
                                   child: Column(
@@ -214,13 +214,13 @@ class CustomHealthRecord extends StatelessWidget {
                                       CustomText(
                                         text: "Last Checkup",
                                         fontSize: 10.sp,
-                                        color: Colors.black.withOpacity(0.7),
+                                        color: Colors.black.withValues(alpha: 0.7),
                                       ),
                                       CustomText(
                                         text: lastCheckupDate ?? "Jan 01, 2026",
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
-                                        color: Colors.black.withOpacity(0.7),
+                                        color: Colors.black.withValues(alpha: 0.7),
                                       ),
                                     ],
                                   ),

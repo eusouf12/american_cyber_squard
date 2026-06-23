@@ -8,7 +8,7 @@ class AttendanceTrendContainer extends StatelessWidget {
   final TabControllerX controller;
 
   // Constructor to accept the controller
-  const AttendanceTrendContainer({Key? key, required this.controller}) : super(key: key);
+  const AttendanceTrendContainer({super.key, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class AttendanceTrendContainer extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -75,7 +75,7 @@ class AttendanceTrendContainer extends StatelessWidget {
                       BarChartRodData(
 
                         toY: attendanceData[index].toDouble(),
-                        color: AppColors.primary.withOpacity(0.6),
+                        color: AppColors.primary.withValues(alpha: 0.6),
                         width: 20.w,
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(4),

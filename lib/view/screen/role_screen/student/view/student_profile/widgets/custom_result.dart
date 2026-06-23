@@ -10,7 +10,7 @@ class CustomResult extends StatelessWidget {
   final String? grade;
   final String? status;
 
-  CustomResult({
+  const CustomResult({super.key, 
     this.subject,
     this.date,
     this.score,
@@ -28,7 +28,7 @@ class CustomResult extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.5),
+            color: Colors.white.withValues(alpha: 0.5),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -55,11 +55,11 @@ class CustomResult extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: AppColors.primary.withOpacity(0.1),
+                    color: AppColors.primary.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.white.withOpacity(0.09),
+                        color: Colors.white.withValues(alpha: 0.09),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),

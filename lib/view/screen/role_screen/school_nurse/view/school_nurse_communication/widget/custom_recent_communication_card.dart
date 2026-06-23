@@ -11,12 +11,12 @@ class CustomRecentCommunicationCard extends StatelessWidget {
   final String? time;
 
   const CustomRecentCommunicationCard({
-    Key? key,
+    super.key,
     this.recipient,
     this.studentName,
     this.reason,
     this.time,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class CustomRecentCommunicationCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1),
+            color: Colors.grey.withValues(alpha: 0.1),
             blurRadius: 6,
             offset: const Offset(0, 3),
           ),

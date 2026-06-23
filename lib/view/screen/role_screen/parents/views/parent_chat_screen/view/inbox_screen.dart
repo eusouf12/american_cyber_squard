@@ -277,7 +277,7 @@ class _InboxScreenState extends State<InboxScreen> {
                   // textEditingController: controller.messageController2.value,
                   hintText: 'typeAMessage'.tr,
                   hintStyle:  TextStyle(color: AppColors.black),
-                  fieldBorderColor: AppColors.primary.withOpacity(.3),
+                  fieldBorderColor: AppColors.primary.withValues(alpha: .3),
                   fillColor: AppColors.white,
 
                 ),
@@ -369,7 +369,7 @@ class CustomInboxMessage2 extends StatelessWidget {
           bottomRight: isMe ? Radius.zero : const Radius.circular(12),
         ),
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 4)
+          BoxShadow(color: Colors.black.withValues(alpha: 0.1), blurRadius: 4)
         ],
       ),
       child: Column(
@@ -477,7 +477,7 @@ class CustomInboxMessage2 extends StatelessWidget {
           return GestureDetector(
             onTap: () {
               Get.to(() => FullScreenImageView(
-                  imageUrl: fullImgPath!,
+                  imageUrl: fullImgPath,
                   isLocal: isLocal
               ));
             },

@@ -34,7 +34,7 @@ class TeacherMyStudentCard extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -63,7 +63,7 @@ class TeacherMyStudentCard extends StatelessWidget {
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
                   decoration: BoxDecoration(
-                    color: status =="Present" ? AppColors.primary.withOpacity(0.2)  : status =="Late" ?Colors.yellow.withOpacity(0.2) :Colors.red.withOpacity(0.2),
+                    color: status =="Present" ? AppColors.primary.withValues(alpha: 0.2)  : status =="Late" ?Colors.yellow.withValues(alpha: 0.2) :Colors.red.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: CustomText(text: status ?? "",fontSize: 10.sp, fontWeight: FontWeight.w500,color:status =="Present" ?AppColors.primary :  status =="Late" ?Colors.red : Colors.red)

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../utils/app_colors/app_colors.dart';
-import '../../../../../utils/app_const/app_const.dart';
 import '../../../../components/custom_netwrok_image/custom_network_image.dart';
 import '../../../../components/custom_text/custom_text.dart';
 
@@ -39,7 +38,7 @@ class CustomSubjectCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.08),
+                color: Colors.black.withValues(alpha: 0.08),
                 blurRadius: 10,
                 offset: const Offset(0, 6),
               ),
@@ -79,7 +78,7 @@ class CustomSubjectCard extends StatelessWidget {
                       text: subTitle ?? "MAT-101",
                       fontSize: 10.sp,
                       fontWeight: FontWeight.w500,
-                      color: Colors.black.withOpacity(0.7),
+                      color: Colors.black.withValues(alpha: 0.7),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),

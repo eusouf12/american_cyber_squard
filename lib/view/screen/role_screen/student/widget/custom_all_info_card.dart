@@ -11,14 +11,14 @@ class CustomAllInfoCard extends StatelessWidget {
   final VoidCallback? onTap;
 
   const CustomAllInfoCard({
-    Key? key,
+    super.key,
     required this.title,
     this.onTap,
     required this.subtitle,
     required this.count,
     required this.icon,
     this.textColor = Colors.black,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class CustomAllInfoCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.1),
+              color: Colors.grey.withValues(alpha: 0.1),
               blurRadius: 6,
               offset: const Offset(0, 3),
             ),

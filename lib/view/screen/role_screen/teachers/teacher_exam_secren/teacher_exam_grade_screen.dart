@@ -7,9 +7,7 @@ import '../../../../components/custom_nav_bar/teacher_nav_bar.dart';
 import '../../../../components/custom_text/custom_text.dart';
 import '../../parents/widget/custom_parents_show_card.dart';
 import '../teachers_profile/controller/teachers_material_controller.dart';
-import '../teachers_profile/model/teachers_resource_model.dart';
 import '../teachers_profile/widget/custom_teacher_exam_card.dart';
-import '../teachers_profile/widget/custom_teachers_material_card.dart';
 
 class TeacherExamGradeScreen extends StatelessWidget {
   TeacherExamGradeScreen({super.key});
@@ -66,7 +64,7 @@ class TeacherExamGradeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -175,7 +173,7 @@ class TeacherExamGradeScreen extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 6,
                       offset: const Offset(0, 4),
                     ),

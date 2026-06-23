@@ -28,7 +28,7 @@ class CustomParentsShowCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -40,8 +40,8 @@ class CustomParentsShowCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: iconColor?.withOpacity(0.1) ??
-                  Colors.white.withOpacity(0.1),
+              color: iconColor?.withValues(alpha: 0.1) ??
+                  Colors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(
@@ -71,7 +71,7 @@ class CustomParentsShowCard extends StatelessWidget {
                       text: label ?? '',
                       fontSize: 14.sp,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.white.withOpacity(0.8),
+                      color: AppColors.white.withValues(alpha: 0.8),
                       textAlign: TextAlign.center,
                     ),
                   ],

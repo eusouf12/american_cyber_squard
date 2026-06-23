@@ -1,7 +1,6 @@
 import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
 import 'package:flutter/material.dart';
 import '../../../../../components/custom_nav_bar/student_nav_bar.dart';
-import '../../../../../components/custom_royel_appbar/custom_royel_appbar.dart';
 import '../../../parents/widget/custom_welcome_card.dart';
 import '../../widget/custom_assignment_status.dart';
 import '../../widget/custom_grade_summary_card.dart';

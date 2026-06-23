@@ -6,7 +6,6 @@ import 'package:get/get.dart';
 import '../../../../../../utils/app_colors/app_colors.dart';
 import '../../../../../components/custom_text/custom_text.dart';
 import '../../../parents/widget/custom_parents_show_card.dart';
-import '../../teachers_attendance/controller/teacher_attendence_controller.dart';
 import '../controller/teachers_material_controller.dart';
 import '../model/teachers_resource_model.dart';
 import '../widget/custom_teachers_material_card.dart';
@@ -117,7 +116,7 @@ class TeachersMaterial extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16.r),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withValues(alpha: 0.05),
                       blurRadius: 10,
                       offset: const Offset(0, 4),
                     ),
@@ -225,7 +224,7 @@ class TeachersMaterial extends StatelessWidget {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.1),
+                      color: Colors.black.withValues(alpha: 0.1),
                       blurRadius: 6,
                       offset: const Offset(0, 4),
                     ),

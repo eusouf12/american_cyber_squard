@@ -5,10 +5,10 @@ import '../../../../../../components/custom_royel_appbar/custom_royel_appbar.dar
 import '../../../../../../components/custom_text/custom_text.dart';
 import '../controller/student_shedule_controller.dart';
 import '../widgets/custom_schedule_card.dart';
-import '../widgets/custom_time _card.dart';
+import '../widgets/custom_time_card.dart';
 
 class StudentScheduleScreen extends StatelessWidget {
-  const StudentScheduleScreen({Key? key}) : super(key: key);
+  const StudentScheduleScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

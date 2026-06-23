@@ -1,7 +1,6 @@
 import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import '../../../../../core/app_routes/app_routes.dart';
 import '../../../../../utils/app_const/app_const.dart';
 import '../../../../components/custom_nav_bar/navbar.dart';
@@ -9,7 +8,6 @@ import '../../../../components/custom_netwrok_image/custom_network_image.dart';
 import '../../../../components/custom_text/custom_text.dart';
 import '../widget/custom_parent_show_profile.dart';
 import '../widget/custom_parents_show_card.dart';
-import '../widget/custom_welcome_card.dart';
 import '../widget/recent_activity_card_parent.dart';
 
 class ParentsHomeScreen extends StatelessWidget {
@@ -145,7 +143,7 @@ class ParentsHomeScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16),
                         boxShadow: [
                           BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
+                            color: Colors.black.withValues(alpha: 0.1),
                             blurRadius: 10,
                             offset: const Offset(0, 4),
                           ),

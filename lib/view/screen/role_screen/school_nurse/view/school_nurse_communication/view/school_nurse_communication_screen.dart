@@ -32,7 +32,7 @@ class SchoolNurseCommunicationScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 6,
                         offset: const Offset(0, 4),
                       ),
@@ -65,14 +65,14 @@ class SchoolNurseCommunicationScreen extends StatelessWidget {
                         hintText: "Search student name",
                         controller: TextEditingController(),
                         fillBorderRadius: 10,
-                        fieldBorderColor: Colors.grey.withOpacity(0.2),
+                        fieldBorderColor: Colors.grey.withValues(alpha: 0.2),
                       ),
                       CustomRoyelDropdown(
                         title: "Visit Reason",
                         hintText: "Select Communication Type",
                         borderRadius: 10,
                         isBorder: true,
-                        fillColor: Colors.grey.withOpacity(0.1),
+                        fillColor: Colors.grey.withValues(alpha: 0.1),
                       ),
                       SizedBox(height: 20.h),
                       CustomRoyelDropdown(
@@ -80,7 +80,7 @@ class SchoolNurseCommunicationScreen extends StatelessWidget {
                         hintText: "Select Communication Type",
                         borderRadius: 10,
                         isBorder: true,
-                        fillColor: Colors.grey.withOpacity(0.1),
+                        fillColor: Colors.grey.withValues(alpha: 0.1),
                       ),
                       SizedBox(height: 20.h),
                       CustomButton(
@@ -100,7 +100,7 @@ class SchoolNurseCommunicationScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 6,
                         offset: const Offset(0, 4),
                       ),
@@ -133,21 +133,21 @@ class SchoolNurseCommunicationScreen extends StatelessWidget {
                         hintText: "Enter paarent/staff name",
                         controller: TextEditingController(),
                         fillBorderRadius: 10,
-                        fieldBorderColor: Colors.grey.withOpacity(0.2),
+                        fieldBorderColor: Colors.grey.withValues(alpha: 0.2),
                       ),
                       CustomFormCard(
                         title: "Subjet",
                         hintText: "Regarding",
                         controller: TextEditingController(),
                         fillBorderRadius: 10,
-                        fieldBorderColor: Colors.grey.withOpacity(0.2),
+                        fieldBorderColor: Colors.grey.withValues(alpha: 0.2),
                       ),
                       CustomFormCard(
                         title: "Message",
                         hintText: "Type your message here",
                         controller: TextEditingController(),
                         fillBorderRadius: 10,
-                        fieldBorderColor: Colors.grey.withOpacity(0.2),
+                        fieldBorderColor: Colors.grey.withValues(alpha: 0.2),
                       ),
                       SizedBox(height: 20.h),
                       CustomButton(
@@ -167,7 +167,7 @@ class SchoolNurseCommunicationScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 6,
                         offset: const Offset(0, 4),
                       ),

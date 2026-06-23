@@ -74,7 +74,7 @@ class ResourceCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: iconColor.withOpacity(0.1),
+              color: iconColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(
@@ -141,7 +141,7 @@ class ResourceCard extends StatelessWidget {
 
           IconButton(
             onPressed: () {
-              print("Downloading ${item.fileName}");
+              debugPrint("Downloading ${item.fileName}");
             },
             icon: const Icon(Icons.download_for_offline_outlined),
             color: const Color(0xFF2ECC71),

@@ -1,4 +1,3 @@
-import 'package:america_ayber_squad/view/components/custom_button/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../utils/app_colors/app_colors.dart';
@@ -31,7 +30,7 @@ class CustomPrimaryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withValues(alpha: 0.05),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -53,7 +52,7 @@ class CustomPrimaryCard extends StatelessWidget {
           CustomText(
             text: description,
             fontSize: 11.sp,
-            color: Colors.white.withOpacity(0.9),
+            color: Colors.white.withValues(alpha: 0.9),
             top: 8,
             bottom: 20,
             maxLines: 4,
@@ -62,7 +61,7 @@ class CustomPrimaryCard extends StatelessWidget {
           isInbox== true ? Container(
             padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
             decoration: BoxDecoration(
-              color: AppColors.white.withOpacity(0.1),
+              color: AppColors.white.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(16),
             ),
             child: Row(

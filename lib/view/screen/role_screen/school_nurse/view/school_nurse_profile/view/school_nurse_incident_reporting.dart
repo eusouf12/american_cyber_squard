@@ -33,7 +33,7 @@ class SchoolNurseIncidentReporting extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 2,
                         offset: const Offset(0, 2),
                       ),
@@ -74,7 +74,7 @@ class SchoolNurseIncidentReporting extends StatelessWidget {
                         title: "Location",
                         hintText: "Select Location",
                         isBorder: true,
-                        fillColor: Colors.grey.withOpacity(0.1),
+                        fillColor: Colors.grey.withValues(alpha: 0.1),
                       ),
                       SizedBox(
                         height: 10,
@@ -93,7 +93,7 @@ class SchoolNurseIncidentReporting extends StatelessWidget {
                         title: "Location",
                         hintText: "Select Location",
                         isBorder: true,
-                        fillColor: Colors.grey.withOpacity(0.1),
+                        fillColor: Colors.grey.withValues(alpha: 0.1),
                       ),
                       SizedBox(
                         height: 10,
@@ -163,7 +163,7 @@ class SchoolNurseIncidentReporting extends StatelessWidget {
                 //     borderRadius: BorderRadius.circular(12),
                 //     boxShadow: [
                 //       BoxShadow(
-                //         color: Colors.black.withOpacity(0.1),
+                //         color: Colors.black.withValues(alpha: 0.1),
                 //         blurRadius: 2,
                 //         offset: const Offset(0, 2),
                 //       ),
@@ -235,7 +235,7 @@ class SchoolNurseIncidentReporting extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.black.withOpacity(0.1),
+                  color: Colors.black.withValues(alpha: 0.1),
                   blurRadius: 2,
                   offset: const Offset(0, 2),
                 ),

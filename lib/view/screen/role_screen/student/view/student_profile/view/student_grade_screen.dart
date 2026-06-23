@@ -1,11 +1,8 @@
-import 'package:america_ayber_squad/utils/app_colors/app_colors.dart';
 import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
 import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_royel_appbar.dart';
-import 'package:america_ayber_squad/view/components/custom_tab_selected/custom_tab_bar.dart';
 import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
 
 import '../../../../../../components/custom_nav_bar/student_nav_bar.dart';
 import '../../../../parents/widget/custom_gread_card.dart';
@@ -13,7 +10,7 @@ import '../../../../parents/widget/custom_welcome_card.dart';
 import '../widgets/custom_result.dart';
 
 class StudentGradeScreen extends StatelessWidget {
-  StudentGradeScreen({super.key});
+  const StudentGradeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +42,7 @@ class StudentGradeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.09),
+                        color: Colors.black.withValues(alpha: 0.09),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),
@@ -105,7 +102,7 @@ class StudentGradeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.09),
+                        color: Colors.black.withValues(alpha: 0.09),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),

@@ -11,12 +11,12 @@ class CustomRecentReport extends StatelessWidget {
   final String date;
 
   const CustomRecentReport({
-    Key? key,
+    super.key,
     required this.title,
     required this.studentName,
     required this.grade,
     required this.date,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class CustomRecentReport extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 6,
             offset: const Offset(0, 3),
           ),
@@ -73,7 +73,7 @@ class CustomRecentReport extends StatelessWidget {
           //   child: ElevatedButton(
           //     onPressed: () {},
           //     style: ElevatedButton.styleFrom(
-          //       primary: Colors.grey.withOpacity(0.2),
+          //       primary: Colors.grey.withValues(alpha: 0.2),
           //       onPrimary: Colors.black,
           //       shape: RoundedRectangleBorder(
           //         borderRadius: BorderRadius.circular(12),

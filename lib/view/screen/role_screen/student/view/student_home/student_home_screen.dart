@@ -1,4 +1,3 @@
-import 'package:america_ayber_squad/core/app_routes/app_routes.dart';
 import 'package:america_ayber_squad/utils/app_colors/app_colors.dart';
 import 'package:america_ayber_squad/utils/app_const/app_const.dart';
 import 'package:america_ayber_squad/view/components/custom_netwrok_image/custom_network_image.dart';

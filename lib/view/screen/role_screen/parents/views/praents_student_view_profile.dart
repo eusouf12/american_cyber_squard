@@ -1,5 +1,4 @@
 import 'package:america_ayber_squad/utils/app_colors/app_colors.dart';
-import 'package:america_ayber_squad/view/components/custom_button/custom_button.dart';
 import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
 import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,7 @@ class PraentsStudentViewProfile extends StatelessWidget {
                 // Header Section
                 Text(
                   "Grade 11-A • ST-2024-001",
-                  style: TextStyle(fontSize: 14.sp, color: Colors.black.withOpacity(0.7)),
+                  style: TextStyle(fontSize: 14.sp, color: Colors.black.withValues(alpha: 0.7)),
                 ),
                 SizedBox(height: 20.h),
       
@@ -85,7 +84,7 @@ class InfoCard extends StatelessWidget {
   final String title;
   final String subtitle;
 
-  const InfoCard({required this.icon, required this.title, required this.subtitle});
+  const InfoCard({super.key, required this.icon, required this.title, required this.subtitle});
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +104,7 @@ class InfoCard extends StatelessWidget {
               children: [
                 Text(title, style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.w600)),
                 SizedBox(height: 4.h),
-                Text(subtitle, style: TextStyle(fontSize: 12.sp, color: Colors.black.withOpacity(0.6))),
+                Text(subtitle, style: TextStyle(fontSize: 12.sp, color: Colors.black.withValues(alpha: 0.6))),
               ],
             ),
           ],

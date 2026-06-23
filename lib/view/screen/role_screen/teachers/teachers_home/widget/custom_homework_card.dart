@@ -35,7 +35,7 @@ class CustomHomeworkCard extends StatelessWidget {
           border: Border.all(color: Colors.grey.shade200),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.03),
+              color: Colors.black.withValues(alpha: 0.03),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -70,7 +70,7 @@ class CustomHomeworkCard extends StatelessWidget {
                   ),
                   SizedBox(height: 4.h),
                   CustomText(
-                    text: "Due: $time" ??"",
+                    text: "Due: $time",
                     fontSize: 10.sp,
                     color: Colors.grey,
                   ),
@@ -82,7 +82,7 @@ class CustomHomeworkCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
                   decoration: BoxDecoration(
-                    color: status =="Pending" ? Color(0xFFFFF9C4) : status =="Completed" ? AppColors.primary.withOpacity(0.2) :AppColors.red.withOpacity(0.2) ,
+                    color: status =="Pending" ? Color(0xFFFFF9C4) : status =="Completed" ? AppColors.primary.withValues(alpha: 0.2) :AppColors.red.withValues(alpha: 0.2) ,
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: CustomText(text: status ?? "Overdue",fontSize: 10.sp, fontWeight: FontWeight.w600,color:status =="Completed" ? AppColors.primary :Color(0xFF827717),)

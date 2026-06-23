@@ -11,7 +11,7 @@ import 'inbox_screen.dart';
 
 class ChatListScreen extends StatefulWidget {
 
-  ChatListScreen({super.key});
+  const ChatListScreen({super.key});
 
   @override
   State<ChatListScreen> createState() => _ChatListScreenState();
@@ -122,6 +122,7 @@ class _ChatListScreenState extends State<ChatListScreen> {
                           ),
                         );
                       }
+                      return null;
                       // else {
                       //   return Obx(() => controller.isMoreLoading.value
                       //       ? const Padding(padding: EdgeInsets.all(20.0),

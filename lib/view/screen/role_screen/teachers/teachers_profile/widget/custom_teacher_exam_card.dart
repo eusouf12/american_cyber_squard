@@ -38,7 +38,7 @@ class CustomTeacherExamCard extends StatelessWidget {
         border: Border.all(color: Colors.grey.shade200),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 10,
             offset: const Offset(0, 4),
           ),
@@ -67,7 +67,7 @@ class CustomTeacherExamCard extends StatelessWidget {
               Container(
                   padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
                   decoration: BoxDecoration(
-                    color: status =="Completed" ? AppColors.primary.withOpacity(0.2)  : status =="Upcoming" ?Colors.blue.withOpacity(0.2) :Colors.red.withOpacity(0.2),
+                    color: status =="Completed" ? AppColors.primary.withValues(alpha: 0.2)  : status =="Upcoming" ?Colors.blue.withValues(alpha: 0.2) :Colors.red.withValues(alpha: 0.2),
                     borderRadius: BorderRadius.circular(8.r),
                   ),
                   child: CustomText(text: status ?? "",fontSize: 10.sp, fontWeight: FontWeight.w500,color:status =="Completed" ?AppColors.primary :  status =="Upcoming" ?Colors.blue : Colors.red)
@@ -113,7 +113,7 @@ class CustomTeacherExamCard extends StatelessWidget {
             height: 36,
             width: 100,
             fontSize: 10.sp,
-            fillColor: Colors.blue.withOpacity(0.2),
+            fillColor: Colors.blue.withValues(alpha: 0.2),
             fontWeight: FontWeight.w400,
             textColor:Color(0xFF2563EB) ,
           )

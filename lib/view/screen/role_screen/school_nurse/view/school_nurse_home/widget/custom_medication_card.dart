@@ -13,14 +13,14 @@ class MedicationCard extends StatelessWidget {
   final VoidCallback? onSnoozeTap;
 
   const MedicationCard({
-    Key? key,
+    super.key,
     this.name,
     this.grade,
     this.medication,
     this.time,
     this.onAdministerTap,
     this.onSnoozeTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class MedicationCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 2,
             offset: Offset(0, 1),
           ),
