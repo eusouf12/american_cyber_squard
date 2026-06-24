@@ -17,7 +17,14 @@ class LoginController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getMyProfile();
+    _checkTokenAndGetProfile();
+  }
+
+  Future<void> _checkTokenAndGetProfile() async {
+    String token = await SharePrefsHelper.getString(AppConstants.bearerToken);
+    if (token.isNotEmpty) {
+      getMyProfile();
+    }
   }
   // ======== Login Controller =================
   final emailController = TextEditingController();
@@ -40,7 +47,7 @@ class LoginController extends GetxController {
       var response = await ApiClient.postData(ApiUrl.signIn, jsonEncode(body));
 
       if (response.statusCode == 200) {
-        Map<String, dynamic> jsonResponse =response.body is String ? jsonDecode(response.body) : response.body;
+        Map<String, dynamic> jsonResponse = _parseResponseBody(response.body);
         showCustomSnackBar(
           jsonResponse['message'] ?? "Login successful",
           isError: false,
@@ -83,8 +90,7 @@ class LoginController extends GetxController {
       } else {
         // Parse server error message (e.g. 404 "User not found")
         try {
-          Map<String, dynamic> errorResponse =
-              response.body is String ? jsonDecode(response.body) : response.body;
+          Map<String, dynamic> errorResponse = _parseResponseBody(response.body);
           final String message =
               errorResponse['message']?.toString() ?? 'Login failed. Please try again.';
           showCustomSnackBar(message, isError: true);
@@ -121,8 +127,7 @@ class LoginController extends GetxController {
       var response = await ApiClient.postData(ApiUrl.forgotPassword, body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Map<String, dynamic> jsonResponse =
-            response.body is String ? jsonDecode(response.body) : response.body;
+        Map<String, dynamic> jsonResponse = _parseResponseBody(response.body);
         showCustomSnackBar(
           jsonResponse['message'] ?? "OTP sent to your email",
           isError: false,
@@ -130,7 +135,7 @@ class LoginController extends GetxController {
         Get.toNamed(AppRoutes.verificationOtpForgetPass); // Navigate to OTP screen
       } else {
         try {
-          Map<String, dynamic> errorResponse =response.body is String ? jsonDecode(response.body) : response.body;
+          Map<String, dynamic> errorResponse = _parseResponseBody(response.body);
           final String message = errorResponse['message']?.toString() ?? 'Request failed. Please try again.';
           showCustomSnackBar(message, isError: true);
         } catch (_) {
@@ -169,9 +174,7 @@ class LoginController extends GetxController {
       refresh();
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Map<String, dynamic> jsonResponse = response.body is String
-            ? jsonDecode(response.body)
-            : response.body as Map<String, dynamic>;
+        Map<String, dynamic> jsonResponse = _parseResponseBody(response.body);
 
         showCustomSnackBar(
           jsonResponse['message']?.toString() ?? "Account verified successfully!",
@@ -206,7 +209,7 @@ class LoginController extends GetxController {
         Get.toNamed(AppRoutes.resetPasswordScreen);
       } else {
         try {
-          Map<String, dynamic> errorResponse = response.body is String ? jsonDecode(response.body) : response.body;
+          Map<String, dynamic> errorResponse = _parseResponseBody(response.body);
           final String message = errorResponse['message']?.toString() ?? 'Verification failed';
           showCustomSnackBar(message, isError: true);
         } catch (_) {
@@ -257,13 +260,13 @@ class LoginController extends GetxController {
       refresh();
 
       if (response.statusCode == 200 || response.statusCode == 201) {
-        Map<String, dynamic> jsonResponse = response.body is String ? jsonDecode(response.body) : response.body as Map<String, dynamic>;
+        Map<String, dynamic> jsonResponse = _parseResponseBody(response.body);
         showCustomSnackBar(jsonResponse['message']?.toString() ?? "Password reset successfully. Please login.", isError: false);
         
         Get.offAllNamed(AppRoutes.loginScreen);
       } else {
         try {
-          Map<String, dynamic> errorResponse = response.body is String ? jsonDecode(response.body) : response.body;
+          Map<String, dynamic> errorResponse = _parseResponseBody(response.body);
           final String message = errorResponse['message']?.toString() ?? 'Password reset failed';
           showCustomSnackBar(message, isError: true);
         } catch (_) {
@@ -308,8 +311,7 @@ class LoginController extends GetxController {
     try {
       var response = await ApiClient.patchData( ApiUrl.newPassword,jsonEncode(body));
 
-      Map<String, dynamic> jsonResponse =
-          response.body is String  ? jsonDecode(response.body) : response.body as Map<String, dynamic>;
+      Map<String, dynamic> jsonResponse = _parseResponseBody(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         showCustomSnackBar(jsonResponse['message']?.toString() ?? "Password updated successfully!", isError: false, );
@@ -394,9 +396,7 @@ class LoginController extends GetxController {
         );
       }
 
-      final Map<String, dynamic> jsonResponse = response.body is String
-          ? jsonDecode(response.body)
-          : Map<String, dynamic>.from(response.body);
+      final Map<String, dynamic> jsonResponse = _parseResponseBody(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         showCustomSnackBar(
@@ -433,9 +433,7 @@ class LoginController extends GetxController {
     try {
       final response = await ApiClient.getData(ApiUrl.myProfile);
 
-      final Map<String, dynamic> jsonResponse = response.body is String
-          ? jsonDecode(response.body)
-          : Map<String, dynamic>.from(response.body);
+      final Map<String, dynamic> jsonResponse = _parseResponseBody(response.body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final TeacherProfileResponse model =
@@ -481,4 +479,18 @@ class LoginController extends GetxController {
     editEmailController.dispose();
     super.onClose();
   }
+}
+
+Map<String, dynamic> _parseResponseBody(dynamic body) {
+  if (body == null) return {};
+  if (body is Map) return Map<String, dynamic>.from(body);
+  if (body is String && body.isNotEmpty) {
+    try {
+      final decoded = jsonDecode(body);
+      if (decoded is Map) {
+        return Map<String, dynamic>.from(decoded);
+      }
+    } catch (_) {}
+  }
+  return {};
 }

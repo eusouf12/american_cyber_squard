@@ -13,7 +13,7 @@ import '../../../Login_role/login_controller.dart';
 class TeachersProfileScreen extends StatelessWidget {
   TeachersProfileScreen({super.key});
 
-  final loginController = Get.put(LoginController());
+  final loginController = Get.find<LoginController>();
 
   static const List<_ProfileMenuItem> _menuItems = [
     _ProfileMenuItem(

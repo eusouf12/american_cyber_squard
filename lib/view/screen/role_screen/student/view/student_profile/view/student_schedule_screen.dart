@@ -13,7 +13,7 @@ class StudentScheduleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // GetX Controller for day selection
-    final StudentSheduleController dayController = Get.put(StudentSheduleController());
+    final StudentSheduleController dayController = Get.find<StudentSheduleController>();
 
     return Scaffold(
       appBar: CustomRoyelAppbar(

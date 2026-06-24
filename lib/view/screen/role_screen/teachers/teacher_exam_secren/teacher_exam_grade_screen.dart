@@ -12,7 +12,7 @@ import '../teachers_profile/widget/custom_teacher_exam_card.dart';
 class TeacherExamGradeScreen extends StatelessWidget {
   TeacherExamGradeScreen({super.key});
 
-  final TeachersMaterialController teachersMaterialController = Get.put(TeachersMaterialController());
+  final TeachersMaterialController teachersMaterialController = Get.find<TeachersMaterialController>();
 
   @override
   Widget build(BuildContext context) {

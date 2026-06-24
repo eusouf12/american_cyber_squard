@@ -14,7 +14,7 @@ import '../../widget/custom_shedule_item.dart';
 class StudentHomeScreen extends StatelessWidget {
   StudentHomeScreen({super.key});
 
-  final StudentHomeController controller = Get.put(StudentHomeController());
+  final StudentHomeController controller = Get.find<StudentHomeController>();
 
   @override
   Widget build(BuildContext context) {

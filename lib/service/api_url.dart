@@ -1,5 +1,5 @@
 class ApiUrl {
-  static const String baseUrl = "https://sheriff-interest-second-compaq.trycloudflare.com";
+  static const String baseUrl = "https://feof-segment-shopping-introduced.trycloudflare.com";
   static const String imageUrl = baseUrl;
   static String socketUrl = baseUrl;
   static String mapKey = "AIzaSyBuSZJklSc1j0D4kqhkJcmyArcZbWujbXQ";
@@ -13,7 +13,7 @@ class ApiUrl {
   static const String verificationOtpForgetPass = "/api/v1/users/verification_forgot_user";
   static const String resetPassword = "/api/v1/users/reset_password";
 
-  
+  static String getAllTeacherSchedule({required int page}) =>  "/api/v1/teacher/find_by_specific_class_listOf_teacher?page=$page&limit=10";
   
   
   

@@ -15,7 +15,7 @@ import '../widget/custom_create_assignment_card.dart';
 
 class TeachersAssignmentScreen extends StatelessWidget {
   TeachersAssignmentScreen({super.key});
-  final TeacherCreateController teacherCreateController = Get.put(TeacherCreateController());
+  final TeacherCreateController teacherCreateController = Get.find<TeacherCreateController>();
 
   @override
   Widget build(BuildContext context) {

@@ -10,7 +10,7 @@ import '../../widget/custom_history_item.dart';
 class StudentAttendanceScreen extends StatelessWidget {
   StudentAttendanceScreen({super.key});
 
-  final StudentAttendanceController studentAttendanceController = Get.put(StudentAttendanceController());
+  final StudentAttendanceController studentAttendanceController = Get.find<StudentAttendanceController>();
 
   @override
   Widget build(BuildContext context) {

@@ -11,7 +11,7 @@ import '../../../../components/custom_text/custom_text.dart';
 
 class TeachersAttendanceScreen extends StatelessWidget {
    TeachersAttendanceScreen({super.key});
-  final TeacherAttendanceController teacherAttendanceController = Get.put(TeacherAttendanceController());
+  final TeacherAttendanceController teacherAttendanceController = Get.find<TeacherAttendanceController>();
 
 
   @override

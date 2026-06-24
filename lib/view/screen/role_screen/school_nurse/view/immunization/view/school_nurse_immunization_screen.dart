@@ -15,7 +15,7 @@ import '../widget/custom_schedule_scrining_card.dart';
 class SchoolNurseImmunizationScreen extends StatelessWidget {
   SchoolNurseImmunizationScreen({super.key});
 
-  final ImmunizationController immunizationController = Get.put(ImmunizationController());
+  final ImmunizationController immunizationController = Get.find<ImmunizationController>();
 
   @override
   Widget build(BuildContext context) {

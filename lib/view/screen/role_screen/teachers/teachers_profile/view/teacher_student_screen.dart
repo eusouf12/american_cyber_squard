@@ -11,7 +11,7 @@ import '../widget/teacher_my_student_card.dart';
 class TeacherStudentScreen extends StatelessWidget {
   TeacherStudentScreen({super.key});
 
-  final teacherStudentController = Get.put(TeacherStudentController());
+  final teacherStudentController = Get.find<TeacherStudentController>();
 
   @override
   Widget build(BuildContext context) {

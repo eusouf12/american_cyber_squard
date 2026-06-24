@@ -12,7 +12,7 @@ import '../widget/custom_welcome_card.dart';
 
 class AcademicProgressScreen extends StatelessWidget {
    AcademicProgressScreen({super.key});
-   final TabControllerX controller = Get.put(TabControllerX());
+   final TabControllerX controller = Get.find<TabControllerX>();
 
   @override
   Widget build(BuildContext context) {

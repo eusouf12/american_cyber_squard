@@ -1,4 +1,5 @@
 import 'package:america_ayber_squad/utils/app_const/app_const.dart';
+import 'package:america_ayber_squad/view/components/custom_loader/custom_loader.dart';
 import 'package:america_ayber_squad/view/components/custom_nav_bar/teacher_nav_bar.dart';
 import 'package:america_ayber_squad/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_home/widget/custom_homework_card.dart';
@@ -7,27 +8,22 @@ import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_ho
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import '../../../../../core/app_routes/app_routes.dart';
-import '../../../../../utils/app_colors/app_colors.dart';
-import '../../../../components/custom_gradient/custom_gradient.dart';
-import '../../../../components/custom_text/custom_text.dart';
-import '../../../Login_role/login_controller.dart';
+import '../../../../../../core/app_routes/app_routes.dart';
+import '../../../../../../utils/app_colors/app_colors.dart';
+import '../../../../../components/custom_gradient/custom_gradient.dart';
+import '../../../../../components/custom_text/custom_text.dart';
+import '../controller/teachers_controller.dart';
+import '../../../../Login_role/login_controller.dart';
+import 'package:intl/intl.dart';
 
 class TeachersHomeScreen extends StatelessWidget {
   TeachersHomeScreen({super.key});
 
-  final LoginController _controller = Get.find<LoginController>();
+  final LoginController loginController = Get.find<LoginController>();
+  final TeachersController teachersController = Get.find<TeachersController>();
 
   @override
   Widget build(BuildContext context) {
-    // StatelessWidget equivalent of initState — called after first frame
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (_controller.myProfileData.value == null &&
-          !_controller.isMyProfileLoading.value) {
-        _controller.getMyProfile();
-      }
-    });
-
     final List<Map<String, dynamic>> gridItems = [
       {
         'title': 'Mark Attendance',
@@ -66,13 +62,13 @@ class TeachersHomeScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // ── Profile info (reactive) ───────────────────────
+                  // =============== Profile info ===================
                   Obx(() {
-                    final profile = _controller.myProfileData.value;
-                    final imageUrl = (profile?.photo != null &&
-                            profile!.photo!.isNotEmpty)
-                        ? profile.photo!
-                        : AppConstants.profileImage;
+                    final profile = loginController.myProfileData.value;
+                    final imageUrl =
+                        (profile?.photo != null && profile!.photo!.isNotEmpty)
+                            ? profile.photo!
+                            : AppConstants.profileImage;
 
                     return Row(
                       children: [
@@ -145,7 +141,7 @@ class TeachersHomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //today schedule
+                //======== today schedule =========
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -165,42 +161,77 @@ class TeachersHomeScreen extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            CustomText(
-                                text: "Today's Schedule",
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w600),
-                            Spacer(),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 6, vertical: 6),
-                              decoration: BoxDecoration(
-                                color: AppColors.primary1,
-                                borderRadius: BorderRadius.circular(6),
-                              ),
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.calendar_today,
-                                    size: 18,
-                                    color: AppColors.primary,
-                                  ),
-                                ],
+                            Obx(() {
+                              final nowStr = DateFormat('yyyy-MM-dd')
+                                  .format(DateTime.now());
+                              final selStr = DateFormat('yyyy-MM-dd').format( teachersController.selectedDate.value);
+                              final title = nowStr == selStr
+                                  ? "Today's Schedule"
+                                  : DateFormat('dd MMM yyyy').format(teachersController.selectedDate.value);
+                              return CustomText(
+                                  text: title,
+                                  fontSize: 16.sp,
+                                  fontWeight: FontWeight.w600);
+                            }),
+                            const Spacer(),
+                            GestureDetector(
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                  context: context,
+                                  initialDate:teachersController.selectedDate.value,
+                                  firstDate: DateTime(2020),
+                                  lastDate: DateTime(2030),
+                                );
+                                if (pickedDate != null) {teachersController.changeSelectedDate(pickedDate);
+                                }
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary1,
+                                  borderRadius: BorderRadius.circular(6),
+                                ),
+                                child: const Row(
+                                  children: [
+                                    Icon(Icons.calendar_today, size: 18,color: AppColors.primary,),
+                                  ],
+                                ),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(height: 20),
-                        ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: 3,
-                            itemBuilder: (context, index) {
-                              return CustomTodayScheduleCard(
-                                name: index == 0 ? "Physics" : "Mathematics",
-                                subject: "Grade 4-A",
-                                time: "11:00 - 12:00",
-                              );
-                            }),
+                        const SizedBox(height: 20),
+                        Obx(() {
+                          if (teachersController.isScheduleLoading.value) {
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                child: CustomLoader(),
+                              ),
+                            );
+                          }
+                          if (teachersController .filteredScheduleList.isEmpty) {
+                            return Padding(padding: const EdgeInsets.symmetric(vertical: 20),child: Center(child: CustomText(text: "No schedule for this day", fontSize: 14.sp,color: Colors.grey,
+                              ),
+                              ),
+                            );
+                          }
+                          return ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: teachersController
+                                  .filteredScheduleList.length,
+                              itemBuilder: (context, index) {
+                                final routine = teachersController
+                                    .filteredScheduleList[index];
+                                return CustomTodayScheduleCard(
+                                  name:
+                                      routine.assignableSubject ?? "No Subject",
+                                  subject: routine.classLevel ?? "No Class",
+                                  time: routine.time ?? "N/A",
+                                );
+                              });
+                        }),
                       ],
                     ),
                   ),

@@ -13,7 +13,7 @@ import '../widget/custom_teachers_material_card.dart';
 class TeachersMaterial extends StatelessWidget {
   TeachersMaterial({super.key});
 
-  final TeachersMaterialController teachersMaterialController = Get.put(TeachersMaterialController());
+  final TeachersMaterialController teachersMaterialController = Get.find<TeachersMaterialController>();
 
   @override
   Widget build(BuildContext context) {

@@ -20,7 +20,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
-  final LoginController _controller = Get.put(LoginController());
+  final LoginController _controller = Get.find<LoginController>();
   final List<String> _roles = ['TEACHER', 'STUDENT', 'NURSE', 'parent'];
 
   void _handleLogin() {
