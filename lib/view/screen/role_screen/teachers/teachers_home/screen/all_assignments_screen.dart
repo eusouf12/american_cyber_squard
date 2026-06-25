@@ -9,10 +9,37 @@ import '../controller/teachers_controller.dart';
 import '../widget/custom_homework_card.dart';
 import 'package:america_ayber_squad/helper/time_converter/time_converter.dart';
 
-class AllAssignmentsScreen extends StatelessWidget {
-  AllAssignmentsScreen({super.key});
+class AllAssignmentsScreen extends StatefulWidget {
+  const AllAssignmentsScreen({super.key});
 
+  @override
+  State<AllAssignmentsScreen> createState() => _AllAssignmentsScreenState();
+}
+
+class _AllAssignmentsScreenState extends State<AllAssignmentsScreen> {
   final TeachersController teachersController = Get.find<TeachersController>();
+  final ScrollController _scrollController = ScrollController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Load fresh assignments when entering this page
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      teachersController.getAssignmentHomework();
+    });
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
+        teachersController.getAssignmentHomework(isLoadMore: true);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +51,7 @@ class AllAssignmentsScreen extends StatelessWidget {
           leftIcon: true,
         ),
         body: Obx(() {
-          if (teachersController.isAssignmentLoading.value) {
+          if (teachersController.isAssignmentLoading.value && teachersController.assignmentList.isEmpty) {
             return const Center(
               child: CustomLoader(),
             );
@@ -39,9 +66,23 @@ class AllAssignmentsScreen extends StatelessWidget {
             );
           }
           return ListView.builder(
+            controller: _scrollController,
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-            itemCount: teachersController.assignmentList.length,
+            itemCount: teachersController.assignmentList.length + 1,
             itemBuilder: (context, index) {
+              if (index == teachersController.assignmentList.length) {
+                return Obx(() {
+                  if (teachersController.isMoreAssignmentLoading.value) {
+                    return const Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Center(
+                        child: CustomLoader(),
+                      ),
+                    );
+                  }
+                  return const SizedBox.shrink();
+                });
+              }
               final assignment = teachersController.assignmentList[index];
               return CustomHomeworkCard(
                 subject: assignment.assignmentTitle ?? "No Subject",

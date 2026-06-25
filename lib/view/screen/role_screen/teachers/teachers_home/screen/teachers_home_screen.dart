@@ -161,43 +161,60 @@ class TeachersHomeScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Obx(() {
-                              final nowStr = DateFormat('yyyy-MM-dd')
-                                  .format(DateTime.now());
-                              final selStr = DateFormat('yyyy-MM-dd').format( teachersController.selectedDate.value);
-                              final title = nowStr == selStr
-                                  ? "Today's Schedule"
-                                  : "${DateFormat('EEEE').format(teachersController.selectedDate.value)}'s Schedule";
-                              return CustomText(
-                                  text: title,
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600);
-                            }),
-                            const Spacer(),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Obx(() {
+                                    final nowStr = DateFormat('yyyy-MM-dd')
+                                        .format(DateTime.now());
+                                    final selStr = DateFormat('yyyy-MM-dd')
+                                        .format(teachersController
+                                            .selectedDate.value);
+                                    final title = nowStr == selStr
+                                        ? "Today's Schedule"
+                                        : "${DateFormat('EEEE').format(teachersController.selectedDate.value)}'s Schedule";
+                                    return CustomText(
+                                        text: title,
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppColors.black_02);
+                                  }),
+                                  CustomText(
+                                    text: "Your classes for the day",
+                                    fontSize: 11.sp,
+                                    color: AppColors.titleText2Clr,
+                                  ),
+                                ],
+                              ),
+                            ),
                             // === calender icon===
                             GestureDetector(
                               onTap: () async {
                                 DateTime? pickedDate = await showDatePicker(
                                   context: context,
-                                  initialDate:teachersController.selectedDate.value,
+                                  initialDate:
+                                      teachersController.selectedDate.value,
                                   firstDate: DateTime(2020),
                                   lastDate: DateTime(2030),
                                 );
-                                if (pickedDate != null) {teachersController.changeSelectedDate(pickedDate);
+                                if (pickedDate != null) {
+                                  teachersController
+                                      .changeSelectedDate(pickedDate);
                                 }
                               },
                               child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+                                padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   color: AppColors.primary1,
-                                  borderRadius: BorderRadius.circular(6),
+                                  borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: const Row(
-                                  children: [
-                                    Icon(Icons.calendar_today, size: 18,color: AppColors.primary,),
-                                  ],
+                                child: const Icon(
+                                  Icons.calendar_month,
+                                  size: 20,
+                                  color: AppColors.primary,
                                 ),
                               ),
                             ),
@@ -207,29 +224,40 @@ class TeachersHomeScreen extends StatelessWidget {
                         Obx(() {
                           if (teachersController.isScheduleLoading.value) {
                             return const Center(
-                              child: Padding( padding: EdgeInsets.symmetric(vertical: 20),
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20),
                                 child: CustomLoader(),
                               ),
                             );
                           }
-                          if (teachersController .filteredScheduleList.isEmpty) {
-                            return Padding(padding: const EdgeInsets.symmetric(vertical: 20),child: Center(child: CustomText(text: "No schedule for this day", fontSize: 14.sp,color: Colors.grey,
-                              ),
+                          if (teachersController.filteredScheduleList.isEmpty) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Center(
+                                child: CustomText(
+                                  text: "No schedule for this day",
+                                  fontSize: 14.sp,
+                                  color: Colors.grey,
+                                ),
                               ),
                             );
                           }
                           return ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: teachersController.filteredScheduleList.length,
+                              itemCount: teachersController
+                                  .filteredScheduleList.length,
                               itemBuilder: (context, index) {
-                                final routine = teachersController.filteredScheduleList[index];
+                                final routine = teachersController
+                                    .filteredScheduleList[index];
                                 return GestureDetector(
-                                  onTap: (){
-                                    Get.toNamed(AppRoutes.detailsScheduleScreen, arguments: routine);
+                                  onTap: () {
+                                    Get.toNamed(AppRoutes.detailsScheduleScreen,
+                                        arguments: routine);
                                   },
                                   child: CustomTodayScheduleCard(
-                                    name: routine.assignableSubject ?? "No Subject",
+                                    name: routine.assignableSubject ??
+                                        "No Subject",
                                     subject: routine.classLevel ?? "No Class",
                                     time: routine.time ?? "N/A",
                                   ),
@@ -259,11 +287,42 @@ class TeachersHomeScreen extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        CustomText(
-                            text: "Quick Actions",
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w600),
-                        SizedBox(height: 20),
+                        Row(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFEFF6FF), // soft blue
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.flash_on_rounded,
+                                color: Colors.blue,
+                                size: 20,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  CustomText(
+                                    text: "Quick Actions",
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: AppColors.black_02,
+                                  ),
+                                  CustomText(
+                                    text: "Common tasks at your fingertips",
+                                    fontSize: 11.sp,
+                                    color: AppColors.titleText2Clr,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
                         GridView.builder(
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
@@ -309,23 +368,48 @@ class TeachersHomeScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            CustomText(
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFFEF3C7), // soft amber
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.assignment_rounded,
+                                color: Color(0xFFD97706),
+                                size: 20,
+                              ),
+                            ),
+                            const SizedBox(width: 5),
+                            Expanded(
+                              child: CustomText(
                                 text: "Assignment & HomeWork",
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w600),
-                            Spacer(),
+                                fontSize: 14.sp,
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.black_02,
+                              ),
+                            ),
                             GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(AppRoutes.allAssignmentsScreen);
-                                },
+                              onTap: () {
+                                Get.toNamed(AppRoutes.allAssignmentsScreen);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary1,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                                 child: CustomText(
                                   text: "View All",
-                                  fontSize: 12.sp,
+                                  fontSize: 11.sp,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.primary,
-                                )),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(height: 20),
@@ -350,7 +434,9 @@ class TeachersHomeScreen extends StatelessWidget {
                               ),
                             );
                           }
-                          final itemsToShow = teachersController.assignmentList.take(3).toList();
+                          final itemsToShow = teachersController.assignmentList
+                              .take(3)
+                              .toList();
                           return ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
@@ -358,17 +444,26 @@ class TeachersHomeScreen extends StatelessWidget {
                               itemBuilder: (context, index) {
                                 final assignment = itemsToShow[index];
                                 return CustomHomeworkCard(
-                                  subject: assignment.assignmentTitle ?? "No Subject",
+                                  subject: assignment.assignmentTitle ??
+                                      "No Subject",
                                   chapter: assignment.assignmentType ?? "N/A",
-                                  grade: assignment.classDistributions?.classLevel ?? "N/A",
-                                  assessmentAvailable:assignment.assessmentAvailable,
+                                  grade: assignment
+                                          .classDistributions?.classLevel ??
+                                      "N/A",
+                                  assessmentAvailable:
+                                      assignment.assessmentAvailable,
                                   time: (() {
                                     try {
-                                      if (assignment.assignmentDueDate != null && assignment.assignmentDueDate!.isNotEmpty) {
-                                        return DateConverter.timeFormetString(assignment.assignmentDueDate!);
+                                      if (assignment.assignmentDueDate !=
+                                              null &&
+                                          assignment
+                                              .assignmentDueDate!.isNotEmpty) {
+                                        return DateConverter.timeFormetString(
+                                            assignment.assignmentDueDate!);
                                       }
                                     } catch (_) {}
-                                    return assignment.assignmentDueDate ?? "N/A";
+                                    return assignment.assignmentDueDate ??
+                                        "N/A";
                                   })(),
                                   onTap: () {},
                                 );
@@ -397,23 +492,48 @@ class TeachersHomeScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            CustomText(
+                            Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: const BoxDecoration(
+                                color: Color(0xFFFEE2E2), // soft red
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(
+                                Icons.campaign_rounded,
+                                color: AppColors.red,
+                                size: 20,
+                              ),
+                            ),
+                            Expanded(
+                              child: CustomText(
                                 text: "Announcements",
                                 fontSize: 15.sp,
-                                fontWeight: FontWeight.w600),
-                            Spacer(),
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.black_02,
+                              ),
+                            ),
                             GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(AppRoutes.allAnnouncementsScreen);
-                                },
+                              onTap: () {
+                                Get.toNamed(AppRoutes.allAnnouncementsScreen);
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary1,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                                 child: CustomText(
                                   text: "View All",
-                                  fontSize: 12.sp,
+                                  fontSize: 11.sp,
                                   fontWeight: FontWeight.w600,
                                   color: AppColors.primary,
-                                )),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                         SizedBox(height: 20),
@@ -438,7 +558,10 @@ class TeachersHomeScreen extends StatelessWidget {
                               ),
                             );
                           }
-                          final itemsToShow = teachersController.announcementList.take(2).toList();
+                          final itemsToShow = teachersController
+                              .announcementList
+                              .take(2)
+                              .toList();
                           return ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
@@ -447,11 +570,14 @@ class TeachersHomeScreen extends StatelessWidget {
                                 final announcement = itemsToShow[index];
                                 return CustomAnnouncementCard(
                                   title: announcement.title ?? "No Title",
-                                  content: announcement.description ?? "No Content",
+                                  content:
+                                      announcement.description ?? "No Content",
                                   date: (() {
                                     try {
-                                      if (announcement.createdAt != null && announcement.createdAt!.isNotEmpty) {
-                                        return DateConverter.timeFormetString(announcement.createdAt!);
+                                      if (announcement.createdAt != null &&
+                                          announcement.createdAt!.isNotEmpty) {
+                                        return DateConverter.timeFormetString(
+                                            announcement.createdAt!);
                                       }
                                     } catch (_) {}
                                     return announcement.createdAt ?? "N/A";

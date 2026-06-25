@@ -89,21 +89,43 @@ class TeachersController extends GetxController {
 //========================= Get Teacher AssignmentHomework =========================
   RxList<AssignmentModel> assignmentList = <AssignmentModel>[].obs;
   RxBool isAssignmentLoading = false.obs;
+  RxBool isMoreAssignmentLoading = false.obs;
   Rx<Status> rxAssignmentStatus = Status.loading.obs;
+  var assignmentPage = 1.obs;
+  var hasMoreAssignments = true.obs;
 
-  Future<void> getAssignmentHomework() async {
-    isAssignmentLoading.value = true;
-    rxAssignmentStatus.value = Status.loading;
+  Future<void> getAssignmentHomework({bool isLoadMore = false}) async {
+    if (isLoadMore) {
+      if (isMoreAssignmentLoading.value || !hasMoreAssignments.value) return;
+      isMoreAssignmentLoading.value = true;
+      assignmentPage.value++;
+    } else {
+      isAssignmentLoading.value = true;
+      rxAssignmentStatus.value = Status.loading;
+      assignmentPage.value = 1;
+      hasMoreAssignments.value = true;
+    }
 
     try {
-      final response = await ApiClient.getData(ApiUrl.getAssignmentHomework(page: 1));
+      final response = await ApiClient.getData(ApiUrl.getAssignmentHomework(page: assignmentPage.value));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final Map<String, dynamic> jsonResponse = response.body is String ? jsonDecode(response.body) : Map<String, dynamic>.from(response.body);
         final AssignmentResponse model = AssignmentResponse.fromJson(jsonResponse);
         
         if (model.data != null && model.data!.data != null) {
-          assignmentList.value = model.data!.data!;
+          if (isLoadMore) {
+            assignmentList.addAll(model.data!.data!);
+          } else {
+            assignmentList.value = model.data!.data!;
+          }
+
+          if (model.data!.data!.isEmpty || 
+              (model.data!.meta != null && model.data!.meta!.totalPage != null && assignmentPage.value >= model.data!.meta!.totalPage!)) {
+            hasMoreAssignments.value = false;
+          }
+        } else {
+          hasMoreAssignments.value = false;
         }
 
         rxAssignmentStatus.value = Status.completed;
@@ -120,7 +142,11 @@ class TeachersController extends GetxController {
       debugPrint('getAssignmentHomework Error: $e');
       showCustomSnackBar('Error: ${e.toString()}', isError: true);
     } finally {
-      isAssignmentLoading.value = false;
+      if (isLoadMore) {
+        isMoreAssignmentLoading.value = false;
+      } else {
+        isAssignmentLoading.value = false;
+      }
     }
   }
 
