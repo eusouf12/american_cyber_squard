@@ -9,7 +9,7 @@ class CustomHomeworkCard extends StatelessWidget {
   final String? subject;
   final String? chapter;
   final String? time;
-  final String? status;
+  final bool? assessmentAvailable;
   final VoidCallback onTap;
 
   const CustomHomeworkCard({
@@ -18,7 +18,7 @@ class CustomHomeworkCard extends StatelessWidget {
     this.subject,
     this.chapter,
     this.time,
-    this.status,
+    this.assessmentAvailable,
     required this.onTap,
   });
 
@@ -82,10 +82,10 @@ class CustomHomeworkCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
                   decoration: BoxDecoration(
-                    color: status =="Pending" ? Color(0xFFFFF9C4) : status =="Completed" ? AppColors.primary.withValues(alpha: 0.2) :AppColors.red.withValues(alpha: 0.2) ,
+                    color: assessmentAvailable == true ? AppColors.primary.withValues(alpha: 0.2) :AppColors.red.withValues(alpha: 0.2) ,
                     borderRadius: BorderRadius.circular(8.r),
                   ),
-                  child: CustomText(text: status ?? "Overdue",fontSize: 10.sp, fontWeight: FontWeight.w600,color:status =="Completed" ? AppColors.primary :Color(0xFF827717),)
+                  child: CustomText(text: assessmentAvailable == true ? "Completed" :"In Progress",fontSize: 10.sp, fontWeight: FontWeight.w600,color:assessmentAvailable == true ? AppColors.primary :Color(0xFF827717),)
                 ),
               ],
             ),

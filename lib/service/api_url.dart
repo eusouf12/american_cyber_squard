@@ -16,6 +16,7 @@ class ApiUrl {
  ///========================= Teacher =========================
   static String getAllTeacherSchedule({required int page}) =>  "/api/v1/teacher/find_by_specific_class_listOf_teacher?page=$page&limit=10";
   static String getAssignmentHomework({required int page}) =>  "/api/v1/assignments/find_by_specific_teacher_assignment?page=$page&limit=10";
+   static String getAnnouncement({required int page}) =>  "/api/v1/announcement/find_by_announcement?page=$page&limit=10";
  
   
 

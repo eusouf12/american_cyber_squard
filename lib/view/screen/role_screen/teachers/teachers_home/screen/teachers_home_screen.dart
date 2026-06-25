@@ -1,10 +1,12 @@
 import 'package:america_ayber_squad/utils/app_const/app_const.dart';
 import 'package:america_ayber_squad/view/components/custom_loader/custom_loader.dart';
+import 'package:america_ayber_squad/helper/time_converter/time_converter.dart';
 import 'package:america_ayber_squad/view/components/custom_nav_bar/teacher_nav_bar.dart';
 import 'package:america_ayber_squad/view/components/custom_netwrok_image/custom_network_image.dart';
 import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_home/widget/custom_homework_card.dart';
 import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_home/widget/custom_quick_card.dart';
 import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_home/widget/custom_today_schedule_card.dart';
+import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_home/widget/custom_announcement_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -239,7 +241,7 @@ class TeachersHomeScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
-                //quick actions
+                //===== quick actions
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -289,7 +291,7 @@ class TeachersHomeScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
 
-                // assignment and homework
+                //====== assignment and homework
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -315,7 +317,9 @@ class TeachersHomeScreen extends StatelessWidget {
                                 fontWeight: FontWeight.w600),
                             Spacer(),
                             GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.allAssignmentsScreen);
+                                },
                                 child: CustomText(
                                   text: "View All",
                                   fontSize: 12.sp,
@@ -325,21 +329,137 @@ class TeachersHomeScreen extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 20),
-                        ListView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: 3,
-                            itemBuilder: (context, index) {
-                              return CustomHomeworkCard(
-                                subject: index == 0
-                                    ? "Quadratic Equations"
-                                    : "NewTown's Laws Lab",
-                                chapter: index == 0 ? "Chapter 5" : "Report",
-                                grade: "Grade 10-A • Mathematics",
-                                time: "Dec 15, 2024",
-                                onTap: () {},
-                              );
-                            }),
+                        Obx(() {
+                          if (teachersController.isAssignmentLoading.value) {
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                child: CustomLoader(),
+                              ),
+                            );
+                          }
+                          if (teachersController.assignmentList.isEmpty) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Center(
+                                child: CustomText(
+                                  text: "No assignments found",
+                                  fontSize: 14.sp,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            );
+                          }
+                          final itemsToShow = teachersController.assignmentList.take(3).toList();
+                          return ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: itemsToShow.length,
+                              itemBuilder: (context, index) {
+                                final assignment = itemsToShow[index];
+                                return CustomHomeworkCard(
+                                  subject: assignment.assignmentTitle ?? "No Subject",
+                                  chapter: assignment.assignmentType ?? "N/A",
+                                  grade: assignment.classDistributions?.classLevel ?? "N/A",
+                                  assessmentAvailable:assignment.assessmentAvailable,
+                                  time: (() {
+                                    try {
+                                      if (assignment.assignmentDueDate != null && assignment.assignmentDueDate!.isNotEmpty) {
+                                        return DateConverter.timeFormetString(assignment.assignmentDueDate!);
+                                      }
+                                    } catch (_) {}
+                                    return assignment.assignmentDueDate ?? "N/A";
+                                  })(),
+                                  onTap: () {},
+                                );
+                              });
+                        }),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 20),
+                //====== announcements
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 6,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            CustomText(
+                                text: "Announcements",
+                                fontSize: 15.sp,
+                                fontWeight: FontWeight.w600),
+                            Spacer(),
+                            GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.allAnnouncementsScreen);
+                                },
+                                child: CustomText(
+                                  text: "View All",
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.primary,
+                                )),
+                          ],
+                        ),
+                        SizedBox(height: 20),
+                        Obx(() {
+                          if (teachersController.isAnnouncementLoading.value) {
+                            return const Center(
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 20),
+                                child: CustomLoader(),
+                              ),
+                            );
+                          }
+                          if (teachersController.announcementList.isEmpty) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 20),
+                              child: Center(
+                                child: CustomText(
+                                  text: "No announcements found",
+                                  fontSize: 14.sp,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                            );
+                          }
+                          final itemsToShow = teachersController.announcementList.take(2).toList();
+                          return ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: itemsToShow.length,
+                              itemBuilder: (context, index) {
+                                final announcement = itemsToShow[index];
+                                return CustomAnnouncementCard(
+                                  title: announcement.title ?? "No Title",
+                                  content: announcement.description ?? "No Content",
+                                  date: (() {
+                                    try {
+                                      if (announcement.createdAt != null && announcement.createdAt!.isNotEmpty) {
+                                        return DateConverter.timeFormetString(announcement.createdAt!);
+                                      }
+                                    } catch (_) {}
+                                    return announcement.createdAt ?? "N/A";
+                                  })(),
+                                  onTap: () {},
+                                );
+                              });
+                        }),
                       ],
                     ),
                   ),
