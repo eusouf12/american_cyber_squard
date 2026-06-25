@@ -167,7 +167,7 @@ class TeachersHomeScreen extends StatelessWidget {
                               final selStr = DateFormat('yyyy-MM-dd').format( teachersController.selectedDate.value);
                               final title = nowStr == selStr
                                   ? "Today's Schedule"
-                                  : DateFormat('dd MMM yyyy').format(teachersController.selectedDate.value);
+                                  : "${DateFormat('EEEE').format(teachersController.selectedDate.value)}'s Schedule";
                               return CustomText(
                                   text: title,
                                   fontSize: 16.sp,

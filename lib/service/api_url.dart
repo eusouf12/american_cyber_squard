@@ -1,8 +1,7 @@
 class ApiUrl {
-  static const String baseUrl = "https://feof-segment-shopping-introduced.trycloudflare.com";
+  static const String baseUrl = "https://watching-claimed-visible-third.trycloudflare.com";
   static const String imageUrl = baseUrl;
   static String socketUrl = baseUrl;
-  static String mapKey = "AIzaSyBuSZJklSc1j0D4kqhkJcmyArcZbWujbXQ";
 
   ///========================= Authentication =========================
   static const String signIn = "/api/v1/auth/login";
@@ -13,14 +12,16 @@ class ApiUrl {
   static const String verificationOtpForgetPass = "/api/v1/users/verification_forgot_user";
   static const String resetPassword = "/api/v1/users/reset_password";
 
+
+ ///========================= Teacher =========================
   static String getAllTeacherSchedule({required int page}) =>  "/api/v1/teacher/find_by_specific_class_listOf_teacher?page=$page&limit=10";
+  static String getAssignmentHomework({required int page}) =>  "/api/v1/assignments/find_by_specific_teacher_assignment?page=$page&limit=10";
+ 
   
-  
-  
-  
+
+
   static const String termsCondition = "/api/v1/setting/find_by_terms_conditions";
   static const String privacyPolicy = "/api/v1/setting/find_by_privacy_policys";
-  
   static const String googleAuth = "/api/v1/user/google_auth";
   static  String  deleteAccount({required String userId})=> "/api/v1/auth/delete_account/$userId";
 

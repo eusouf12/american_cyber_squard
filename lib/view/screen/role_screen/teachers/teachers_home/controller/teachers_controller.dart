@@ -8,6 +8,7 @@ import 'package:america_ayber_squad/service/api_url.dart';
 import 'package:america_ayber_squad/utils/ToastMsg/toast_message.dart';
 import 'package:america_ayber_squad/utils/app_const/app_const.dart';
 import '../model/teacher_schedule.dart';
+import '../model/teacher_assignment.dart';
 
 class TeachersController extends GetxController {
   var selectedIndex = 0.obs;
@@ -25,13 +26,18 @@ class TeachersController extends GetxController {
   Rx<Status> rxScheduleStatus = Status.loading.obs;
   Rx<DateTime> selectedDate = DateTime.now().obs;
 
+  RxList<AssignmentModel> assignmentList = <AssignmentModel>[].obs;
+  RxBool isAssignmentLoading = false.obs;
+  Rx<Status> rxAssignmentStatus = Status.loading.obs;
+
   Future<void> _checkTokenAndLoadData() async {
     String token = await SharePrefsHelper.getString(AppConstants.bearerToken);
     if (token.isNotEmpty) {
       getTeacherSchedule();
+      getAssignmentHomework();
     }
   }
-
+//========================= Get Teacher Schedule =========================
   Future<void> getTeacherSchedule() async {
     isScheduleLoading.value = true;
     rxScheduleStatus.value = Status.loading;
