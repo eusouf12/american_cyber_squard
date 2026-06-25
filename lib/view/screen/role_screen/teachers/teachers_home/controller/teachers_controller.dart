@@ -14,13 +14,52 @@ import '../model/announcement_model.dart';
 class TeachersController extends GetxController {
   var selectedIndex = 0.obs;
 
+  final ScrollController assignmentScrollController = ScrollController();
+  final ScrollController announcementScrollController = ScrollController();
+
   @override
   void onInit() {
     super.onInit();
     _checkTokenAndLoadData();
+    assignmentScrollController.addListener(_assignmentScrollListener);
+    announcementScrollController.addListener(_announcementScrollListener);
   }
 
- 
+  @override
+  void onClose() {
+    assignmentScrollController.dispose();
+    announcementScrollController.dispose();
+    super.onClose();
+  }
+
+  void _assignmentScrollListener() {
+    if (assignmentScrollController.position.pixels >=
+        assignmentScrollController.position.maxScrollExtent - 100) {
+      getAssignmentHomework(isLoadMore: true);
+    }
+  }
+
+  void _announcementScrollListener() {
+    if (announcementScrollController.position.pixels >=
+        announcementScrollController.position.maxScrollExtent - 100) {
+      getAnnouncement(isLoadMore: true);
+    }
+  }
+
+  void resetAndLoadAssignments() {
+    assignmentPage.value = 1;
+    hasMoreAssignments.value = true;
+    assignmentList.clear();
+    getAssignmentHomework();
+  }
+
+  void resetAndLoadAnnouncements() {
+    announcementPage.value = 1;
+    hasMoreAnnouncements.value = true;
+    announcementList.clear();
+    getAnnouncement();
+  }
+
   RxList<RoutineModel> allScheduleList = <RoutineModel>[].obs;
   RxList<RoutineModel> filteredScheduleList = <RoutineModel>[].obs;
   RxBool isScheduleLoading = false.obs;

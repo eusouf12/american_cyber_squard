@@ -9,37 +9,10 @@ import '../controller/teachers_controller.dart';
 import '../widget/custom_homework_card.dart';
 import 'package:america_ayber_squad/helper/time_converter/time_converter.dart';
 
-class AllAssignmentsScreen extends StatefulWidget {
-  const AllAssignmentsScreen({super.key});
+class AllAssignmentsScreen extends StatelessWidget {
+  AllAssignmentsScreen({super.key});
 
-  @override
-  State<AllAssignmentsScreen> createState() => _AllAssignmentsScreenState();
-}
-
-class _AllAssignmentsScreenState extends State<AllAssignmentsScreen> {
   final TeachersController teachersController = Get.find<TeachersController>();
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    // Load fresh assignments when entering this page
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      teachersController.getAssignmentHomework();
-    });
-
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
-        teachersController.getAssignmentHomework(isLoadMore: true);
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +39,7 @@ class _AllAssignmentsScreenState extends State<AllAssignmentsScreen> {
             );
           }
           return ListView.builder(
-            controller: _scrollController,
+            controller: teachersController.assignmentScrollController,
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             itemCount: teachersController.assignmentList.length + 1,
             itemBuilder: (context, index) {

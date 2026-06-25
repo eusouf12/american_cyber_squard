@@ -15,6 +15,7 @@ import '../../view/screen/role_screen/teachers/teachers_attendance/controller/te
 import '../../view/screen/role_screen/teachers/teachers_home/controller/teachers_controller.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/controller/teacher_student_controller.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/controller/teachers_material_controller.dart';
+import '../../view/screen/role_screen/teachers/teachers_recording_classes/controller/recording_class_controller.dart';
 
 class DependencyInjection extends Bindings {
   @override
@@ -40,6 +41,8 @@ class DependencyInjection extends Bindings {
 
     ///==========================Teacher Controllers =========================
     Get.lazyPut(() => TeachersController(), fenix: true);
+    Get.lazyPut(() => RecordingClassController(), fenix: true);
+    
     Get.lazyPut(() => TeachersMaterialController(), fenix: true);
     Get.lazyPut(() => TeacherStudentController(), fenix: true);
     Get.lazyPut(() => TeacherCreateController(), fenix: true);

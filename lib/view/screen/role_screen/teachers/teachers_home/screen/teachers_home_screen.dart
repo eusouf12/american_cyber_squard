@@ -393,6 +393,7 @@ class TeachersHomeScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
+                                teachersController.resetAndLoadAssignments();
                                 Get.toNamed(AppRoutes.allAssignmentsScreen);
                               },
                               child: Container(
@@ -517,6 +518,7 @@ class TeachersHomeScreen extends StatelessWidget {
                             ),
                             GestureDetector(
                               onTap: () {
+                                teachersController.resetAndLoadAnnouncements();
                                 Get.toNamed(AppRoutes.allAnnouncementsScreen);
                               },
                               child: Container(

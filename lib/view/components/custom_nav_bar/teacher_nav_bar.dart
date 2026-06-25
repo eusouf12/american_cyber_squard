@@ -9,7 +9,7 @@ import '../../screen/role_screen/teachers/teachers_assignment/views/teachers_ass
 import '../../screen/role_screen/teachers/teachers_attendance/teachers_attendance_screen.dart';
 import '../../screen/role_screen/teachers/teachers_home/screen/teachers_home_screen.dart';
 import '../../screen/role_screen/teachers/teachers_profile/teachers_profile_screen.dart';
-import '../../screen/role_screen/teachers/teachers_recording_classes/teachers_recording_classes.dart';
+import '../../screen/role_screen/teachers/teachers_recording_classes/screen/teachers_recording_classes.dart';
 
 
 class TeacherNavBar extends StatefulWidget {

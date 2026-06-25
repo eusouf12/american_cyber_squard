@@ -9,37 +9,10 @@ import '../controller/teachers_controller.dart';
 import '../widget/custom_announcement_card.dart';
 import 'package:america_ayber_squad/helper/time_converter/time_converter.dart';
 
-class AllAnnouncementsScreen extends StatefulWidget {
-  const AllAnnouncementsScreen({super.key});
+class AllAnnouncementsScreen extends StatelessWidget {
+  AllAnnouncementsScreen({super.key});
 
-  @override
-  State<AllAnnouncementsScreen> createState() => _AllAnnouncementsScreenState();
-}
-
-class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
   final TeachersController teachersController = Get.find<TeachersController>();
-  final ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    // Load fresh announcements when entering this page
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      teachersController.getAnnouncement();
-    });
-
-    _scrollController.addListener(() {
-      if (_scrollController.position.pixels >= _scrollController.position.maxScrollExtent - 100) {
-        teachersController.getAnnouncement(isLoadMore: true);
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +39,7 @@ class _AllAnnouncementsScreenState extends State<AllAnnouncementsScreen> {
             );
           }
           return ListView.builder(
-            controller: _scrollController,
+            controller: teachersController.announcementScrollController,
             padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
             itemCount: teachersController.announcementList.length + 1,
             itemBuilder: (context, index) {

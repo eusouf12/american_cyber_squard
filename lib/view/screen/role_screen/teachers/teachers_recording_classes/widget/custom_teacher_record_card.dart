@@ -111,19 +111,8 @@ class CustomTeacherRecordCard extends StatelessWidget {
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w400,
                 icon: Icon(Icons.play_arrow,color: Colors.white),
-              )
-              : CustomButton(
-                onTap: onTapView,
-                title: "Recording Failed",
-                height: 36,
-                width: 150,
-                fontSize: 10.sp,
-                fontWeight: FontWeight.w400,
-                fillColor: AppColors.grey_02 ,
-                textColor: Colors.black ,
-                icon: Icon(Icons.error_outline,color: Colors.grey),
-              )
-        ],
+              ):SizedBox.shrink(),
+        ]  
       ),
     );
   }

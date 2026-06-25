@@ -25,6 +25,7 @@ import '../../view/screen/Login_role/login.dart';
 import '../../view/screen/Login_role/forgot_password_screen.dart';
 import '../../view/screen/Login_role/verification_otp_forget_pass_screen.dart';
 import '../../view/screen/Login_role/reset_password_screen.dart';
+import '../../view/screen/role_screen/teachers/teachers_recording_classes/screen/video_player_screen.dart';
 
 class AppRoutes {
   ///=========================== Student Part ===============
@@ -57,6 +58,7 @@ class AppRoutes {
   static const String detailsScheduleScreen ="/DetailsScheduleScreen";
   static const String allAssignmentsScreen ="/AllAssignmentsScreen";
   static const String allAnnouncementsScreen ="/AllAnnouncementsScreen";
+  static const String videoPlayerScreen = "/VideoPlayerScreen";
 
   ///=================== School Nurse Part ======================
   static const String schoolNurseHomeScreen ="/SchoolNurseHomeScreen";
@@ -91,7 +93,8 @@ class AppRoutes {
     GetPage(name: teachersAttendanceScreen, page: () => TeachersAttendanceScreen()),
     GetPage(name: detailsScheduleScreen, page: () => const DetailsScheduleScreen()),
     GetPage(name: allAssignmentsScreen, page: () => AllAssignmentsScreen()),
-    GetPage(name: allAnnouncementsScreen, page: () => const AllAnnouncementsScreen()),
+    GetPage(name: allAnnouncementsScreen, page: () => AllAnnouncementsScreen()),
+    GetPage(name: videoPlayerScreen, page: () => VideoPlayerScreen()),
 
 
    ///===================== School Nurse Part================
