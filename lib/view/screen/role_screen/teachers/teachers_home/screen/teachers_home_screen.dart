@@ -174,6 +174,7 @@ class TeachersHomeScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w600);
                             }),
                             const Spacer(),
+                            // === calender icon===
                             GestureDetector(
                               onTap: () async {
                                 DateTime? pickedDate = await showDatePicker(
@@ -204,8 +205,7 @@ class TeachersHomeScreen extends StatelessWidget {
                         Obx(() {
                           if (teachersController.isScheduleLoading.value) {
                             return const Center(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(vertical: 20),
+                              child: Padding( padding: EdgeInsets.symmetric(vertical: 20),
                                 child: CustomLoader(),
                               ),
                             );
@@ -219,16 +219,18 @@ class TeachersHomeScreen extends StatelessWidget {
                           return ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: teachersController
-                                  .filteredScheduleList.length,
+                              itemCount: teachersController.filteredScheduleList.length,
                               itemBuilder: (context, index) {
-                                final routine = teachersController
-                                    .filteredScheduleList[index];
-                                return CustomTodayScheduleCard(
-                                  name:
-                                      routine.assignableSubject ?? "No Subject",
-                                  subject: routine.classLevel ?? "No Class",
-                                  time: routine.time ?? "N/A",
+                                final routine = teachersController.filteredScheduleList[index];
+                                return GestureDetector(
+                                  onTap: (){
+                                    Get.toNamed(AppRoutes.detailsScheduleScreen, arguments: routine);
+                                  },
+                                  child: CustomTodayScheduleCard(
+                                    name: routine.assignableSubject ?? "No Subject",
+                                    subject: routine.classLevel ?? "No Class",
+                                    time: routine.time ?? "N/A",
+                                  ),
                                 );
                               });
                         }),
