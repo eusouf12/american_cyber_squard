@@ -13,17 +13,26 @@ class RecordingClassController extends GetxController {
   final ScrollController scrollController = ScrollController();
  
 
+  final searchController = TextEditingController();
+  RxString searchVal = "".obs;
+
   @override
   void onInit() {
     super.onInit();
     getClassRecording();
     scrollController.addListener(_scrollListener);
+    
+    // Automatic search after 500ms when typing stops
+    debounce(searchVal, (_) {
+      getClassRecording();
+    }, time: const Duration(milliseconds: 500));
   }
 
   @override
   void onClose() {
     scrollController.dispose();
     recordingUrlController.dispose();
+    searchController.dispose();
     super.onClose();
   }
 
@@ -131,7 +140,10 @@ class RecordingClassController extends GetxController {
 
     try {
       final response = await ApiClient.getData(
-          ApiUrl.getClassRecording(page: recordingPage.value));
+          ApiUrl.getClassRecording(
+            page: recordingPage.value,
+            searchTerm: searchController.text.trim(),
+          ));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final Map<String, dynamic> jsonResponse = response.body is String

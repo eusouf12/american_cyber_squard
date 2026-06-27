@@ -29,15 +29,19 @@ class TeachersRecordingClasses extends StatelessWidget {
           titleSpacing: 0,
           title: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: const CustomTextField(
+            child: CustomTextField(
+              textEditingController: recordingClassController.searchController,
+              onChanged: (value) {
+                recordingClassController.searchVal.value = value;
+              },
               fillColor: AppColors.white,
               fieldBorderColor: AppColors.greyLight,
-              prefixIcon: Icon(
+              prefixIcon: const Icon(
                 Icons.search,
                 color: Colors.grey,
               ),
               hintText: "Search Your Recorded class",
-              hintStyle: TextStyle(color: Colors.grey),
+              hintStyle: const TextStyle(color: Colors.grey),
             ),
           ),
           toolbarHeight: 60,
