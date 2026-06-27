@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:america_ayber_squad/helper/shared_prefe/shared_prefe.dart';
 import 'package:america_ayber_squad/service/api_client.dart';
 import 'package:america_ayber_squad/service/api_url.dart';
 import 'package:america_ayber_squad/utils/ToastMsg/toast_message.dart';
@@ -20,7 +19,9 @@ class TeachersController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _checkTokenAndLoadData();
+    getTeacherSchedule();
+    getAssignmentHomework();
+    getAnnouncement();
     assignmentScrollController.addListener(_assignmentScrollListener);
     announcementScrollController.addListener(_announcementScrollListener);
   }
@@ -80,14 +81,7 @@ class TeachersController extends GetxController {
     filterScheduleBySelectedDate();
   }
 
-  Future<void> _checkTokenAndLoadData() async {
-    String token = await SharePrefsHelper.getString(AppConstants.bearerToken);
-    if (token.isNotEmpty) {
-      getTeacherSchedule();
-      getAssignmentHomework();
-      getAnnouncement();
-    }
-  }
+
 //========================= Get Teacher Schedule =========================
   Future<void> getTeacherSchedule() async {
     isScheduleLoading.value = true;

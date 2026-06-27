@@ -1,5 +1,5 @@
 class ApiUrl {
-  static const String baseUrl = "https://watching-claimed-visible-third.trycloudflare.com";
+  static const String baseUrl = "https://argue-computed-trans-spaces.trycloudflare.com";
   static const String imageUrl = baseUrl;
   static String socketUrl = baseUrl;
 
@@ -18,7 +18,10 @@ class ApiUrl {
   static String getAssignmentHomework({required int page}) =>  "/api/v1/assignments/find_by_specific_teacher_assignment?page=$page&limit=10";
   static String getAnnouncement({required int page}) =>  "/api/v1/announcement/find_by_announcement?page=$page&limit=10";
   static String getClassRecording({required int page}) =>  "/api/v1/teacher/find_by_specific_student_class_recording_of_teacher?page=$page&limit=10";
+  static String getteacherClassDistribute() =>  "/api/v1/class_distribution/find_my_all_distributed_class";
+  static String postClassRecording() => "/api/v1/teacher/store_class_recording_link_of_teacher";
  
+  
   
 
 

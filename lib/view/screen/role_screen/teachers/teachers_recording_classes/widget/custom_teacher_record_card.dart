@@ -8,7 +8,6 @@ import '../../../../../components/custom_button/custom_button.dart';
 class CustomTeacherRecordCard extends StatelessWidget {
   final String? grade;
   final String? subject;
-  final String? time;
   final String? date;
   final String? status;
   final VoidCallback onTapView;
@@ -18,7 +17,6 @@ class CustomTeacherRecordCard extends StatelessWidget {
     this.grade,
     this.subject,
     this.date,
-    this.time,
     this.status,
     required this.onTapView,
   });
@@ -40,80 +38,78 @@ class CustomTeacherRecordCard extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomText(
-            text: subject ?? "",
-            fontWeight: FontWeight.bold,
-            fontSize: 12.sp,
-            maxLines: 2,
-            textAlign: TextAlign.start,
-          ),
-          SizedBox(height: 6.h),
-          //grade
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CustomText(
-                text: grade ?? "",
-                fontSize: 10.sp,
-                color: Colors.black87,
-              ),
-              Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
-                  decoration: BoxDecoration(
-                    color: status =="Available" ? AppColors.primary.withValues(alpha: 0.2)  : Colors.red.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: CustomText(text: status ?? "",fontSize: 10.sp, fontWeight: FontWeight.w500,color:status =="Available" ? AppColors.primary :Colors.red)
-              ),
-            ],
-          ),
-          SizedBox(height: 6.h),
-          Row(
-            children: [
-              Row(
-                children: [
-                  Icon(Icons.calendar_today,size: 16,color: Colors.black45,),
-                  CustomText(
-                    text: date ??"",
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        CustomText(
+          text: subject ?? "",
+          fontWeight: FontWeight.bold,
+          fontSize: 12.sp,
+          maxLines: 2,
+          textAlign: TextAlign.start,
+        ),
+        SizedBox(height: 6.h),
+        //grade
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CustomText(
+              text: grade ?? "",
+              fontSize: 10.sp,
+              color: Colors.black87,
+            ),
+            Container(
+                padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
+                decoration: BoxDecoration(
+                  color: status == "Available"
+                      ? AppColors.primary.withValues(alpha: 0.2)
+                      : Colors.red.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(8.r),
+                ),
+                child: CustomText(
+                    text: status ?? "",
                     fontSize: 10.sp,
-                    color: Colors.black87,
-                    right: 10.sp,
-                    left: 10,
-                  ),
-                ],
-              ),
-              Row(
-                children: [
-                  Icon(Icons.alarm,size: 18,color: Colors.black45,),
-                  CustomText(
-                    text: time ??"",
-                    fontSize: 10.sp,
-                    color: Colors.black87,
-                    left: 10,
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(height: 8.h),
-          SizedBox(height: 8.h),
+                    fontWeight: FontWeight.w500,
+                    color: status == "Available"
+                        ? AppColors.primary
+                        : Colors.red)),
+          ],
+        ),
+        SizedBox(height: 6.h),
+        Row(
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.calendar_today,
+                  size: 16,
+                  color: Colors.black45,
+                ),
+                CustomText(
+                  text: date ?? "",
+                  fontSize: 10.sp,
+                  color: Colors.black87,
+                  right: 10.sp,
+                  left: 10,
+                ),
+              ],
+            ),
+          ],
+        ),
+        SizedBox(height: 8.h),
+        SizedBox(height: 8.h),
 
-          // btn
-          status =="Available"
-              ? CustomButton(
+        // btn
+        status == "Available"
+            ? CustomButton(
                 onTap: onTapView,
                 title: "View Recording",
                 height: 36,
                 width: 150,
                 fontSize: 10.sp,
                 fontWeight: FontWeight.w400,
-                icon: Icon(Icons.play_arrow,color: Colors.white),
-              ):SizedBox.shrink(),
-        ]  
-      ),
+                icon: Icon(Icons.play_arrow, color: Colors.white),
+              )
+            : SizedBox.shrink(),
+      ]),
     );
   }
 }

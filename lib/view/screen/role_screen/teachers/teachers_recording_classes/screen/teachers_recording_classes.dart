@@ -10,14 +10,14 @@ import '../../../../../components/custom_text/custom_text.dart';
 import '../../../../../components/custom_text_field/custom_text_field.dart';
 import '../controller/recording_class_controller.dart';
 import '../widget/custom_teacher_record_card.dart';
+import 'upload_recording_screen.dart';
 
 class TeachersRecordingClasses extends StatelessWidget {
   const TeachersRecordingClasses({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final RecordingClassController recordingClassController =
-        Get.find<RecordingClassController>();
+    final RecordingClassController recordingClassController = Get.find<RecordingClassController>();
     return CustomGradient(
       child: Scaffold(
         appBar: AppBar(
@@ -65,7 +65,12 @@ class TeachersRecordingClasses extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        recordingClassController.recordingUrlController.clear();
+                        recordingClassController.selectedDistribution.value = null;
+                        recordingClassController.getTeacherClassDistribution();
+                        Get.to(() => const UploadRecordingScreen());
+                      },
                       child: Container(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 6, vertical: 10),
@@ -77,8 +82,7 @@ class TeachersRecordingClasses extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(Icons.add,
-                                color: AppColors.white, size: 20),
+                            const Icon(Icons.add, color: AppColors.white, size: 20),
                             const SizedBox(width: 5),
                             CustomText(
                               text: "Upload Recording",
@@ -120,11 +124,9 @@ class TeachersRecordingClasses extends StatelessWidget {
                         itemCount:
                             recordingClassController.recordingList.length + 1,
                         itemBuilder: (context, index) {
-                          if (index ==
-                              recordingClassController.recordingList.length) {
+                          if (index == recordingClassController.recordingList.length) {
                             return Obx(() {
-                              if (recordingClassController
-                                  .isMoreRecordingLoading.value) {
+                              if (recordingClassController.isMoreRecordingLoading.value) {
                                 return const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 20),
                                   child: Center(
@@ -135,15 +137,10 @@ class TeachersRecordingClasses extends StatelessWidget {
                               return const SizedBox.shrink();
                             });
                           }
-                          final recording =
-                              recordingClassController.recordingList[index];
+                          final recording = recordingClassController.recordingList[index];
                           return CustomTeacherRecordCard(
-                            subject: recording
-                                    .classDistribution?.assignableSubject ??
-                                "No Subject",
-                            grade: recording.classDistribution?.classLevel ??
-                                "N/A",
-                            time: recording.classDistribution?.time ?? "N/A",
+                            subject: recording.classDistribution?.assignableSubject ?? "No Subject",
+                            grade: recording.classDistribution?.classLevel ?? "N/A",
                             date: (() {
                               try {
                                 if (recording.createdAt != null &&

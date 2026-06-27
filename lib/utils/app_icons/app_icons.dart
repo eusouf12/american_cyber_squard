@@ -31,7 +31,7 @@ class AppIcons {
   static const String pay = "$basePath/pay.svg";
   static const String student = "$basePath/student.svg";
   static const String myClass = "$basePath/my_class.svg";
-  static const String zoom = "$basePath/zoom.svg";
+  static const String group = "$basePath/group.svg";
   static const String health = "$basePath/health.svg";
   static const String chat = "$basePath/chat.svg";
   static const String exam = "$basePath/exam.svg";
