@@ -20,6 +20,16 @@ class ApiUrl {
   static String getClassRecording({required int page, String? searchTerm}) =>  "/api/v1/teacher/find_by_specific_student_class_recording_of_teacher?page=$page&limit=10${searchTerm != null && searchTerm.isNotEmpty ? '&searchTerm=$searchTerm' : ''}";
   static String getteacherClassDistribute() =>  "/api/v1/class_distribution/find_my_all_distributed_class";
   static String postClassRecording() => "/api/v1/teacher/store_class_recording_link_of_teacher";
+  static String getTeacherUnderStudents({required int page, String? className, String? name}) {
+    String url = "/api/v1/teacher/find_by_specific_student_listOf_teacher?page=$page&limit=10";
+    if (className != null && className.isNotEmpty && className != "All") {
+      url += "&className=$className";
+    }
+    if (name != null && name.isNotEmpty) {
+      url += "&name=$name";
+    }
+    return url;
+  }
  
   
   

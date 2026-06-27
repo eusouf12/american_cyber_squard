@@ -1,8 +1,6 @@
 import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../../../utils/app_colors/app_colors.dart';
 import '../../../../../components/custom_button/custom_button.dart';
 
 class TeacherMyStudentCard extends StatelessWidget {
@@ -10,7 +8,7 @@ class TeacherMyStudentCard extends StatelessWidget {
   final String? subject;
   final String? phone;
   final String? email;
-  final String? status;
+  final String? studentId;
   final VoidCallback? onTapView;
 
   const TeacherMyStudentCard({
@@ -19,7 +17,7 @@ class TeacherMyStudentCard extends StatelessWidget {
     this.subject,
     this.email,
     this.phone,
-    this.status,
+    this.studentId,
     this.onTapView,
   });
 
@@ -60,14 +58,13 @@ class TeacherMyStudentCard extends StatelessWidget {
                 fontSize: 10.sp,
                 color: Colors.black87,
               ),
-              Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
-                  decoration: BoxDecoration(
-                    color: status =="Present" ? AppColors.primary.withValues(alpha: 0.2)  : status =="Late" ?Colors.yellow.withValues(alpha: 0.2) :Colors.red.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: CustomText(text: status ?? "",fontSize: 10.sp, fontWeight: FontWeight.w500,color:status =="Present" ?AppColors.primary :  status =="Late" ?Colors.red : Colors.red)
-              ),
+              if (studentId != null)
+                CustomText(
+                  text: "ID: $studentId",
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black54,
+                ),
             ],
           ),
           SizedBox(height: 6.h),
