@@ -180,8 +180,7 @@ class TeacherStudentScreen extends StatelessWidget {
                                 itemCount:
                                     teacherStudentController.studentList.length,
                                 itemBuilder: (context, index) {
-                                  final student = teacherStudentController
-                                      .studentList[index];
+                                  final student = teacherStudentController .studentList[index];
                                   return TeacherMyStudentCard(
                                     phone: student.guardianPhone ?? "N/A",
                                     studentId: student.studentId ?? "N/A",
@@ -190,8 +189,7 @@ class TeacherStudentScreen extends StatelessWidget {
                                     grade: student.className ?? "N/A",
                                     onTapView: () {
                                       if (student.id != null) {
-                                        teacherStudentController
-                                            .getStudentDetails("0aee4a0e-079f-44fd-916a-e84a60057280");
+                                        teacherStudentController.getStudentDetails(student.id !);
                                         Get.to(
                                             () => TeacherStudentDetailsScreen(
                                                   studentId: student.id!,

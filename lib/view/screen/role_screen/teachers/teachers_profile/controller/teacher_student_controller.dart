@@ -33,10 +33,8 @@ class TeacherStudentController extends GetxController {
     selectedClass.value = "All";
     myClass.value = ["All"];
     
-    // Fetch classes and students
-    getClasses().then((_) {
-      getStudents();
-    });
+    // Fetch students
+    getStudents();
 
     // Automatically trigger search on text change (with 500ms debounce)
     debounce(searchQuery, (_) {
@@ -61,30 +59,6 @@ class TeacherStudentController extends GetxController {
     if (scrollController.position.pixels >=
         scrollController.position.maxScrollExtent - 100) {
       getStudents(isLoadMore: true);
-    }
-  }
-
-  Future<void> getClasses() async {
-    try {
-      final response = await ApiClient.getData(ApiUrl.getteacherClassDistribute());
-      if (response.statusCode == 200 || response.statusCode == 201) {
-        final Map<String, dynamic> jsonResponse = response.body is String
-            ? jsonDecode(response.body)
-            : Map<String, dynamic>.from(response.body);
-        
-        if (jsonResponse['data'] != null) {
-          final list = jsonResponse['data'] as List;
-          final uniqueClasses = list
-              .map((e) => e['classLevel']?.toString() ?? '')
-              .where((element) => element.isNotEmpty)
-              .toSet()
-              .toList();
-          
-          myClass.value = ["All", ...uniqueClasses];
-        }
-      }
-    } catch (e) {
-      debugPrint('getClasses error: $e');
     }
   }
 
@@ -121,6 +95,15 @@ class TeacherStudentController extends GetxController {
             studentList.addAll(model.data!.data!);
           } else {
             studentList.value = model.data!.data!;
+          }
+
+          if (selectedClass.value == "All" && searchQuery.value.isEmpty) {
+            final fetchedClasses = studentList
+                .map((e) => e.className?.toString() ?? '')
+                .where((element) => element.isNotEmpty)
+                .toSet()
+                .toList();
+            myClass.value = ["All", ...fetchedClasses];
           }
 
           if (model.data!.data!.isEmpty ||
