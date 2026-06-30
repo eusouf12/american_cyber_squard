@@ -9,6 +9,7 @@ import '../../../../../components/custom_text_field/custom_text_field.dart';
 import '../../../../../../utils/app_colors/app_colors.dart';
 import '../controller/teacher_student_controller.dart';
 import '../widget/teacher_my_student_card.dart';
+import 'teacher_student_details_screen.dart';
 
 class TeacherStudentScreen extends StatelessWidget {
   TeacherStudentScreen({super.key});
@@ -150,7 +151,8 @@ class TeacherStudentScreen extends StatelessWidget {
                         ),
                         SizedBox(height: 20),
                         Obx(() {
-                          if (teacherStudentController.isStudentsLoading.value) {
+                          if (teacherStudentController
+                              .isStudentsLoading.value) {
                             return const Center(
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 30),
@@ -175,20 +177,33 @@ class TeacherStudentScreen extends StatelessWidget {
                                 padding: EdgeInsets.zero,
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                itemCount: teacherStudentController.studentList.length,
+                                itemCount:
+                                    teacherStudentController.studentList.length,
                                 itemBuilder: (context, index) {
-                                  final student = teacherStudentController.studentList[index];
+                                  final student = teacherStudentController
+                                      .studentList[index];
                                   return TeacherMyStudentCard(
                                     phone: student.guardianPhone ?? "N/A",
                                     studentId: student.studentId ?? "N/A",
                                     email: student.email ?? "N/A",
                                     subject: student.name ?? "N/A",
                                     grade: student.className ?? "N/A",
-                                    onTapView: () {},
+                                    onTapView: () {
+                                      if (student.id != null) {
+                                        teacherStudentController
+                                            .getStudentDetails("0aee4a0e-079f-44fd-916a-e84a60057280");
+                                        Get.to(
+                                            () => TeacherStudentDetailsScreen(
+                                                  studentId: student.id!,
+                                                  studentName: student.name ?? "N/A",
+                                                ));
+                                      }
+                                    },
                                   );
                                 },
                               ),
-                              if (teacherStudentController.isMoreStudentsLoading.value)
+                              if (teacherStudentController
+                                  .isMoreStudentsLoading.value)
                                 const Padding(
                                   padding: EdgeInsets.symmetric(vertical: 12),
                                   child: Center(
@@ -210,5 +225,3 @@ class TeacherStudentScreen extends StatelessWidget {
     );
   }
 }
-
-

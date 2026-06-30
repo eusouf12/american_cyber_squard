@@ -6,6 +6,7 @@ import 'package:america_ayber_squad/service/api_url.dart';
 import 'package:america_ayber_squad/utils/ToastMsg/toast_message.dart';
 import 'package:america_ayber_squad/utils/app_const/app_const.dart';
 import '../model/teacher_under_students.dart';
+import '../model/teacher_student_details.dart';
 
 class TeacherStudentController extends GetxController {
   final ScrollController scrollController = ScrollController();
@@ -20,6 +21,11 @@ class TeacherStudentController extends GetxController {
   Rx<Status> rxStudentsStatus = Status.loading.obs;
   var studentsPage = 1.obs;
   var hasMoreStudents = true.obs;
+
+  // Student Details States
+  Rxn<TeacherStudentDetailsData> studentDetails = Rxn<TeacherStudentDetailsData>();
+  RxBool isDetailsLoading = false.obs;
+  Rx<Status> rxDetailsStatus = Status.loading.obs;
 
   @override
   void onInit() {
@@ -148,6 +154,41 @@ class TeacherStudentController extends GetxController {
       } else {
         isStudentsLoading.value = false;
       }
+    }
+  }
+
+  Future<void> getStudentDetails(String id) async {
+    isDetailsLoading.value = true;
+    rxDetailsStatus.value = Status.loading;
+    studentDetails.value = null;
+    try {
+      final response = await ApiClient.getData(
+        ApiUrl.getAllStudentsDetailsUnderTeacher(studentId: id),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final Map<String, dynamic> jsonResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body);
+        final TeacherStudentDetailsResponse model =
+            TeacherStudentDetailsResponse.fromJson(jsonResponse);
+        studentDetails.value = model.data;
+        rxDetailsStatus.value = Status.completed;
+      } else {
+        rxDetailsStatus.value = Status.error;
+        final Map<String, dynamic> errorResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body ?? {});
+        showCustomSnackBar(
+          errorResponse['message']?.toString() ?? 'Failed to load student details',
+          isError: true,
+        );
+      }
+    } catch (e) {
+      rxDetailsStatus.value = Status.error;
+      debugPrint('getStudentDetails Error: $e');
+      showCustomSnackBar('Error: ${e.toString()}', isError: true);
+    } finally {
+      isDetailsLoading.value = false;
     }
   }
 }

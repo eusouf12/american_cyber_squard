@@ -1,5 +1,5 @@
 class ApiUrl {
-  static const String baseUrl = "https://argue-computed-trans-spaces.trycloudflare.com";
+  static const String baseUrl = "https://affected-partners-dist-educated.trycloudflare.com";
   static const String imageUrl = baseUrl;
   static String socketUrl = baseUrl;
 
@@ -31,7 +31,7 @@ class ApiUrl {
     return url;
   }
  
-  
+  static String getAllStudentsDetailsUnderTeacher({required String studentId}) =>  "/api/v1/class_distribution/find_by_student_details/$studentId";
   
 
 
