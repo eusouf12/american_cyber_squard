@@ -60,7 +60,7 @@ dependencies:
   permission_handler: ^12.0.3
 
   shared_preferences: any
-  video_player: ^2.11.1
+  video_player: ^2.10.1
   chewie: ^1.13.1
   url_launcher: ^6.3.2
 dev_dependencies:
