@@ -12,28 +12,19 @@ import '../../../../components/custom_text/custom_text.dart';
 import '../teachers_home/model/teacher_schedule.dart';
 import '../teachers_home/controller/teachers_controller.dart';
 
-class TeachersAttendanceScreen extends StatefulWidget {
-  const TeachersAttendanceScreen({super.key});
+class TeachersAttendanceScreen extends StatelessWidget {
+  TeachersAttendanceScreen({super.key});
 
-  @override
-  State<TeachersAttendanceScreen> createState() => _TeachersAttendanceScreenState();
-}
-
-class _TeachersAttendanceScreenState extends State<TeachersAttendanceScreen> {
   final TeacherAttendanceController teacherAttendanceController = Get.find<TeacherAttendanceController>();
   final TeachersController teachersController = Get.find<TeachersController>();
 
   @override
-  void initState() {
-    super.initState();
+  Widget build(BuildContext context) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       teacherAttendanceController.resetState();
       teachersController.getTeacherSchedule();
     });
-  }
 
-  @override
-  Widget build(BuildContext context) {
     return CustomGradient(
       child: Scaffold(
         body: SingleChildScrollView(
@@ -232,24 +223,33 @@ class _TeachersAttendanceScreenState extends State<TeachersAttendanceScreen> {
                           children: [
                             CustomText(text: "Attendance Sheet", fontSize: 15.sp, fontWeight: FontWeight.w600),
                             const Spacer(),
-                            GestureDetector(
-                              onTap: () {
-                                // Save attendance API action goes here
-                              },
+                            Obx(() => GestureDetector(
+                              onTap: teacherAttendanceController.isSaveLoading.value
+                                  ? null
+                                  : () => teacherAttendanceController.saveAttendance(),
                               child: Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                                 decoration: BoxDecoration(
                                   color: AppColors.primary,
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: CustomText(
-                                  text: "Save Attendance",
-                                  fontSize: 10.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.white,
-                                ),
+                                child: teacherAttendanceController.isSaveLoading.value
+                                    ? SizedBox(
+                                        height: 12.h,
+                                        width: 12.w,
+                                        child: const CircularProgressIndicator(
+                                          strokeWidth: 2,
+                                          color: Colors.white,
+                                        ),
+                                      )
+                                    : CustomText(
+                                        text: "Save Attendance",
+                                        fontSize: 10.sp,
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.white,
+                                      ),
                               ),
-                            ),
+                            )),
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -311,9 +311,7 @@ class _TeachersAttendanceScreenState extends State<TeachersAttendanceScreen> {
                                   onTapPresent: () => teacherAttendanceController.setStatus(studentId, 'Present'),
                                   onTapAbsent: () => teacherAttendanceController.setStatus(studentId, 'Absent'),
                                   onTapLate: () => teacherAttendanceController.setStatus(studentId, 'Late'),
-                                  onTapMail: () {
-                                    // navigate to mail / message screen
-                                  },
+                                  onTapMail: () => teacherAttendanceController.sendEmail(student.staffs?.email ?? ''),
                                 );
                               });
                             },

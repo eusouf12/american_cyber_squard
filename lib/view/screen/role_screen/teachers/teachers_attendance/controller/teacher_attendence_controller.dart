@@ -5,30 +5,17 @@ import 'package:america_ayber_squad/service/api_client.dart';
 import 'package:america_ayber_squad/service/api_url.dart';
 import 'package:america_ayber_squad/utils/ToastMsg/toast_message.dart';
 import 'package:america_ayber_squad/utils/app_const/app_const.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../model/attendence_sheet_teacher.dart';
 import '../../teachers_home/model/teacher_schedule.dart';
 
 class TeacherAttendanceController extends GetxController {
-  RxBool isOpen = false.obs;
-
-  // Selected schedule (holds selected class and subject)
-  Rxn<RoutineModel> selectedSchedule = Rxn<RoutineModel>();
-
-  // Date selection (today's date initially)
-  Rx<DateTime> selectedDate = DateTime.now().obs;
-
-  // Attendance Sheet
-  RxList<TeacherStudentAttendance> attendanceSheet = <TeacherStudentAttendance>[].obs;
-  RxBool isAttendanceLoading = false.obs;
-  Rx<Status> rxAttendanceStatus = Status.loading.obs;
-
   @override
   void onInit() {
     super.onInit();
     resetState();
   }
 
-  // Reset states as required: today's date, no schedule selected, no attendance data
   void resetState() {
     selectedSchedule.value = null;
     selectedDate.value = DateTime.now();
@@ -36,7 +23,16 @@ class TeacherAttendanceController extends GetxController {
     studentStatus.clear();
   }
 
-  // Fetch Student Attendance Sheet
+  //================================= Get Attendence Sheet ==============================
+  Rxn<RoutineModel> selectedSchedule = Rxn<RoutineModel>();
+  RxBool isOpen = false.obs;
+  Rx<DateTime> selectedDate = DateTime.now().obs;
+  RxList<TeacherStudentAttendance> attendanceSheet =
+      <TeacherStudentAttendance>[].obs;
+  RxBool isAttendanceLoading = false.obs;
+  RxBool isSaveLoading = false.obs;
+  Rx<Status> rxAttendanceStatus = Status.loading.obs;
+
   Future<void> getAttenddenceSheet() async {
     if (selectedSchedule.value == null) return;
 
@@ -44,23 +40,22 @@ class TeacherAttendanceController extends GetxController {
     rxAttendanceStatus.value = Status.loading;
     attendanceSheet.clear();
 
-    // Use schedule's ID as the studentId parameter
     final routineId = selectedSchedule.value?.id ?? '';
 
     try {
       final response = await ApiClient.getData(
-        ApiUrl.getTeacherStudentsAttenddenceSheet(page: 1, studentId: routineId),
-      );
+          ApiUrl.getTeacherStudentsAttenddenceSheet(
+              page: 1, studentId: routineId));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final Map<String, dynamic> jsonResponse = response.body is String
             ? jsonDecode(response.body)
             : Map<String, dynamic>.from(response.body);
-        final TeacherStudentsAttendenceSheet model = TeacherStudentsAttendenceSheet.fromJson(jsonResponse);
+        final TeacherStudentsAttendenceSheet model =
+            TeacherStudentsAttendenceSheet.fromJson(jsonResponse);
 
         if (model.data != null && model.data!.data != null) {
           attendanceSheet.value = model.data!.data!;
-          // Populate studentStatus map for tracking changes in UI
           for (var item in attendanceSheet) {
             if (item.studentId != null) {
               studentStatus[item.studentId!] = '';
@@ -74,7 +69,8 @@ class TeacherAttendanceController extends GetxController {
             ? jsonDecode(response.body)
             : Map<String, dynamic>.from(response.body ?? {});
         showCustomSnackBar(
-          errorResponse['message']?.toString() ?? 'Failed to load attendance sheet',
+          errorResponse['message']?.toString() ??
+              'Failed to load attendance sheet',
           isError: true,
         );
       }
@@ -84,6 +80,81 @@ class TeacherAttendanceController extends GetxController {
       showCustomSnackBar('Error: ${e.toString()}', isError: true);
     } finally {
       isAttendanceLoading.value = false;
+    }
+  }
+
+  // Save/Update student attendance using PATCH API
+  Future<void> saveAttendance() async {
+    if (attendanceSheet.isEmpty) {
+      showCustomSnackBar("No students to save attendance for", isError: true);
+      return;
+    }
+
+    isSaveLoading.value = true;
+
+    final List<Map<String, dynamic>> bodyList = [];
+    for (var item in attendanceSheet) {
+      final sId = item.studentId ?? '';
+      final status = studentStatus[sId] ?? '';
+      if (status.isNotEmpty) {
+        bodyList.add({
+          "id": item.id,
+          "status": status,
+        });
+      }
+    }
+
+    if (bodyList.isEmpty) {
+      showCustomSnackBar("Please mark attendance for at least one student",
+          isError: true);
+      isSaveLoading.value = false;
+      return;
+    }
+
+    try {
+      final response = await ApiClient.patchData(
+          ApiUrl.updateTeacherStudentAttendanc, bodyList);
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        showCustomSnackBar("Attendance updated successfully!", isError: false);
+        getAttenddenceSheet();
+      } else {
+        final Map<String, dynamic> errorResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body ?? {});
+        showCustomSnackBar(
+          errorResponse['message']?.toString() ?? 'Failed to update attendance',
+          isError: true,
+        );
+      }
+    } catch (e) {
+      debugPrint('saveAttendance Error: $e');
+      showCustomSnackBar('Error: ${e.toString()}', isError: true);
+    } finally {
+      isSaveLoading.value = false;
+    }
+  }
+
+  // Open phone's mail app to email parent
+  Future<void> sendEmail(String email) async {
+    if (email.isEmpty || email == "N/A") {
+      showCustomSnackBar("Invalid email address", isError: true);
+      return;
+    }
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: email,
+      queryParameters: {'subject': 'Student Attendance Notification'},
+    );
+    try {
+      if (await canLaunchUrl(emailLaunchUri)) {
+        await launchUrl(emailLaunchUri);
+      } else {
+        showCustomSnackBar("Could not launch mail application", isError: true);
+      }
+    } catch (e) {
+      debugPrint("sendEmail Error: $e");
+      showCustomSnackBar("Failed to open mail app", isError: true);
     }
   }
 

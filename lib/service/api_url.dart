@@ -46,7 +46,10 @@ class ApiUrl {
   static String getTeacherStudentsAttenddenceSheet(
           {required int page, required String studentId}) =>
       "/api/v1/teacher/find_by_specific_student_attendance_of_teacher/$studentId?page=$page&limit=10";
+  static const String updateTeacherStudentAttendanc =
+      "/api/v1/teacher/update_student_attendance_of_teacher";
 
+//============================================================================
   static const String termsCondition =
       "/api/v1/setting/find_by_terms_conditions";
   static const String privacyPolicy = "/api/v1/setting/find_by_privacy_policys";
