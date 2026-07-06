@@ -15,7 +15,8 @@ import '../teachers_home/controller/teachers_controller.dart';
 class TeachersAttendanceScreen extends StatelessWidget {
   TeachersAttendanceScreen({super.key});
 
-  final TeacherAttendanceController teacherAttendanceController = Get.find<TeacherAttendanceController>();
+  final TeacherAttendanceController teacherAttendanceController =
+      Get.find<TeacherAttendanceController>();
   final TeachersController teachersController = Get.find<TeachersController>();
 
   @override
@@ -62,7 +63,8 @@ class TeachersAttendanceScreen extends StatelessWidget {
                         Obx(() {
                           final itemsList = teachersController.allScheduleList
                               .map<DropdownMenuItem<String>>(
-                                (RoutineModel value) => DropdownMenuItem<String>(
+                                (RoutineModel value) =>
+                                    DropdownMenuItem<String>(
                                   value: value.id,
                                   child: Text(
                                     "${value.assignableSubject ?? ''} - ${value.classLevel ?? ''}",
@@ -75,13 +77,22 @@ class TeachersAttendanceScreen extends StatelessWidget {
                               )
                               .toList();
 
-                          final String? selectedId = (teacherAttendanceController.selectedSchedule.value != null &&
-                                  teachersController.allScheduleList.any((e) => e.id == teacherAttendanceController.selectedSchedule.value?.id))
-                              ? teacherAttendanceController.selectedSchedule.value?.id
-                              : null;
+                          final String? selectedId =
+                              (teacherAttendanceController
+                                              .selectedSchedule.value !=
+                                          null &&
+                                      teachersController.allScheduleList.any(
+                                          (e) =>
+                                              e.id ==
+                                              teacherAttendanceController
+                                                  .selectedSchedule.value?.id))
+                                  ? teacherAttendanceController
+                                      .selectedSchedule.value?.id
+                                  : null;
 
                           return Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 2.h),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 2.h),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.r),
                               border: Border.all(color: Colors.grey.shade300),
@@ -113,8 +124,11 @@ class TeachersAttendanceScreen extends StatelessWidget {
                                 },
                                 onChanged: (String? newId) {
                                   if (newId != null) {
-                                    final selected = teachersController.allScheduleList.firstWhere((e) => e.id == newId);
-                                    teacherAttendanceController.selectClass(selected);
+                                    final selected = teachersController
+                                        .allScheduleList
+                                        .firstWhere((e) => e.id == newId);
+                                    teacherAttendanceController
+                                        .selectClass(selected);
                                   }
                                 },
                                 items: itemsList,
@@ -134,30 +148,41 @@ class TeachersAttendanceScreen extends StatelessWidget {
                           onTap: () async {
                             final DateTime? picked = await showDatePicker(
                               context: context,
-                              initialDate: teacherAttendanceController.selectedDate.value,
+                              initialDate: teacherAttendanceController
+                                      .selectedDate.value
+                                      .isAfter(DateTime.now())
+                                  ? DateTime.now()
+                                  : teacherAttendanceController
+                                      .selectedDate.value,
                               firstDate: DateTime(2020),
-                              lastDate: DateTime(2101),
+                              lastDate: DateTime
+                                  .now(), // Disable future dates, enable today and past dates
                             );
                             if (picked != null) {
-                              teacherAttendanceController.selectedDate.value = picked;
+                              teacherAttendanceController.selectedDate.value =
+                                  picked;
                               teacherAttendanceController.getAttenddenceSheet();
                             }
                           },
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 12.h),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10.r),
                               border: Border.all(color: Colors.grey.shade300),
                             ),
                             child: Row(
                               children: [
-                                Icon(Icons.calendar_today_outlined, size: 20.sp, color: Colors.black87),
+                                Icon(Icons.calendar_today_outlined,
+                                    size: 20.sp, color: Colors.black87),
                                 SizedBox(width: 12.w),
                                 Obx(() => CustomText(
-                                  text: DateFormat('MMMM d, yyyy').format(teacherAttendanceController.selectedDate.value),
-                                  fontSize: 14.sp,
-                                  color: Colors.black87,
-                                )),
+                                      text: DateFormat('MMMM d, yyyy').format(
+                                          teacherAttendanceController
+                                              .selectedDate.value),
+                                      fontSize: 14.sp,
+                                      color: Colors.black87,
+                                    )),
                               ],
                             ),
                           ),
@@ -169,12 +194,22 @@ class TeachersAttendanceScreen extends StatelessWidget {
                 const SizedBox(height: 20),
                 //card show
                 Obx(() {
-                  if (teacherAttendanceController.selectedSchedule.value == null) {
+                  if (teacherAttendanceController.selectedSchedule.value ==
+                      null) {
                     return const SizedBox.shrink();
                   }
-                  int presentCount = teacherAttendanceController.studentStatus.values.where((v) => v.toLowerCase() == 'present').length;
-                  int absentCount = teacherAttendanceController.studentStatus.values.where((v) => v.toLowerCase() == 'absent').length;
-                  int lateCount = teacherAttendanceController.studentStatus.values.where((v) => v.toLowerCase() == 'late').length;
+                  int presentCount = teacherAttendanceController
+                      .studentStatus.values
+                      .where((v) => v.toLowerCase() == 'present')
+                      .length;
+                  int absentCount = teacherAttendanceController
+                      .studentStatus.values
+                      .where((v) => v.toLowerCase() == 'absent')
+                      .length;
+                  int lateCount = teacherAttendanceController
+                      .studentStatus.values
+                      .where((v) => v.toLowerCase() == 'late')
+                      .length;
 
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -219,42 +254,80 @@ class TeachersAttendanceScreen extends StatelessWidget {
                       children: [
                         //attendance
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CustomText(text: "Attendance Sheet", fontSize: 15.sp, fontWeight: FontWeight.w600),
-                            const Spacer(),
-                            Obx(() => GestureDetector(
-                              onTap: teacherAttendanceController.isSaveLoading.value
-                                  ? null
-                                  : () => teacherAttendanceController.saveAttendance(),
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                decoration: BoxDecoration(
-                                  color: AppColors.primary,
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: teacherAttendanceController.isSaveLoading.value
-                                    ? SizedBox(
-                                        height: 12.h,
-                                        width: 12.w,
-                                        child: const CircularProgressIndicator(
-                                          strokeWidth: 2,
-                                          color: Colors.white,
-                                        ),
-                                      )
-                                    : CustomText(
-                                        text: "Save Attendance",
-                                        fontSize: 10.sp,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.white,
-                                      ),
+                            Expanded(
+                              child: CustomText(
+                                text: "Attendance Sheet",
+                                fontSize: 13.sp,
+                                fontWeight: FontWeight.w600,
+                                textAlign: TextAlign.start,
                               ),
-                            )),
+                            ),
+                            SizedBox(width: 8.w),
+                            Obx(() => GestureDetector(
+                                  onTap: teacherAttendanceController
+                                          .isSaveLoading.value
+                                      ? null
+                                      : () => teacherAttendanceController
+                                          .saveAttendance(),
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10.w, vertical: 8.h),
+                                    decoration: BoxDecoration(
+                                      gradient: const LinearGradient(
+                                        colors: [
+                                          AppColors.primary,
+                                          Color(0xFF81C784)
+                                        ],
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                      ),
+                                      borderRadius:
+                                          BorderRadius.circular(20.r),
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: AppColors.primary
+                                              .withValues(alpha: 0.3),
+                                          blurRadius: 6,
+                                          offset: const Offset(0, 3),
+                                        ),
+                                      ],
+                                    ),
+                                    child: teacherAttendanceController
+                                            .isSaveLoading.value
+                                        ? SizedBox(
+                                            height: 14.h,
+                                            width: 14.w,
+                                            child: const CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                              color: Colors.white,
+                                            ),
+                                          )
+                                        : Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Icon(Icons.check_circle_outline,
+                                                  color: Colors.white,
+                                                  size: 12.sp),
+                                              SizedBox(width: 4.w),
+                                              CustomText(
+                                                text: "Save Attendance",
+                                                fontSize: 10.sp,
+                                                fontWeight: FontWeight.w600,
+                                                color: Colors.white,
+                                              ),
+                                            ],
+                                          ),
+                                  ),
+                                )),
                           ],
                         ),
                         const SizedBox(height: 20),
                         Obx(() {
-                          if (teacherAttendanceController.selectedSchedule.value == null) {
+                          if (teacherAttendanceController
+                                  .selectedSchedule.value ==
+                              null) {
                             return Center(
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 20.h),
@@ -266,15 +339,18 @@ class TeachersAttendanceScreen extends StatelessWidget {
                               ),
                             );
                           }
-                          if (teacherAttendanceController.isAttendanceLoading.value) {
+                          if (teacherAttendanceController
+                              .isAttendanceLoading.value) {
                             return const Center(
                               child: Padding(
                                 padding: EdgeInsets.all(20.0),
-                                child: CircularProgressIndicator(color: AppColors.primary),
+                                child: CircularProgressIndicator(
+                                    color: AppColors.primary),
                               ),
                             );
                           }
-                          if (teacherAttendanceController.attendanceSheet.isEmpty) {
+                          if (teacherAttendanceController
+                              .attendanceSheet.isEmpty) {
                             return Center(
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 20.h),
@@ -291,27 +367,37 @@ class TeachersAttendanceScreen extends StatelessWidget {
                             padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
-                            itemCount: teacherAttendanceController.attendanceSheet.length,
+                            itemCount: teacherAttendanceController
+                                .attendanceSheet.length,
                             itemBuilder: (context, index) {
-                              final student = teacherAttendanceController.attendanceSheet[index];
+                              final student = teacherAttendanceController
+                                  .attendanceSheet[index];
                               final studentId = student.studentId ?? '';
 
                               return Obx(() {
-                                final currentStatus = teacherAttendanceController.studentStatus[studentId] ?? '';
+                                final currentStatus =
+                                    teacherAttendanceController
+                                            .studentStatus[studentId] ??
+                                        '';
                                 return CustomAttendanceCardTeacher(
                                   parentsName: student.staffs?.name ?? "N/A",
                                   name: student.name ?? "N/A",
                                   number: student.staffs?.phoneNumber ?? "N/A",
                                   email: student.staffs?.email ?? "N/A",
-
-                                  isPresent: currentStatus.toLowerCase() == 'present',
-                                  isAbsent: currentStatus.toLowerCase() == 'absent',
+                                  isPresent:
+                                      currentStatus.toLowerCase() == 'present',
+                                  isAbsent:
+                                      currentStatus.toLowerCase() == 'absent',
                                   isLate: currentStatus.toLowerCase() == 'late',
-
-                                  onTapPresent: () => teacherAttendanceController.setStatus(studentId, 'Present'),
-                                  onTapAbsent: () => teacherAttendanceController.setStatus(studentId, 'Absent'),
-                                  onTapLate: () => teacherAttendanceController.setStatus(studentId, 'Late'),
-                                  onTapMail: () => teacherAttendanceController.sendEmail(student.staffs?.email ?? ''),
+                                  onTapPresent: () =>
+                                      teacherAttendanceController.setStatus(
+                                          studentId, 'Present'),
+                                  onTapAbsent: () => teacherAttendanceController
+                                      .setStatus(studentId, 'Absent'),
+                                  onTapLate: () => teacherAttendanceController
+                                      .setStatus(studentId, 'Late'),
+                                  onTapMail: () => teacherAttendanceController
+                                      .sendEmail(student.staffs?.email ?? ''),
                                 );
                               });
                             },
