@@ -57,11 +57,13 @@ class ApiUrl {
       "/api/v1/teacher/update_student_attendance_of_teacher";
   static String getExamlistTeacher(
           {required int page, String? className, String? subject}) =>
-      "/api/v1/exam_announcement/find_my_announcement_exam_list?page=$page&limit=10&classLevel=${className ?? ''}&assignableSubject=${subject ?? ''}&_t=${DateTime.now().millisecondsSinceEpoch}";
+      "/api/v1/exam_announcement/find_my_announcement_exam_list?page=$page&limit=10&classLevel=${className ?? ''}&assignableSubject=${subject ?? ''}";
   static const String createExam =
       "/api/v1/exam_announcement/create_exam_announcement";
   static String updateExam({required String examId}) =>
       "/api/v1/exam_announcement/update_announcement_exam/$examId";
+  static String deleteExam({required String examId}) =>
+      "/api/v1/exam_announcement/delete_announcement_exam/$examId";
 
 //============================================================================
   static const String termsCondition =

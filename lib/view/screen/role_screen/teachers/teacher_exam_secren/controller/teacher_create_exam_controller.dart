@@ -238,4 +238,30 @@ class TeacherCreateExamController extends GetxController {
       isExamLoading.value = false;
     }
   }
+
+  Future<void> deleteExam(String examId) async {
+    isLoading.value = true;
+    try {
+      final response = await ApiClient.deleteData(
+        ApiUrl.deleteExam(examId: examId),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        showCustomSnackBar("Exam deleted successfully!", isError: false);
+        await getExamsList(); // Refresh exams list
+      } else {
+        final Map<String, dynamic> errorResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body ?? {});
+        showCustomSnackBar(
+          errorResponse['message']?.toString() ?? 'Failed to delete exam',
+          isError: true,
+        );
+      }
+    } catch (e) {
+      showCustomSnackBar("Error deleting exam: ${e.toString()}", isError: true);
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }

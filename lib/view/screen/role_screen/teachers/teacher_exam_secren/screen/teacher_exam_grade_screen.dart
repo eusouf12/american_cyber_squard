@@ -279,6 +279,36 @@ class TeacherExamGradeScreen extends StatelessWidget {
                                   controller.getExamsList();
                                 }
                               },
+                              onTapDelete: () {
+                                Get.dialog(
+                                  AlertDialog(
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(16.r),
+                                    ),
+                                    title: const Text("Delete Exam"),
+                                    content: const Text(
+                                        "Are you sure you want to delete this exam announcement?"),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Get.back(),
+                                        child: const Text("Cancel",
+                                            style: TextStyle(color: Colors.grey)),
+                                      ),
+                                      TextButton(
+                                        onPressed: () {
+                                          Get.back();
+                                          if (exam.id != null) {
+                                            controller.deleteExam(exam.id!);
+                                          }
+                                        },
+                                        child: const Text("Delete",
+                                            style: TextStyle(color: Colors.red)),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
                             );
                           },
                         );

@@ -17,6 +17,7 @@ class CustomTeacherExamCard extends StatelessWidget {
   final VoidCallback? onTapView;
   final VoidCallback? onTapEdit;
   final VoidCallback? onTapGrade;
+  final VoidCallback? onTapDelete;
 
   const CustomTeacherExamCard({
     super.key,
@@ -30,6 +31,7 @@ class CustomTeacherExamCard extends StatelessWidget {
     this.onTapView,
     this.onTapEdit,
     this.onTapGrade,
+    this.onTapDelete,
   });
 
   String _formatDate(String? rawDate) {
@@ -50,11 +52,13 @@ class CustomTeacherExamCard extends StatelessWidget {
     String calculatedStatus = "Upcoming";
     Color statusColor = const Color(0xFF2563EB);
     Color statusBgColor = const Color(0xFF2563EB).withValues(alpha: 0.1);
+    Color cardBorderColor = Colors.grey.shade200;
 
     if (isCompleted == true) {
       calculatedStatus = "Completed";
       statusColor = AppColors.primary;
       statusBgColor = AppColors.primary.withValues(alpha: 0.1);
+      cardBorderColor = AppColors.primary.withValues(alpha: 0.15);
     } else {
       DateTime? examDateTime;
       if (date != null && date!.isNotEmpty) {
@@ -68,10 +72,12 @@ class CustomTeacherExamCard extends StatelessWidget {
         calculatedStatus = "Upcoming";
         statusColor = const Color(0xFF2563EB);
         statusBgColor = const Color(0xFF2563EB).withValues(alpha: 0.1);
+        cardBorderColor = const Color(0xFF2563EB).withValues(alpha: 0.15);
       } else {
         calculatedStatus = "Pending";
         statusColor = const Color(0xFFEF4444);
         statusBgColor = const Color(0xFFEF4444).withValues(alpha: 0.1);
+        cardBorderColor = const Color(0xFFEF4444).withValues(alpha: 0.15);
       }
     }
 
@@ -80,12 +86,12 @@ class CustomTeacherExamCard extends StatelessWidget {
       padding: EdgeInsets.all(16.w),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(color: Colors.grey.shade200),
+        borderRadius: BorderRadius.circular(16.r),
+        border: Border.all(color: cardBorderColor, width: 1.2),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.03),
-            blurRadius: 10,
+            color: statusColor.withValues(alpha: 0.04),
+            blurRadius: 12,
             offset: const Offset(0, 4),
           ),
         ],
@@ -98,13 +104,28 @@ class CustomTeacherExamCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
-                child: CustomText(
-                  text: subject ?? "",
-                  fontWeight: FontWeight.bold,
-                  fontSize: 14.sp,
-                  maxLines: 2,
-                  textAlign: TextAlign.start,
-                  color: const Color(0xFF1F2937),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CustomText(
+                      text: subject ?? "",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 15.sp,
+                      maxLines: 2,
+                      textAlign: TextAlign.start,
+                      color: const Color(0xFF1F2937),
+                    ),
+                    if (grade != null && grade!.isNotEmpty) ...[
+                      SizedBox(height: 4.h),
+                      CustomText(
+                        text: grade ?? "",
+                        fontSize: 12.sp,
+                        color: Colors.grey.shade500,
+                        textAlign: TextAlign.start,
+                        maxLines: 2,
+                      ),
+                    ],
+                  ],
                 ),
               ),
               SizedBox(width: 8.w),
@@ -123,15 +144,10 @@ class CustomTeacherExamCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 8.h),
-          CustomText(
-            text: grade ?? "",
-            fontSize: 12.sp,
-            color: Colors.grey.shade600,
-            textAlign: TextAlign.start,
-            maxLines: 20,
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 12.h),
+            child: Divider(color: Colors.grey.shade100, height: 1, thickness: 1),
           ),
-          SizedBox(height: 8.h),
           Row(
             children: [
               Expanded(
@@ -182,38 +198,48 @@ class CustomTeacherExamCard extends StatelessWidget {
             ],
           ),
           SizedBox(height: 16.h),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: calculatedStatus == "Completed"
-                ? CustomButton(
-                    onTap: onTapView,
-                    title: "View Results",
-                    height: 36.h,
-                    width: 120.w,
-                    fontSize: 11.sp,
-                    fillColor: const Color(0xFF2563EB).withValues(alpha: 0.1),
-                    fontWeight: FontWeight.w500,
-                    textColor: const Color(0xFF2563EB),
-                  )
-                : calculatedStatus == "Pending"
-                    ? CustomButton(
-                        onTap: onTapGrade,
-                        title: "Grade Submissions",
-                        height: 36.h,
-                        width: 140.w,
-                        fontSize: 11.sp,
-                        fontWeight: FontWeight.w500,
-                      )
-                    : CustomButton(
-                        onTap: onTapEdit,
-                        title: "Edit Exam",
-                        height: 36.h,
-                        width: 100.w,
-                        fontSize: 11.sp,
-                        fontWeight: FontWeight.w500,
-                        fillColor: Colors.grey.shade200,
-                        textColor: Colors.black87,
-                      ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              calculatedStatus == "Completed"
+                  ? CustomButton(
+                      onTap: onTapView,
+                      title: "View Results",
+                      height: 36.h,
+                      width: 120.w,
+                      fontSize: 11.sp,
+                      fillColor: const Color(0xFF2563EB).withValues(alpha: 0.1),
+                      fontWeight: FontWeight.w500,
+                      textColor: const Color(0xFF2563EB),
+                    )
+                  : calculatedStatus == "Pending"
+                      ? CustomButton(
+                          onTap: onTapGrade,
+                          title: "Grade Submissions",
+                          height: 36.h,
+                          width: 140.w,
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.w500,
+                        )
+                      : CustomButton(
+                          onTap: onTapEdit,
+                          title: "Edit Exam",
+                          height: 36.h,
+                          width: 100.w,
+                          fontSize: 11.sp,
+                          fontWeight: FontWeight.w500,
+                          fillColor: Colors.grey.shade200,
+                          textColor: Colors.black87,
+                        ),
+              IconButton(
+                onPressed: onTapDelete,
+                style: IconButton.styleFrom(
+                  backgroundColor: Colors.red.withValues(alpha: 0.1),
+                  padding: EdgeInsets.all(8.w),
+                ),
+                icon: Icon(Icons.delete_outline, color: Colors.red, size: 20.sp),
+              ),
+            ],
           ),
         ],
       ),
