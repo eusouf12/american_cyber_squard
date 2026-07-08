@@ -21,13 +21,13 @@ class CustomTeachersAttendanceCard extends StatelessWidget {
     List<Color> gradientColors;
 
     final type = count?.toLowerCase() ?? '';
-    if (type == 'present') {
+    if (type == 'present' || type == 'completed') {
       baseColor = const Color(0xFF10B981);
       gradientColors = [const Color(0xFF34D399), const Color(0xFF059669)];
-    } else if (type == 'absent') {
+    } else if (type == 'absent' || type == 'pending') {
       baseColor = const Color(0xFFEF4444);
       gradientColors = [const Color(0xFFF87171), const Color(0xFFDC2626)];
-    } else if (type == 'late') {
+    } else if (type == 'late' || type == 'upcoming') {
       baseColor = const Color(0xFFF59E0B);
       gradientColors = [const Color(0xFFFBBF24), const Color(0xFFD97706)];
     } else {

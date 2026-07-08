@@ -1,4 +1,4 @@
-import 'package:america_ayber_squad/view/screen/role_screen/teachers/teacher_exam_secren/teacher_exam_grade_screen.dart';
+import 'package:america_ayber_squad/view/screen/role_screen/teachers/teacher_exam_secren/screen/teacher_exam_grade_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';

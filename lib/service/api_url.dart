@@ -1,6 +1,6 @@
 class ApiUrl {
   static const String baseUrl =
-      "https://positive-sounds-shorts-offerings.trycloudflare.com";
+      "https://travesti-helena-clothing-rip.trycloudflare.com";
   static const String imageUrl = baseUrl;
   static String socketUrl = baseUrl;
 
@@ -45,14 +45,23 @@ class ApiUrl {
       "/api/v1/class_distribution/find_by_student_details/$studentId";
   static String getTeacherStudentsAttenddenceSheet(
       {required int page, required String classId, String? date}) {
-    String url = "/api/v1/teacher/find_by_specific_student_attendance_of_teacher/$classId?page=$page&limit=10";
+    String url =
+        "/api/v1/teacher/find_by_specific_student_attendance_of_teacher/$classId?page=$page&limit=10";
     if (date != null && date.isNotEmpty) {
       url += "&attendanceDate=$date";
     }
     return url;
   }
+
   static const String updateTeacherStudentAttendanc =
       "/api/v1/teacher/update_student_attendance_of_teacher";
+  static String getExamlistTeacher(
+          {required int page, String? className, String? subject}) =>
+      "/api/v1/exam_announcement/find_my_announcement_exam_list?page=$page&limit=10&classLevel=$className&assignableSubject=$subject";
+  static const String createExam =
+      "/api/v1/exam_announcement/create_exam_announcement";
+  static String updateExam({required String examId}) =>
+      "/api/v1/exam_announcement/update_announcement_exam/$examId";
 
 //============================================================================
   static const String termsCondition =

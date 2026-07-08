@@ -17,7 +17,8 @@ import '../../view/screen/role_screen/teachers/teachers_home/screen/teachers_hom
 import '../../view/screen/role_screen/teachers/teachers_home/screen/details_schedule_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_home/screen/all_assignments_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_home/screen/all_announcements_screen.dart';
-import '../../view/screen/role_screen/teachers/teacher_exam_secren/teacher_exam_grade_screen.dart';
+import '../../view/screen/role_screen/teachers/teacher_exam_secren/screen/teacher_exam_grade_screen.dart';
+import '../../view/screen/role_screen/teachers/teacher_exam_secren/screen/teacher_create_exam_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teacher_schedule_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teacher_student_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teachers_material.dart';
@@ -51,6 +52,7 @@ class AppRoutes {
   static const String teachersHomeScreen ="/TeachersHomeScreen";
   static const String teachersMaterial ="/TeachersMaterial";
   static const String teacherExamGradeScreen ="/TeacherExamGradeScreen";
+  static const String teacherCreateExamScreen ="/TeacherCreateExamScreen";
   static const String teacherScheduleScreen ="/TeacherScheduleScreen";
   static const String teacherStudentScreen ="/TeacherStudentScreen";
   static const String teachersAssignmentScreen ="/TeachersAssignmentScreen";
@@ -87,6 +89,7 @@ class AppRoutes {
     GetPage(name: teachersHomeScreen, page: () => TeachersHomeScreen()),
     GetPage(name: teachersMaterial, page: () => TeachersMaterial()),
     GetPage(name: teacherExamGradeScreen, page: () => TeacherExamGradeScreen()),
+    GetPage(name: teacherCreateExamScreen, page: () => TeacherCreateExamScreen()),
     GetPage(name: teacherScheduleScreen, page: () => TeacherScheduleScreen()),
     GetPage(name: teacherStudentScreen, page: () => TeacherStudentScreen()),
     GetPage(name: teachersAssignmentScreen, page: () => TeachersAssignmentScreen()),

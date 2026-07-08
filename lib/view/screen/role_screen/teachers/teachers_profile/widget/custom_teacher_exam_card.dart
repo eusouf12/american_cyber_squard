@@ -1,6 +1,7 @@
 import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 
 import '../../../../../../utils/app_colors/app_colors.dart';
 import '../../../../../components/custom_button/custom_button.dart';
@@ -10,7 +11,9 @@ class CustomTeacherExamCard extends StatelessWidget {
   final String? subject;
   final String? submission;
   final String? date;
-  final String? status;
+  final bool? isCompleted;
+  final String? duration;
+  final String? totalMarks;
   final VoidCallback? onTapView;
   final VoidCallback? onTapEdit;
   final VoidCallback? onTapGrade;
@@ -21,14 +24,57 @@ class CustomTeacherExamCard extends StatelessWidget {
     this.subject,
     this.date,
     this.submission,
-    this.status,
+    this.isCompleted,
+    this.duration,
+    this.totalMarks,
     this.onTapView,
     this.onTapEdit,
     this.onTapGrade,
   });
 
+  String _formatDate(String? rawDate) {
+    if (rawDate == null || rawDate.isEmpty) return "N/A";
+    try {
+      final DateTime parsed = DateTime.parse(rawDate);
+      return DateFormat('MMM dd, yyyy').format(parsed);
+    } catch (_) {
+      if (rawDate.contains('T')) {
+        return rawDate.split('T').first;
+      }
+      return rawDate;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    String calculatedStatus = "Upcoming";
+    Color statusColor = const Color(0xFF2563EB);
+    Color statusBgColor = const Color(0xFF2563EB).withValues(alpha: 0.1);
+
+    if (isCompleted == true) {
+      calculatedStatus = "Completed";
+      statusColor = AppColors.primary;
+      statusBgColor = AppColors.primary.withValues(alpha: 0.1);
+    } else {
+      DateTime? examDateTime;
+      if (date != null && date!.isNotEmpty) {
+        try {
+          examDateTime = DateTime.parse(date!);
+        } catch (_) {}
+      }
+
+      final now = DateTime.now();
+      if (examDateTime != null && examDateTime.isAfter(now)) {
+        calculatedStatus = "Upcoming";
+        statusColor = const Color(0xFF2563EB);
+        statusBgColor = const Color(0xFF2563EB).withValues(alpha: 0.1);
+      } else {
+        calculatedStatus = "Pending";
+        statusColor = const Color(0xFFEF4444);
+        statusBgColor = const Color(0xFFEF4444).withValues(alpha: 0.1);
+      }
+    }
+
     return Container(
       margin: EdgeInsets.symmetric(vertical: 8.h),
       padding: EdgeInsets.all(16.w),
@@ -47,95 +93,128 @@ class CustomTeacherExamCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomText(
-            text: subject ?? "",
-            fontWeight: FontWeight.bold,
-            fontSize: 12,
-            maxLines: 2,
-            textAlign: TextAlign.start,
-          ),
-          SizedBox(height: 6.h),
-          //grade
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomText(
-                text: grade ?? "",
-                fontSize: 10.sp,
-                color: Colors.black87,
+              Expanded(
+                child: CustomText(
+                  text: subject ?? "",
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14.sp,
+                  maxLines: 2,
+                  textAlign: TextAlign.start,
+                  color: const Color(0xFF1F2937),
+                ),
               ),
+              SizedBox(width: 8.w),
               Container(
-                  padding: EdgeInsets.symmetric(horizontal: 6.w, vertical: 2.h),
-                  decoration: BoxDecoration(
-                    color: status =="Completed" ? AppColors.primary.withValues(alpha: 0.2)  : status =="Upcoming" ?Colors.blue.withValues(alpha: 0.2) :Colors.red.withValues(alpha: 0.2),
-                    borderRadius: BorderRadius.circular(8.r),
-                  ),
-                  child: CustomText(text: status ?? "",fontSize: 10.sp, fontWeight: FontWeight.w500,color:status =="Completed" ?AppColors.primary :  status =="Upcoming" ?Colors.blue : Colors.red)
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 4.h),
+                decoration: BoxDecoration(
+                  color: statusBgColor,
+                  borderRadius: BorderRadius.circular(20.r),
+                ),
+                child: CustomText(
+                  text: calculatedStatus,
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w600,
+                  color: statusColor,
+                ),
               ),
             ],
           ),
-          SizedBox(height: 6.h),
+          SizedBox(height: 8.h),
+          CustomText(
+            text: grade ?? "",
+            fontSize: 12.sp,
+            color: Colors.grey.shade600,
+            textAlign: TextAlign.start,
+            maxLines: 20,
+          ),
+          SizedBox(height: 8.h),
           Row(
             children: [
-              Row(
-                children: [
-                  Icon(Icons.calendar_today,size: 16,color: Colors.black45,),
-                  CustomText(
-                    text: date ??"",
-                    fontSize: 10.sp,
-                    color: Colors.black87,
-                    right: 10.sp,
-                    left: 10,
-                  ),
-                ],
+              Expanded(
+                child: Row(
+                  children: [
+                    Icon(Icons.access_time_outlined,
+                        size: 14.sp, color: Colors.grey.shade500),
+                    SizedBox(width: 6.w),
+                    CustomText(
+                      text: duration != null ? "$duration" : "N/A",
+                      fontSize: 12.sp,
+                      color: Colors.grey.shade600,
+                      maxLines: 1,
+                    ),
+                  ],
+                ),
               ),
-              Row(
-                children: [
-                  Icon(Icons.alarm,size: 18,color: Colors.black45,),
-                  CustomText(
-                    text: submission ??"",
-                    fontSize: 10.sp,
-                    color: Colors.black87,
-                    left: 10,
-                  ),
-                ],
+              SizedBox(width: 12.w),
+              Expanded(
+                child: Row(
+                  children: [
+                    Icon(Icons.grade_outlined,
+                        size: 14.sp, color: Colors.grey.shade500),
+                    SizedBox(width: 6.w),
+                    CustomText(
+                      text: totalMarks != null ? "$totalMarks Marks" : "N/A",
+                      fontSize: 12.sp,
+                      color: Colors.grey.shade600,
+                      maxLines: 1,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
           SizedBox(height: 8.h),
-          SizedBox(height: 8.h),
-
-          // btn
-          status =="Completed"
-              ? CustomButton(
-            onTap: onTapView,
-            title: "View",
-            height: 36,
-            width: 100,
-            fontSize: 10.sp,
-            fillColor: Colors.blue.withValues(alpha: 0.2),
-            fontWeight: FontWeight.w400,
-            textColor:Color(0xFF2563EB) ,
-          )
-              : status =="Pending"
-              ? CustomButton(
-            onTap: onTapGrade,
-            title: "Grade View",
-            height: 36,
-            width: 100,
-            fontSize: 10.sp,
-            fontWeight: FontWeight.w400,
-          )
-          :  CustomButton(
-            onTap: onTapEdit,
-            title: "Edit",
-            height: 36,
-            width: 100,
-            fontSize: 10.sp,
-            fontWeight: FontWeight.w400,
-            fillColor: AppColors.grey_02 ,
-            textColor: Colors.black ,
-          )
+          Row(
+            children: [
+              Icon(Icons.calendar_today_outlined,
+                  size: 14.sp, color: Colors.grey.shade500),
+              SizedBox(width: 6.w),
+              CustomText(
+                text: _formatDate(date),
+                fontSize: 12.sp,
+                color: Colors.grey.shade600,
+                maxLines: 1,
+              ),
+            ],
+          ),
+          SizedBox(height: 16.h),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: calculatedStatus == "Completed"
+                ? CustomButton(
+                    onTap: onTapView,
+                    title: "View Results",
+                    height: 36.h,
+                    width: 120.w,
+                    fontSize: 11.sp,
+                    fillColor: const Color(0xFF2563EB).withValues(alpha: 0.1),
+                    fontWeight: FontWeight.w500,
+                    textColor: const Color(0xFF2563EB),
+                  )
+                : calculatedStatus == "Pending"
+                    ? CustomButton(
+                        onTap: onTapGrade,
+                        title: "Grade Submissions",
+                        height: 36.h,
+                        width: 140.w,
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w500,
+                      )
+                    : CustomButton(
+                        onTap: onTapEdit,
+                        title: "Edit Exam",
+                        height: 36.h,
+                        width: 100.w,
+                        fontSize: 11.sp,
+                        fontWeight: FontWeight.w500,
+                        fillColor: Colors.grey.shade200,
+                        textColor: Colors.black87,
+                      ),
+          ),
         ],
       ),
     );
