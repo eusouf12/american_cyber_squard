@@ -57,7 +57,7 @@ class ApiUrl {
       "/api/v1/teacher/update_student_attendance_of_teacher";
   static String getExamlistTeacher(
           {required int page, String? className, String? subject}) =>
-      "/api/v1/exam_announcement/find_my_announcement_exam_list?page=$page&limit=10&classLevel=$className&assignableSubject=$subject";
+      "/api/v1/exam_announcement/find_my_announcement_exam_list?page=$page&limit=10&classLevel=${className ?? ''}&assignableSubject=${subject ?? ''}&_t=${DateTime.now().millisecondsSinceEpoch}";
   static const String createExam =
       "/api/v1/exam_announcement/create_exam_announcement";
   static String updateExam({required String examId}) =>

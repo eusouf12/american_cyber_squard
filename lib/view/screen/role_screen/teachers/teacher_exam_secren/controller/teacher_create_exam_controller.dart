@@ -6,6 +6,7 @@ import 'package:america_ayber_squad/service/api_client.dart';
 import 'package:america_ayber_squad/service/api_url.dart';
 import 'package:america_ayber_squad/utils/ToastMsg/toast_message.dart';
 import '../model/exam_list.dart';
+import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_home/controller/teachers_controller.dart';
 
 class TeacherCreateExamController extends GetxController {
   final examNameController = TextEditingController();
@@ -128,7 +129,7 @@ class TeacherCreateExamController extends GetxController {
 
         if (response.statusCode == 200 || response.statusCode == 201) {
           showCustomSnackBar("Exam updated successfully!", isError: false);
-          getExamsList(); // Refresh exam list
+          await getExamsList(); // Refresh exam list
           Get.back(result: true);
         } else {
           final Map<String, dynamic> errorResponse = response.body is String
@@ -158,7 +159,7 @@ class TeacherCreateExamController extends GetxController {
 
         if (response.statusCode == 200 || response.statusCode == 201) {
           showCustomSnackBar("Exam created successfully!", isError: false);
-          getExamsList(); // Refresh exam list
+          await getExamsList(); // Refresh exam list
           Get.back(result: true);
         } else {
           final Map<String, dynamic> errorResponse = response.body is String
@@ -180,12 +181,28 @@ class TeacherCreateExamController extends GetxController {
 //========================== Exam list GET API ========================================
   Future<void> getExamsList({String? className, String? subject}) async {
     isExamLoading.value = true;
+
+    String targetClass = className ?? "";
+    String targetSubject = subject ?? "";
+
+    if (className == null && subject == null) {
+      if (selectedClassId.value != null) {
+        try {
+          final teachersController = Get.find<TeachersController>();
+          final selected = teachersController.allScheduleList
+              .firstWhere((e) => e.id == selectedClassId.value);
+          targetClass = selected.classLevel ?? "";
+          targetSubject = selected.assignableSubject ?? "";
+        } catch (_) {}
+      }
+    }
+
     try {
       final response = await ApiClient.getData(
         ApiUrl.getExamlistTeacher(
           page: 1,
-          className: className ?? "",
-          subject: subject ?? "",
+          className: targetClass,
+          subject: targetSubject,
         ),
       );
 
