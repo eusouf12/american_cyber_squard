@@ -97,6 +97,8 @@ class TeacherStudentAttendance {
   final String? className;
   final String? photo;
   final TeacherStaff? staffs;
+  final String? attendanceStatus;
+  final String? attendanceDate;
 
   TeacherStudentAttendance({
     this.id,
@@ -105,6 +107,8 @@ class TeacherStudentAttendance {
     this.className,
     this.photo,
     this.staffs,
+    this.attendanceStatus,
+    this.attendanceDate,
   });
 
   factory TeacherStudentAttendance.fromJson(Map<String, dynamic> json) {
@@ -116,6 +120,8 @@ class TeacherStudentAttendance {
       photo: json['photo'],
       staffs:
           json['staffs'] != null ? TeacherStaff.fromJson(json['staffs']) : null,
+      attendanceStatus: json['attendanceStatus'],
+      attendanceDate: json['attendanceDate'],
     );
   }
 
@@ -127,6 +133,8 @@ class TeacherStudentAttendance {
       'className': className,
       'photo': photo,
       'staffs': staffs?.toJson(),
+      'attendanceStatus': attendanceStatus,
+      'attendanceDate': attendanceDate,
     };
   }
 }

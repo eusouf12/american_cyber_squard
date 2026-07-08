@@ -265,62 +265,73 @@ class TeachersAttendanceScreen extends StatelessWidget {
                               ),
                             ),
                             SizedBox(width: 8.w),
-                            Obx(() => GestureDetector(
-                                  onTap: teacherAttendanceController
-                                          .isSaveLoading.value
-                                      ? null
-                                      : () => teacherAttendanceController
-                                          .saveAttendance(),
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 10.w, vertical: 8.h),
-                                    decoration: BoxDecoration(
-                                      gradient: const LinearGradient(
-                                        colors: [
-                                          AppColors.primary,
-                                          Color(0xFF81C784)
-                                        ],
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.circular(20.r),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: AppColors.primary
-                                              .withValues(alpha: 0.3),
-                                          blurRadius: 6,
-                                          offset: const Offset(0, 3),
-                                        ),
+                            Obx(() {
+                              final DateTime now = DateTime.now();
+                              final bool isDateToday = teacherAttendanceController.selectedDate.value.year == now.year &&
+                                  teacherAttendanceController.selectedDate.value.month == now.month &&
+                                  teacherAttendanceController.selectedDate.value.day == now.day;
+
+                              if (!isDateToday) {
+                                return const SizedBox.shrink();
+                              }
+
+                              return GestureDetector(
+                                onTap: teacherAttendanceController
+                                        .isSaveLoading.value
+                                    ? null
+                                    : () => teacherAttendanceController
+                                        .saveAttendance(),
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10.w, vertical: 8.h),
+                                  decoration: BoxDecoration(
+                                    gradient: const LinearGradient(
+                                      colors: [
+                                        AppColors.primary,
+                                        Color(0xFF81C784)
                                       ],
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
                                     ),
-                                    child: teacherAttendanceController
-                                            .isSaveLoading.value
-                                        ? SizedBox(
-                                            height: 14.h,
-                                            width: 14.w,
-                                            child: const CircularProgressIndicator(
-                                              strokeWidth: 2,
+                                    borderRadius:
+                                        BorderRadius.circular(20.r),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: AppColors.primary
+                                            .withValues(alpha: 0.3),
+                                        blurRadius: 6,
+                                        offset: const Offset(0, 3),
+                                      ),
+                                    ],
+                                  ),
+                                  child: teacherAttendanceController
+                                          .isSaveLoading.value
+                                      ? SizedBox(
+                                          height: 14.h,
+                                          width: 14.w,
+                                          child: const CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                            color: Colors.white,
+                                          ),
+                                        )
+                                      : Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(Icons.check_circle_outline,
+                                                color: Colors.white,
+                                                size: 12.sp),
+                                            SizedBox(width: 4.w),
+                                            CustomText(
+                                              text: "Save Attendance",
+                                              fontSize: 10.sp,
+                                              fontWeight: FontWeight.w600,
                                               color: Colors.white,
                                             ),
-                                          )
-                                        : Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Icon(Icons.check_circle_outline,
-                                                  color: Colors.white,
-                                                  size: 12.sp),
-                                              SizedBox(width: 4.w),
-                                              CustomText(
-                                                text: "Save Attendance",
-                                                fontSize: 10.sp,
-                                                fontWeight: FontWeight.w600,
-                                                color: Colors.white,
-                                              ),
-                                            ],
-                                          ),
-                                  ),
-                                )),
+                                          ],
+                                        ),
+                                ),
+                              );
+                            }),
                           ],
                         ),
                         const SizedBox(height: 20),
@@ -379,6 +390,11 @@ class TeachersAttendanceScreen extends StatelessWidget {
                                     teacherAttendanceController
                                             .studentStatus[studentId] ??
                                         '';
+                                final DateTime now = DateTime.now();
+                                final bool isDateToday = teacherAttendanceController.selectedDate.value.year == now.year &&
+                                    teacherAttendanceController.selectedDate.value.month == now.month &&
+                                    teacherAttendanceController.selectedDate.value.day == now.day;
+
                                 return CustomAttendanceCardTeacher(
                                   parentsName: student.staffs?.name ?? "N/A",
                                   name: student.name ?? "N/A",
@@ -389,13 +405,18 @@ class TeachersAttendanceScreen extends StatelessWidget {
                                   isAbsent:
                                       currentStatus.toLowerCase() == 'absent',
                                   isLate: currentStatus.toLowerCase() == 'late',
-                                  onTapPresent: () =>
-                                      teacherAttendanceController.setStatus(
-                                          studentId, 'Present'),
-                                  onTapAbsent: () => teacherAttendanceController
-                                      .setStatus(studentId, 'Absent'),
-                                  onTapLate: () => teacherAttendanceController
-                                      .setStatus(studentId, 'Late'),
+                                  onTapPresent: isDateToday
+                                      ? () => teacherAttendanceController.setStatus(
+                                          studentId, 'Present')
+                                      : null,
+                                  onTapAbsent: isDateToday
+                                      ? () => teacherAttendanceController.setStatus(
+                                          studentId, 'Absent')
+                                      : null,
+                                  onTapLate: isDateToday
+                                      ? () => teacherAttendanceController.setStatus(
+                                          studentId, 'Late')
+                                      : null,
                                   onTapMail: () => teacherAttendanceController
                                       .sendEmail(student.staffs?.email ?? ''),
                                 );

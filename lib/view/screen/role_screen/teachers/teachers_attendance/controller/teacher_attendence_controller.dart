@@ -8,6 +8,7 @@ import 'package:america_ayber_squad/utils/app_const/app_const.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../model/attendence_sheet_teacher.dart';
 import '../../teachers_home/model/teacher_schedule.dart';
+import 'package:intl/intl.dart';
 
 class TeacherAttendanceController extends GetxController {
   @override
@@ -43,9 +44,13 @@ class TeacherAttendanceController extends GetxController {
     final routineId = selectedSchedule.value?.id ?? '';
 
     try {
+      final localDate = selectedDate.value;
+      final startOfDay = DateTime(localDate.year, localDate.month, localDate.day);
       final response = await ApiClient.getData(
           ApiUrl.getTeacherStudentsAttenddenceSheet(
-              page: 1, studentId: routineId));
+              page: 1,
+              classId: routineId,
+              date: DateFormat('yyyy-MM-dd').format(startOfDay.toUtc())));
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final Map<String, dynamic> jsonResponse = response.body is String
@@ -58,7 +63,7 @@ class TeacherAttendanceController extends GetxController {
           attendanceSheet.value = model.data!.data!;
           for (var item in attendanceSheet) {
             if (item.studentId != null) {
-              studentStatus[item.studentId!] = '';
+              studentStatus[item.studentId!] = item.attendanceStatus ?? '';
             }
           }
         }
@@ -92,28 +97,34 @@ class TeacherAttendanceController extends GetxController {
 
     isSaveLoading.value = true;
 
-    final List<Map<String, dynamic>> bodyList = [];
+    final String formattedDate = DateFormat('yyyy-MM-dd').format(selectedDate.value);
+    final List<Map<String, dynamic>> studentsList = [];
     for (var item in attendanceSheet) {
       final sId = item.studentId ?? '';
       final status = studentStatus[sId] ?? '';
       if (status.isNotEmpty) {
-        bodyList.add({
-          "id": item.id,
-          "status": status,
+        studentsList.add({
+          "studentId": sId,
+          "attendanceStatus": status.toUpperCase(),
         });
       }
     }
 
-    if (bodyList.isEmpty) {
+    if (studentsList.isEmpty) {
       showCustomSnackBar("Please mark attendance for at least one student",
           isError: true);
       isSaveLoading.value = false;
       return;
     }
 
+    final Map<String, dynamic> body = {
+      "attendanceDate": formattedDate,
+      "students": studentsList,
+    };
+
     try {
       final response = await ApiClient.patchData(
-          ApiUrl.updateTeacherStudentAttendanc, bodyList);
+          ApiUrl.updateTeacherStudentAttendanc, body);
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         showCustomSnackBar("Attendance updated successfully!", isError: false);
@@ -147,14 +158,16 @@ class TeacherAttendanceController extends GetxController {
       queryParameters: {'subject': 'Student Attendance Notification'},
     );
     try {
-      if (await canLaunchUrl(emailLaunchUri)) {
-        await launchUrl(emailLaunchUri);
-      } else {
+      final bool launched = await launchUrl(
+        emailLaunchUri,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!launched) {
         showCustomSnackBar("Could not launch mail application", isError: true);
       }
     } catch (e) {
       debugPrint("sendEmail Error: $e");
-      showCustomSnackBar("Failed to open mail app", isError: true);
+      showCustomSnackBar("Failed to open mail app: ${e.toString()}", isError: true);
     }
   }
 

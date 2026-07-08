@@ -1,6 +1,6 @@
 class ApiUrl {
   static const String baseUrl =
-      "https://bedroom-journalism-hollow-tmp.trycloudflare.com";
+      "https://positive-sounds-shorts-offerings.trycloudflare.com";
   static const String imageUrl = baseUrl;
   static String socketUrl = baseUrl;
 
@@ -44,8 +44,13 @@ class ApiUrl {
           {required String studentId}) =>
       "/api/v1/class_distribution/find_by_student_details/$studentId";
   static String getTeacherStudentsAttenddenceSheet(
-          {required int page, required String studentId}) =>
-      "/api/v1/teacher/find_by_specific_student_attendance_of_teacher/$studentId?page=$page&limit=10";
+      {required int page, required String classId, String? date}) {
+    String url = "/api/v1/teacher/find_by_specific_student_attendance_of_teacher/$classId?page=$page&limit=10";
+    if (date != null && date.isNotEmpty) {
+      url += "&attendanceDate=$date";
+    }
+    return url;
+  }
   static const String updateTeacherStudentAttendanc =
       "/api/v1/teacher/update_student_attendance_of_teacher";
 
