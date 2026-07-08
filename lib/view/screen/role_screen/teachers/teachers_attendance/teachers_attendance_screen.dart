@@ -198,6 +198,7 @@ class TeachersAttendanceScreen extends StatelessWidget {
                       null) {
                     return const SizedBox.shrink();
                   }
+                  int totalCount = teacherAttendanceController.attendanceSheet.length;
                   int presentCount = teacherAttendanceController
                       .studentStatus.values
                       .where((v) => v.toLowerCase() == 'present')
@@ -211,28 +212,41 @@ class TeachersAttendanceScreen extends StatelessWidget {
                       .where((v) => v.toLowerCase() == 'late')
                       .length;
 
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      CustomTeachersAttendanceCard(
-                        count: "Present",
-                        label: "$presentCount",
-                        icon: Icons.people,
-                      ),
-                      const SizedBox(width: 12),
-                      CustomTeachersAttendanceCard(
-                        count: "Absent",
-                        label: "$absentCount",
-                        icon: Icons.people,
-                      ),
-                      const SizedBox(width: 12),
-                      CustomTeachersAttendanceCard(
-                        count: "Late",
-                        label: "$lateCount",
-                        icon: Icons.alarm,
-                      ),
-                    ],
-                  );
+                   return Row(
+                     children: [
+                       Expanded(
+                         child: CustomTeachersAttendanceCard(
+                           count: "Total",
+                           label: "$totalCount",
+                           icon: Icons.groups,
+                         ),
+                       ),
+                       SizedBox(width: 8.w),
+                       Expanded(
+                         child: CustomTeachersAttendanceCard(
+                           count: "Present",
+                           label: "$presentCount",
+                           icon: Icons.people,
+                         ),
+                       ),
+                       SizedBox(width: 8.w),
+                       Expanded(
+                         child: CustomTeachersAttendanceCard(
+                           count: "Absent",
+                           label: "$absentCount",
+                           icon: Icons.people,
+                         ),
+                       ),
+                       SizedBox(width: 8.w),
+                       Expanded(
+                         child: CustomTeachersAttendanceCard(
+                           count: "Late",
+                           label: "$lateCount",
+                           icon: Icons.alarm,
+                         ),
+                       ),
+                     ],
+                   );
                 }),
                 const SizedBox(height: 20),
                 // attendance sheet
@@ -267,9 +281,16 @@ class TeachersAttendanceScreen extends StatelessWidget {
                             SizedBox(width: 8.w),
                             Obx(() {
                               final DateTime now = DateTime.now();
-                              final bool isDateToday = teacherAttendanceController.selectedDate.value.year == now.year &&
-                                  teacherAttendanceController.selectedDate.value.month == now.month &&
-                                  teacherAttendanceController.selectedDate.value.day == now.day;
+                              final bool isDateToday =
+                                  teacherAttendanceController
+                                              .selectedDate.value.year ==
+                                          now.year &&
+                                      teacherAttendanceController
+                                              .selectedDate.value.month ==
+                                          now.month &&
+                                      teacherAttendanceController
+                                              .selectedDate.value.day ==
+                                          now.day;
 
                               if (!isDateToday) {
                                 return const SizedBox.shrink();
@@ -293,8 +314,7 @@ class TeachersAttendanceScreen extends StatelessWidget {
                                       begin: Alignment.topLeft,
                                       end: Alignment.bottomRight,
                                     ),
-                                    borderRadius:
-                                        BorderRadius.circular(20.r),
+                                    borderRadius: BorderRadius.circular(20.r),
                                     boxShadow: [
                                       BoxShadow(
                                         color: AppColors.primary
@@ -309,7 +329,8 @@ class TeachersAttendanceScreen extends StatelessWidget {
                                       ? SizedBox(
                                           height: 14.h,
                                           width: 14.w,
-                                          child: const CircularProgressIndicator(
+                                          child:
+                                              const CircularProgressIndicator(
                                             strokeWidth: 2,
                                             color: Colors.white,
                                           ),
@@ -391,9 +412,16 @@ class TeachersAttendanceScreen extends StatelessWidget {
                                             .studentStatus[studentId] ??
                                         '';
                                 final DateTime now = DateTime.now();
-                                final bool isDateToday = teacherAttendanceController.selectedDate.value.year == now.year &&
-                                    teacherAttendanceController.selectedDate.value.month == now.month &&
-                                    teacherAttendanceController.selectedDate.value.day == now.day;
+                                final bool isDateToday =
+                                    teacherAttendanceController
+                                                .selectedDate.value.year ==
+                                            now.year &&
+                                        teacherAttendanceController
+                                                .selectedDate.value.month ==
+                                            now.month &&
+                                        teacherAttendanceController
+                                                .selectedDate.value.day ==
+                                            now.day;
 
                                 return CustomAttendanceCardTeacher(
                                   parentsName: student.staffs?.name ?? "N/A",
@@ -406,16 +434,16 @@ class TeachersAttendanceScreen extends StatelessWidget {
                                       currentStatus.toLowerCase() == 'absent',
                                   isLate: currentStatus.toLowerCase() == 'late',
                                   onTapPresent: isDateToday
-                                      ? () => teacherAttendanceController.setStatus(
-                                          studentId, 'Present')
+                                      ? () => teacherAttendanceController
+                                          .setStatus(studentId, 'Present')
                                       : null,
                                   onTapAbsent: isDateToday
-                                      ? () => teacherAttendanceController.setStatus(
-                                          studentId, 'Absent')
+                                      ? () => teacherAttendanceController
+                                          .setStatus(studentId, 'Absent')
                                       : null,
                                   onTapLate: isDateToday
-                                      ? () => teacherAttendanceController.setStatus(
-                                          studentId, 'Late')
+                                      ? () => teacherAttendanceController
+                                          .setStatus(studentId, 'Late')
                                       : null,
                                   onTapMail: () => teacherAttendanceController
                                       .sendEmail(student.staffs?.email ?? ''),

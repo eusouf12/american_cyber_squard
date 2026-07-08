@@ -36,7 +36,6 @@ class CustomTeachersAttendanceCard extends StatelessWidget {
     }
 
     return Container(
-      width: 100.w,
       padding: EdgeInsets.all(12.w),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -70,20 +69,26 @@ class CustomTeachersAttendanceCard extends StatelessWidget {
             ),
           ),
           SizedBox(height: 8.h),
-          CustomText(
-            text: count ?? '',
-            fontSize: 12.sp,
-            fontWeight: FontWeight.w600,
-            color: Colors.white,
-            textAlign: TextAlign.center,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: CustomText(
+              text: count ?? '',
+              fontSize: 11.sp,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+              textAlign: TextAlign.center,
+            ),
           ),
           SizedBox(height: 2.h),
-          CustomText(
-            text: label ?? '0',
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            textAlign: TextAlign.center,
+          FittedBox(
+            fit: BoxFit.scaleDown,
+            child: CustomText(
+              text: label ?? '0',
+              fontSize: 16.sp,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              textAlign: TextAlign.center,
+            ),
           ),
         ],
       ),
