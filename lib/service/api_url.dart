@@ -1,6 +1,6 @@
 class ApiUrl {
   static const String baseUrl =
-      "https://travesti-helena-clothing-rip.trycloudflare.com";
+      "https://apparel-emission-monster-news.trycloudflare.com";
   static const String imageUrl = baseUrl;
   static String socketUrl = baseUrl;
 
@@ -64,6 +64,10 @@ class ApiUrl {
       "/api/v1/exam_announcement/update_announcement_exam/$examId";
   static String deleteExam({required String examId}) =>
       "/api/v1/exam_announcement/delete_announcement_exam/$examId";
+  static String getExamParticipant({required String examId}) =>
+      "/api/v1/exam_announcement/find_by_participant_student_list/$examId";
+  static const String submitExamGrade =
+      "/api/v1/exam_announcement/recorded_exam_grades";
 
 //============================================================================
   static const String termsCondition =

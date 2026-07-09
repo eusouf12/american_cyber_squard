@@ -6,6 +6,7 @@ import 'package:america_ayber_squad/service/api_client.dart';
 import 'package:america_ayber_squad/service/api_url.dart';
 import 'package:america_ayber_squad/utils/ToastMsg/toast_message.dart';
 import '../model/exam_list.dart';
+import '../model/exam_perticipent.dart';
 import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_home/controller/teachers_controller.dart';
 
 class TeacherCreateExamController extends GetxController {
@@ -16,15 +17,6 @@ class TeacherCreateExamController extends GetxController {
   final durationController = TextEditingController();
   final instructionsController = TextEditingController();
 
-  RxBool isLoading = false.obs;
-
-  // --- Exam List state ---
-  RxList<ExamList> exams = <ExamList>[].obs;
-  RxBool isExamLoading = false.obs;
-  RxnString selectedClassId = RxnString();
-  Rxn<ExamStatusCount> statusCount = Rxn<ExamStatusCount>();
-  RxnString selectedClassDistributionId = RxnString();
-
   // --- Edit Mode state ---
   RxBool isEditing = false.obs;
   RxString editingExamId = "".obs;
@@ -32,7 +24,7 @@ class TeacherCreateExamController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getExamsList(); // Initial fetch (gets all exams since parameters are empty/null)
+    getExamsList();
   }
 
   @override
@@ -172,13 +164,20 @@ class TeacherCreateExamController extends GetxController {
         }
       }
     } catch (e) {
-      showCustomSnackBar("Error submitting exam: ${e.toString()}", isError: true);
+      showCustomSnackBar("Error submitting exam: ${e.toString()}",
+          isError: true);
     } finally {
       isLoading.value = false;
     }
   }
 
 //========================== Exam list GET API ========================================
+  RxList<ExamList> exams = <ExamList>[].obs;
+  RxBool isExamLoading = false.obs;
+  RxnString selectedClassId = RxnString();
+  Rxn<ExamStatusCount> statusCount = Rxn<ExamStatusCount>();
+  RxnString selectedClassDistributionId = RxnString();
+
   Future<void> getExamsList({String? className, String? subject}) async {
     isExamLoading.value = true;
 
@@ -239,6 +238,9 @@ class TeacherCreateExamController extends GetxController {
     }
   }
 
+//==================== Delete Exam ===========================
+  RxBool isLoading = false.obs;
+
   Future<void> deleteExam(String examId) async {
     isLoading.value = true;
     try {
@@ -260,6 +262,96 @@ class TeacherCreateExamController extends GetxController {
       }
     } catch (e) {
       showCustomSnackBar("Error deleting exam: ${e.toString()}", isError: true);
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+//========================== tExamParticipants GET API ========================================
+  RxList<ExamParticipant> participants = <ExamParticipant>[].obs;
+  RxBool isParticipantLoading = false.obs;
+
+  Future<void> getExamParticipants(String examId) async {
+    isParticipantLoading.value = true;
+    try {
+      final response = await ApiClient.getData(
+        ApiUrl.getExamParticipant(examId: examId),
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final Map<String, dynamic> jsonResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body);
+        final ExamParticipantResponse model =
+            ExamParticipantResponse.fromJson(jsonResponse);
+        if (model.data != null && model.data!.participants != null) {
+          participants.value = model.data!.participants!;
+        } else {
+          participants.clear();
+        }
+      } else {
+        final Map<String, dynamic> errorResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body ?? {});
+        showCustomSnackBar(
+          errorResponse['message']?.toString() ?? 'Failed to load participants',
+          isError: true,
+        );
+        participants.clear();
+      }
+    } catch (e) {
+      debugPrint("getExamParticipants Error: $e");
+      showCustomSnackBar("Error loading participants: ${e.toString()}",
+          isError: true);
+      participants.clear();
+    } finally {
+      isParticipantLoading.value = false;
+    }
+  }
+
+//========================== submit StudentGrade post API ========================================
+
+  Future<bool> submitStudentGrade({
+    required String examAnnouncementId,
+    required String studentId,
+    required num totalMarks,
+    required num marks,
+    required String instructions,
+  }) async {
+    isLoading.value = true;
+    try {
+      final body = {
+        "examAnnouncementId": examAnnouncementId,
+        "studentId": studentId,
+        "totalMarks": totalMarks,
+        "marks": marks,
+        "instructions": instructions,
+      };
+
+      final response = await ApiClient.postData(
+        ApiUrl.submitExamGrade,
+        jsonEncode(body),
+        isContentType: true,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        showCustomSnackBar("Grade submitted successfully!", isError: false);
+        return true;
+      } else {
+        final Map<String, dynamic> errorResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body ?? {});
+        showCustomSnackBar(
+          errorResponse['message']?.toString() ?? 'Failed to submit grade',
+          isError: true,
+        );
+        return false;
+      }
+    } catch (e) {
+      debugPrint("submitStudentGrade Error: $e");
+      showCustomSnackBar("Error submitting grade: ${e.toString()}",
+          isError: true);
+      return false;
     } finally {
       isLoading.value = false;
     }

@@ -271,6 +271,14 @@ class TeacherExamGradeScreen extends StatelessWidget {
                               duration: exam.duration,
                               totalMarks: exam.totalMarks,
                               onTapView: () {},
+                              onTapGrade: () {
+                                if (exam.id != null) {
+                                  Get.toNamed(
+                                    AppRoutes.teacherStudentSubmissionsScreen,
+                                    arguments: exam,
+                                  );
+                                }
+                              },
                               onTapEdit: () async {
                                 controller.setupEditMode(exam);
                                 final result = await Get.toNamed(
