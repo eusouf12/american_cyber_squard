@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -88,20 +89,31 @@ class ContactUsScreen extends StatelessWidget {
                   SizedBox(height: 10.h),
 
                   /// Button
-                  CustomButton(
-                    title: "Send Message",
-                    fillColor: AppColors.primary,
-                    fontSize: 14.sp,
-                    icon: const Icon(
-                      Icons.send,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                      }
-                    },
-                  ),
+                  Obx(() {
+                    final loading = controller.isLoading.value;
+                    return CustomButton(
+                      title: loading ? "Sending..." : "Send Message",
+                      fillColor: AppColors.primary,
+                      fontSize: 14.sp,
+                      icon: loading
+                          ? null
+                          : const Icon(
+                              Icons.send,
+                              color: Colors.white,
+                              size: 20,
+                            ),
+                      onTap: loading
+                          ? null
+                          : () async {
+                              if (_formKey.currentState!.validate()) {
+                                final success = await controller.sendSupportMessage();
+                                if (success) {
+                                  Get.back();
+                                }
+                              }
+                            },
+                    );
+                  }),
                 ],
               ),
             ),

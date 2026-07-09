@@ -166,12 +166,53 @@ class TeacherStudentController extends GetxController {
           isError: true,
         );
       }
-    } catch (e) {
+      } catch (e) {
       rxDetailsStatus.value = Status.error;
       debugPrint('getStudentDetails Error: $e');
       showCustomSnackBar('Error: ${e.toString()}', isError: true);
     } finally {
       isDetailsLoading.value = false;
+    }
+  }
+
+  // ── Post Online Class Link ──────────────────────────────────────────────
+  RxBool isOnlineClassLoading = false.obs;
+
+  Future<bool> postOnlineClass({
+    required String classDistributionId,
+    required String link,
+  }) async {
+    isOnlineClassLoading.value = true;
+    try {
+      final Map<String, dynamic> body = {
+        "classDistributionId": classDistributionId,
+        "link": link,
+      };
+
+      final response = await ApiClient.postData(
+        ApiUrl.onlineClass,
+        body,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        showCustomSnackBar("Online class link posted successfully", isError: false);
+        return true;
+      } else {
+        final Map<String, dynamic> errorResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body ?? {});
+        showCustomSnackBar(
+          errorResponse['message']?.toString() ?? 'Failed to post online class link',
+          isError: true,
+        );
+        return false;
+      }
+    } catch (e) {
+      debugPrint("postOnlineClass Error: $e");
+      showCustomSnackBar("Error: ${e.toString()}", isError: true);
+      return false;
+    } finally {
+      isOnlineClassLoading.value = false;
     }
   }
 }

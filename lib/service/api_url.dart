@@ -72,6 +72,10 @@ class ApiUrl {
       "/api/v1/exam_announcement/find_by_exam_grades_specific_teacher";
   static String updateExamGrade({required String studentId}) =>
       "/api/v1/exam_announcement/update_exam_grades_specific_teacher/$studentId";
+  static const String onlineClass =
+      "/api/v1/teacher/online_class_recorded_of_teacher";
+  static const String teacherSupportMessage =
+      "/api/v1/support/send_support_message";
 //====assignment===
   static const String createAssignment =
       "/api/v1/assignments/create_assignment";
