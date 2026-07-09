@@ -16,7 +16,8 @@ class TeacherStudentSubmissionsScreen extends StatelessWidget {
       Get.find<TeacherCreateExamController>();
 
   void _showGradeInputModel(
-      BuildContext context, ExamList exam, ExamParticipant participant) {
+      BuildContext context, ExamList exam, ExamParticipant participant,
+      {bool isEdit = false}) {
     final marksInputController = TextEditingController();
     final instructionsInputController = TextEditingController();
     final formKey = GlobalKey<FormState>();
@@ -28,7 +29,7 @@ class TeacherStudentSubmissionsScreen extends StatelessWidget {
           borderRadius: BorderRadius.circular(16.r),
         ),
         title: CustomText(
-          text: "Grade ${participant.name ?? 'Student'}",
+          text: isEdit ? "Update Grade" : "Grade Submission",
           fontSize: 16.sp,
           fontWeight: FontWeight.bold,
         ),
@@ -37,6 +38,40 @@ class TeacherStudentSubmissionsScreen extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
+              // Student Info Header Row
+              Row(
+                children: [
+                  CircleAvatar(
+                    radius: 20.r,
+                    backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+                    child: Icon(Icons.person, color: AppColors.primary, size: 20.sp),
+                  ),
+                  SizedBox(width: 12.w),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomText(
+                          text: participant.name ?? 'Student',
+                          fontSize: 14.sp,
+                          fontWeight: FontWeight.bold,
+                          textAlign: TextAlign.start,
+                        ),
+                        if (participant.studentId != null) ...[
+                          SizedBox(height: 2.h),
+                          CustomText(
+                            text: "ID: ${participant.studentId}",
+                            fontSize: 11.sp,
+                            color: Colors.grey.shade500,
+                            textAlign: TextAlign.start,
+                          ),
+                        ]
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 16.h),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Container(
@@ -73,7 +108,8 @@ class TeacherStudentSubmissionsScreen extends StatelessWidget {
                   if (score == null) {
                     return "Please enter a valid number";
                   }
-                  final totalMarks = double.tryParse(exam.totalMarks ?? "100") ?? 100;
+                  final totalMarks =
+                      double.tryParse(exam.totalMarks ?? "100") ?? 100;
                   if (score > totalMarks) {
                     return "Marks cannot be greater than $totalMarks";
                   }
@@ -107,17 +143,33 @@ class TeacherStudentSubmissionsScreen extends StatelessWidget {
                   : () async {
                       if (formKey.currentState!.validate()) {
                         final studentId = participant.id ?? "";
-                        final success = await controller.submitStudentGrade(
-                          examAnnouncementId: exam.id ?? "",
-                          studentId: studentId,
-                          totalMarks:
-                              double.tryParse(exam.totalMarks ?? "100") ?? 100,
-                          marks:
-                              double.tryParse(marksInputController.text) ?? 0,
-                          instructions: instructionsInputController.text,
-                        );
+                        final success = isEdit
+                            ? await controller.updateStudentGrade(
+                                studentId: studentId,
+                                totalMarks:
+                                    double.tryParse(exam.totalMarks ?? "100") ??
+                                        100,
+                                marks: double.tryParse(
+                                        marksInputController.text) ??
+                                    0,
+                                instructions: instructionsInputController.text,
+                              )
+                            : await controller.submitStudentGrade(
+                                examAnnouncementId: exam.id ?? "",
+                                studentId: studentId,
+                                totalMarks:
+                                    double.tryParse(exam.totalMarks ?? "100") ??
+                                        100,
+                                marks: double.tryParse(
+                                        marksInputController.text) ??
+                                    0,
+                                instructions: instructionsInputController.text,
+                              );
                         if (success) {
                           Get.back(); // Close dialog
+                          if (exam.id != null) {
+                            controller.getExamParticipants(exam.id!);
+                          }
                         }
                       }
                     },
@@ -278,7 +330,8 @@ class TeacherStudentSubmissionsScreen extends StatelessWidget {
                           ),
                           ElevatedButton(
                             onPressed: () {
-                              _showGradeInputModel(context, exam, participant);
+                              _showGradeInputModel(
+                                  context, exam, participant);
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF00A36C),

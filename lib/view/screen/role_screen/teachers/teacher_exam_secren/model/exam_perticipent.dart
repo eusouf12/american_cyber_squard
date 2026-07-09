@@ -72,12 +72,14 @@ class ExamParticipant {
   String? name;
   String? studentId;
   String? createdAt;
+  bool? isGraded;
 
   ExamParticipant({
     this.id,
     this.name,
     this.studentId,
     this.createdAt,
+    this.isGraded,
   });
 
   factory ExamParticipant.fromJson(Map<String, dynamic> json) {
@@ -86,6 +88,7 @@ class ExamParticipant {
       name: json['name'],
       studentId: json['studentId'],
       createdAt: json['createdAt'],
+      isGraded: json['isGraded'],
     );
   }
 }

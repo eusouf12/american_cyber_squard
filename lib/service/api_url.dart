@@ -68,14 +68,12 @@ class ApiUrl {
       "/api/v1/exam_announcement/find_by_participant_student_list/$examId";
   static const String submitExamGrade =
       "/api/v1/exam_announcement/recorded_exam_grades";
+  static String updateExamGrade({required String studentId}) =>
+      "/api/v1/exam_announcement/update_exam_grades_specific_teacher/$studentId";
 
 //============================================================================
-  static const String termsCondition =
-      "/api/v1/setting/find_by_terms_conditions";
-  static const String privacyPolicy = "/api/v1/setting/find_by_privacy_policys";
+
   static const String googleAuth = "/api/v1/user/google_auth";
   static String deleteAccount({required String userId}) =>
       "/api/v1/auth/delete_account/$userId";
-  static String getAllPosts({required int page}) =>
-      "/api/v1/followup/find_by_my_event_social_feed?page=$page&limit=10";
 }

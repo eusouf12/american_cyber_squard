@@ -356,4 +356,47 @@ class TeacherCreateExamController extends GetxController {
       isLoading.value = false;
     }
   }
+
+  Future<bool> updateStudentGrade({
+    required String studentId,
+    required num totalMarks,
+    required num marks,
+    required String instructions,
+  }) async {
+    isLoading.value = true;
+    try {
+      final body = {
+        "totalMarks": totalMarks,
+        "marks": marks,
+        "instructions": instructions,
+      };
+
+      final response = await ApiClient.patchData(
+        ApiUrl.updateExamGrade(studentId: studentId),
+        jsonEncode(body),
+        isContentType: true,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        showCustomSnackBar("Grade updated successfully!", isError: false);
+        return true;
+      } else {
+        final Map<String, dynamic> errorResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body ?? {});
+        showCustomSnackBar(
+          errorResponse['message']?.toString() ?? 'Failed to update grade',
+          isError: true,
+        );
+        return false;
+      }
+    } catch (e) {
+      debugPrint("updateStudentGrade Error: $e");
+      showCustomSnackBar("Error updating grade: ${e.toString()}",
+          isError: true);
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }
