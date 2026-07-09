@@ -42,6 +42,10 @@ class TeacherAssignmentController extends GetxController {
   // Assignments List
   final RxList<dynamic> assignments = <dynamic>[].obs;
 
+  // Specific assignment detail (for details screen)
+  final Rxn<Map<String, dynamic>> specificAssignmentData = Rxn<Map<String, dynamic>>();
+  final RxBool isSpecificAssignmentLoading = false.obs;
+
   // Picker helper
   Future<void> pickFiles() async {
     try {
@@ -151,6 +155,128 @@ class TeacherAssignmentController extends GetxController {
     } catch (e) {
       debugPrint("createAssignment Error: $e");
       showCustomSnackBar("Error creating assignment: ${e.toString()}", isError: true);
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // Fetch Specific Assignment Details
+  Future<Map<String, dynamic>?> fetchSpecificAssignment(String assignmentId) async {
+    isSpecificAssignmentLoading.value = true;
+    specificAssignmentData.value = null;
+    try {
+      final response = await ApiClient.getData(
+        ApiUrl.specificAssignment(assignmentId: assignmentId),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final Map<String, dynamic> jsonResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body);
+        final data = jsonResponse['data'];
+        specificAssignmentData.value = data != null ? Map<String, dynamic>.from(data) : null;
+        return specificAssignmentData.value;
+      } else {
+        final Map<String, dynamic> errorResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body ?? {});
+        showCustomSnackBar(
+          errorResponse['message']?.toString() ?? 'Failed to load details',
+          isError: true,
+        );
+        return null;
+      }
+    } catch (e) {
+      debugPrint("fetchSpecificAssignment Error: $e");
+      showCustomSnackBar("Error loading details: ${e.toString()}", isError: true);
+      return null;
+    } finally {
+      isSpecificAssignmentLoading.value = false;
+    }
+  }
+
+  // Update Assignment
+  Future<bool> updateAssignment({
+    required String assignmentId,
+    required String title,
+    required String type,
+    required String description,
+    required String dueDate,
+  }) async {
+    isLoading.value = true;
+    try {
+      final Map<String, String> data = {
+        "classLevel": selectedClassLevel.value ?? "",
+        "classDistributionId": selectedClassId.value ?? "",
+        "assignmentTitle": title,
+        "assignmentType": type,
+        "assignmentDueDate": dueDate,
+        "description": description,
+      };
+
+      final body = {
+        "data": jsonEncode(data),
+      };
+
+      List<MultipartBody> multipartBody = [];
+      for (var file in pickedFiles) {
+        multipartBody.add(MultipartBody('attachments', file));
+      }
+
+      final response = await ApiClient.patchMultipartData(
+        ApiUrl.updateAssignment(assignmentId: assignmentId),
+        body,
+        multipartBody: multipartBody.isNotEmpty ? multipartBody : null,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        showCustomSnackBar("Assignment updated successfully", isError: false);
+        pickedFiles.clear();
+        getAssignmentsList(); // Refresh list
+        return true;
+      } else {
+        final Map<String, dynamic> errorResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body ?? {});
+        showCustomSnackBar(
+          errorResponse['message']?.toString() ?? 'Failed to update assignment',
+          isError: true,
+        );
+        return false;
+      }
+    } catch (e) {
+      debugPrint("updateAssignment Error: $e");
+      showCustomSnackBar("Error updating assignment: ${e.toString()}", isError: true);
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // Delete Assignment
+  Future<bool> deleteAssignment(String assignmentId) async {
+    isLoading.value = true;
+    try {
+      final response = await ApiClient.deleteData(
+        ApiUrl.deleteAssignment(assignmentId: assignmentId),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        showCustomSnackBar("Assignment deleted successfully", isError: false);
+        getAssignmentsList(); // Refresh list
+        return true;
+      } else {
+        final Map<String, dynamic> errorResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body ?? {});
+        showCustomSnackBar(
+          errorResponse['message']?.toString() ?? 'Failed to delete assignment',
+          isError: true,
+        );
+        return false;
+      }
+    } catch (e) {
+      debugPrint("deleteAssignment Error: $e");
+      showCustomSnackBar("Error deleting assignment: ${e.toString()}", isError: true);
       return false;
     } finally {
       isLoading.value = false;

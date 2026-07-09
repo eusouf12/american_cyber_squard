@@ -75,8 +75,15 @@ class ApiUrl {
 //====assignment===
   static const String createAssignment =
       "/api/v1/assignments/create_assignment";
-  static String getTeacherAssignment({required String status, String? classLevel}) =>
+  static String getTeacherAssignment(
+          {required String status, String? classLevel}) =>
       "/api/v1/assignments/find_by_specific_teacher_assignment?status=$status${classLevel != null ? '&classLevel=$classLevel' : ''}";
+  static String deleteAssignment({required String assignmentId}) =>
+      "/api/v1/assignments/delete_class_assignment/$assignmentId";
+  static String updateAssignment({required String assignmentId}) =>
+      "/api/v1/assignments/update_teacher_assignment/$assignmentId";
+  static String specificAssignment({required String assignmentId}) =>
+      "/api/v1/assignments/find_by_specific_assignment/$assignmentId";
 
 //============================================================================
 

@@ -15,6 +15,7 @@ class CustomCreateAssignmentCard extends StatelessWidget {
   final String? homeWork;
   final VoidCallback onTapEdit;
   final VoidCallback onTapView;
+  final VoidCallback onTapDelete;
 
   const CustomCreateAssignmentCard({
     super.key,
@@ -27,6 +28,7 @@ class CustomCreateAssignmentCard extends StatelessWidget {
     this.homeWork,
     required this.onTapView,
     required this.onTapEdit,
+    required this.onTapDelete,
   });
 
   @override
@@ -168,6 +170,20 @@ class CustomCreateAssignmentCard extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                   fillColor: AppColors.primary,
                   textColor: Colors.white,
+                ),
+              ),
+
+              SizedBox(width: 6.w),
+
+              Expanded(
+                child: CustomButton(
+                  onTap: onTapDelete,
+                  title: "Delete",
+                  height: 36,
+                  fontSize: 10.sp,
+                  fontWeight: FontWeight.w400,
+                  fillColor: Colors.red.withValues(alpha: 0.1),
+                  textColor: Colors.red,
                 ),
               ),
             ],

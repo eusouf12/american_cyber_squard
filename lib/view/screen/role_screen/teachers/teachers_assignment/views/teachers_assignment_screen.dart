@@ -10,6 +10,7 @@ import 'package:get/get.dart';
 import '../../teachers_home/controller/teachers_controller.dart';
 import '../widget/custom_create_assignment.dart';
 import '../widget/custom_create_assignment_card.dart';
+import 'teacher_assignment_details_screen.dart';
 import 'package:america_ayber_squad/view/components/custom_loader/custom_loader.dart';
 import 'package:intl/intl.dart';
 
@@ -18,8 +19,7 @@ class TeachersAssignmentScreen extends StatelessWidget {
 
   final TeacherAssignmentController teacherCreateController =
       Get.find<TeacherAssignmentController>();
-  final TeachersController teachersController =
-      Get.find<TeachersController>();
+  final TeachersController teachersController = Get.find<TeachersController>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class TeachersAssignmentScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 10.h),
-              
+
               // --- Static Dropdown Block ---
               Container(
                 width: double.infinity,
@@ -87,14 +87,13 @@ class TeachersAssignmentScreen extends StatelessWidget {
                           )
                           .toList();
 
-                      final String? selectedClass = (teacherCreateController
-                                      .selectedClassLevel.value !=
-                                  null &&
-                              uniqueClasses.contains(
-                                  teacherCreateController
+                      final String? selectedClass =
+                          (teacherCreateController.selectedClassLevel.value !=
+                                      null &&
+                                  uniqueClasses.contains(teacherCreateController
                                       .selectedClassLevel.value))
-                          ? teacherCreateController.selectedClassLevel.value
-                          : null;
+                              ? teacherCreateController.selectedClassLevel.value
+                              : null;
 
                       return Container(
                         padding: EdgeInsets.symmetric(
@@ -125,13 +124,15 @@ class TeachersAssignmentScreen extends StatelessWidget {
                             ),
                             onChanged: (String? val) {
                               if (val != null) {
-                                teacherCreateController.selectedClassLevel.value = val;
-                                final matchedSchedules = teachersController.allScheduleList
+                                teacherCreateController
+                                    .selectedClassLevel.value = val;
+                                final matchedSchedules = teachersController
+                                    .allScheduleList
                                     .where((e) => e.classLevel == val)
                                     .toList();
                                 if (matchedSchedules.isNotEmpty) {
-                                  teacherCreateController.selectedClassId.value =
-                                      matchedSchedules.first.id;
+                                  teacherCreateController.selectedClassId
+                                      .value = matchedSchedules.first.id;
                                 }
                                 teacherCreateController.getAssignmentsList();
                               }
@@ -144,9 +145,9 @@ class TeachersAssignmentScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              
+
               SizedBox(height: 20.h),
-              
+
               // --- Scrollable list and create assignment area ---
               Expanded(
                 child: SingleChildScrollView(
@@ -176,11 +177,13 @@ class TeachersAssignmentScreen extends StatelessWidget {
                               unselectedTextColor: Colors.grey,
                             )),
                         SizedBox(height: 20.h),
-                        
+
                         GestureDetector(
                           onTap: () {
-                            if (teacherCreateController.selectedClassId.value == null) {
-                              Get.snackbar("Error", "Please select a Class/Subject first");
+                            if (teacherCreateController.selectedClassId.value ==
+                                null) {
+                              Get.snackbar("Error",
+                                  "Please select a Class/Subject first");
                               return;
                             }
                             showCreateAssignmentPopup(context);
@@ -212,9 +215,9 @@ class TeachersAssignmentScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        
+
                         SizedBox(height: 20.h),
-                        
+
                         // Assignments List View
                         Obx(() {
                           if (teacherCreateController.isGetLoading.value) {
@@ -241,31 +244,106 @@ class TeachersAssignmentScreen extends StatelessWidget {
                             padding: EdgeInsets.zero,
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: teacherCreateController.assignments.length,
+                            itemCount:
+                                teacherCreateController.assignments.length,
                             itemBuilder: (context, index) {
-                              final assignment = teacherCreateController.assignments[index];
-                              final title = assignment['assignmentTitle']?.toString() ?? "N/A";
-                              final type = assignment['assignmentType']?.toString() ?? "Homework";
-                              final classLevel = assignment['classLevel']?.toString() ?? "N/A";
-                              
-                              final dueStr = assignment['assignmentDueDate']?.toString() ?? "";
+                              final assignment =
+                                  teacherCreateController.assignments[index];
+                              final title =
+                                  assignment['assignmentTitle']?.toString() ??
+                                      "N/A";
+                              final type =
+                                  assignment['assignmentType']?.toString() ??
+                                      "Homework";
+                              final classLevel =
+                                  assignment['classLevel']?.toString() ??
+                                      assignment['classDistributions']
+                                              ?['classLevel']
+                                          ?.toString() ??
+                                      "N/A";
+
+                              final dueStr =
+                                  assignment['assignmentDueDate']?.toString() ??
+                                      "";
                               final dueDateTime = DateTime.tryParse(dueStr);
-                              final formattedDate = dueDateTime != null 
-                                  ? DateFormat('MMM d, yyyy').format(dueDateTime)
+                              final formattedDate = dueDateTime != null
+                                  ? DateFormat('MMM d, yyyy')
+                                      .format(dueDateTime)
                                   : "N/A";
-                              
-                              final isCompleted = dueDateTime != null && dueDateTime.isBefore(now);
+
+                              final isCompleted = dueDateTime != null &&
+                                  dueDateTime.isBefore(now);
 
                               return CustomCreateAssignmentCard(
                                 subject: title,
                                 grade: classLevel,
-                                submission: "0/0", // Default submission progress placeholder
+                                submission:
+                                    "0/0", // Default submission progress placeholder
                                 time: formattedDate,
                                 status: isCompleted ? "Completed" : "Active",
                                 homeWork: type,
                                 progressValue: isCompleted ? 100 : 0,
-                                onTapEdit: () {},
-                                onTapView: () {},
+                                onTapView: () {
+                                  Get.to(() => TeacherAssignmentDetailsScreen(
+                                        assignmentId:
+                                            assignment['id']?.toString() ?? "",
+                                        classLevel: classLevel,
+                                      ));
+                                },
+                                onTapEdit: () async {
+                                  Get.dialog(
+                                    const Center(child: CustomLoader()),
+                                    barrierDismissible: false,
+                                  );
+                                  final fullData = await teacherCreateController
+                                      .fetchSpecificAssignment(
+                                          assignment['id']?.toString() ?? "");
+                                  Get.back(); // close loader
+                                  if (fullData != null) {
+                                    final mergedData =
+                                        Map<String, dynamic>.from(fullData);
+
+                                    // Resolve classLevel from nested classDistributions
+                                    // if top-level is absent (list API doesn't include it)
+                                    mergedData['classLevel'] ??=
+                                        fullData['classDistributions']
+                                            ?['classLevel'];
+
+                                    mergedData['classDistributionId'] ??=
+                                        fullData['classDistributions']?['id'];
+
+                                    showEditAssignmentPopup(
+                                        context, mergedData);
+                                  }
+                                },
+                                onTapDelete: () {
+                                  Get.dialog(
+                                    AlertDialog(
+                                      title: const Text("Delete Assignment"),
+                                      content: const Text(
+                                          "Are you sure you want to delete this assignment?"),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () => Get.back(),
+                                          child: const Text("Cancel"),
+                                        ),
+                                        TextButton(
+                                          onPressed: () async {
+                                            Get.back();
+                                            await teacherCreateController
+                                                .deleteAssignment(
+                                              assignment['id']?.toString() ??
+                                                  "",
+                                            );
+                                          },
+                                          child: const Text("Delete",
+                                              style:
+                                                  TextStyle(color: Colors.red)),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
                               );
                             },
                           );
