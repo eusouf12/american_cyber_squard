@@ -146,7 +146,8 @@ class CustomTeacherExamCard extends StatelessWidget {
           ),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 12.h),
-            child: Divider(color: Colors.grey.shade100, height: 1, thickness: 1),
+            child:
+                Divider(color: Colors.grey.shade100, height: 1, thickness: 1),
           ),
           Row(
             children: [
@@ -213,13 +214,30 @@ class CustomTeacherExamCard extends StatelessWidget {
                       textColor: const Color(0xFF2563EB),
                     )
                   : calculatedStatus == "Pending"
-                      ? CustomButton(
-                          onTap: onTapGrade,
-                          title: "Grade Submissions",
-                          height: 36.h,
-                          width: 140.w,
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.w500,
+                      ? Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CustomButton(
+                              onTap: onTapGrade,
+                              title: "Grade Now",
+                              height: 36.h,
+                              width: 90.w,
+                              fontSize: 11.sp,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            SizedBox(width: 8.w),
+                            CustomButton(
+                              onTap: onTapView,
+                              title: "View ",
+                              height: 36.h,
+                              width: 90.w,
+                              fontSize: 11.sp,
+                              fillColor: const Color(0xFF2563EB)
+                                  .withValues(alpha: 0.1),
+                              fontWeight: FontWeight.w500,
+                              textColor: const Color(0xFF2563EB),
+                            ),
+                          ],
                         )
                       : CustomButton(
                           onTap: onTapEdit,
@@ -237,7 +255,8 @@ class CustomTeacherExamCard extends StatelessWidget {
                   backgroundColor: Colors.red.withValues(alpha: 0.1),
                   padding: EdgeInsets.all(8.w),
                 ),
-                icon: Icon(Icons.delete_outline, color: Colors.red, size: 20.sp),
+                icon:
+                    Icon(Icons.delete_outline, color: Colors.red, size: 20.sp),
               ),
             ],
           ),

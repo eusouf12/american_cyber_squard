@@ -20,6 +20,7 @@ import '../../view/screen/role_screen/teachers/teachers_home/screen/all_announce
 import '../../view/screen/role_screen/teachers/teacher_exam_secren/screen/teacher_exam_grade_screen.dart';
 import '../../view/screen/role_screen/teachers/teacher_exam_secren/screen/teacher_create_exam_screen.dart';
 import '../../view/screen/role_screen/teachers/teacher_exam_secren/screen/teacher_student_submissions_screen.dart';
+import '../../view/screen/role_screen/teachers/teacher_exam_secren/screen/teacher_view_results_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teacher_schedule_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teacher_student_screen.dart';
 import '../../view/screen/role_screen/teachers/teachers_profile/view/teachers_material.dart';
@@ -55,6 +56,7 @@ class AppRoutes {
   static const String teacherExamGradeScreen ="/TeacherExamGradeScreen";
   static const String teacherCreateExamScreen ="/TeacherCreateExamScreen";
   static const String teacherStudentSubmissionsScreen ="/TeacherStudentSubmissionsScreen";
+  static const String teacherViewResultsScreen ="/TeacherViewResultsScreen";
   static const String teacherScheduleScreen ="/TeacherScheduleScreen";
   static const String teacherStudentScreen ="/TeacherStudentScreen";
   static const String teachersAssignmentScreen ="/TeachersAssignmentScreen";
@@ -93,6 +95,7 @@ class AppRoutes {
     GetPage(name: teacherExamGradeScreen, page: () => TeacherExamGradeScreen()),
     GetPage(name: teacherCreateExamScreen, page: () => TeacherCreateExamScreen()),
     GetPage(name: teacherStudentSubmissionsScreen, page: () => TeacherStudentSubmissionsScreen()),
+    GetPage(name: teacherViewResultsScreen, page: () => TeacherViewResultsScreen()),
     GetPage(name: teacherScheduleScreen, page: () => TeacherScheduleScreen()),
     GetPage(name: teacherStudentScreen, page: () => TeacherStudentScreen()),
     GetPage(name: teachersAssignmentScreen, page: () => TeachersAssignmentScreen()),

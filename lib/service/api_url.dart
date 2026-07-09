@@ -68,6 +68,8 @@ class ApiUrl {
       "/api/v1/exam_announcement/find_by_participant_student_list/$examId";
   static const String submitExamGrade =
       "/api/v1/exam_announcement/recorded_exam_grades";
+  static const String showExamGrade =
+      "/api/v1/exam_announcement/find_by_exam_grades_specific_teacher";
   static String updateExamGrade({required String studentId}) =>
       "/api/v1/exam_announcement/update_exam_grades_specific_teacher/$studentId";
 

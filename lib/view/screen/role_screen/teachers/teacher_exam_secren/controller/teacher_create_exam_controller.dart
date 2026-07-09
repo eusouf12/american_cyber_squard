@@ -7,6 +7,7 @@ import 'package:america_ayber_squad/service/api_url.dart';
 import 'package:america_ayber_squad/utils/ToastMsg/toast_message.dart';
 import '../model/exam_list.dart';
 import '../model/exam_perticipent.dart';
+import '../model/exam_grade_show.dart';
 import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_home/controller/teachers_controller.dart';
 
 class TeacherCreateExamController extends GetxController {
@@ -357,6 +358,7 @@ class TeacherCreateExamController extends GetxController {
     }
   }
 
+//========================== update StudentGrade patch API =======================================
   Future<bool> updateStudentGrade({
     required String studentId,
     required num totalMarks,
@@ -397,6 +399,49 @@ class TeacherCreateExamController extends GetxController {
       return false;
     } finally {
       isLoading.value = false;
+    }
+  }
+
+  //========================== Student Grades GET API =======================================
+  RxList<ExamStudentGrade> studentGrades = <ExamStudentGrade>[].obs;
+  RxBool isStudentGradesLoading = false.obs;
+
+  Future<void> fetchExamStudentGrades(String examId) async {
+    isStudentGradesLoading.value = true;
+    try {
+      final response = await ApiClient.getData(
+        "${ApiUrl.showExamGrade}?examAnnouncementId=$examId",
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final Map<String, dynamic> jsonResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body);
+        final ExamStudentGradeResponse model =
+            ExamStudentGradeResponse.fromJson(jsonResponse);
+        if (model.data != null && model.data!.grades != null) {
+          studentGrades.value = model.data!.grades!;
+        } else {
+          studentGrades.clear();
+        }
+      } else {
+        final Map<String, dynamic> errorResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body ?? {});
+        showCustomSnackBar(
+          errorResponse['message']?.toString() ??
+              'Failed to load student grades',
+          isError: true,
+        );
+        studentGrades.clear();
+      }
+    } catch (e) {
+      debugPrint("fetchExamStudentGrades Error: $e");
+      showCustomSnackBar("Error loading student grades: ${e.toString()}",
+          isError: true);
+      studentGrades.clear();
+    } finally {
+      isStudentGradesLoading.value = false;
     }
   }
 }

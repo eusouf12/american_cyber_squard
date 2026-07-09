@@ -270,7 +270,14 @@ class TeacherExamGradeScreen extends StatelessWidget {
                               grade: exam.topic ?? "N/A",
                               duration: exam.duration,
                               totalMarks: exam.totalMarks,
-                              onTapView: () {},
+                              onTapView: () {
+                                if (exam.id != null) {
+                                  Get.toNamed(
+                                    AppRoutes.teacherViewResultsScreen,
+                                    arguments: exam,
+                                  );
+                                }
+                              },
                               onTapGrade: () {
                                 if (exam.id != null) {
                                   Get.toNamed(
