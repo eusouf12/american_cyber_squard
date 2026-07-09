@@ -22,7 +22,7 @@ class ContactUsController extends GetxController {
     super.onClose();
   }
 
-  Future<bool> sendSupportMessage() async {
+  Future<void> sendSupportMessage() async {
     isLoading.value = true;
     try {
       final Map<String, dynamic> body = {
@@ -39,12 +39,12 @@ class ContactUsController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         showCustomSnackBar("Message sent successfully", isError: false);
+        Get.back();
         // Clear inputs on success
         nameController.clear();
         emailController.clear();
         subjectController.clear();
         messageController.clear();
-        return true;
       } else {
         final Map<String, dynamic> errorResponse = response.body is String
             ? jsonDecode(response.body)
@@ -53,12 +53,10 @@ class ContactUsController extends GetxController {
           errorResponse['message']?.toString() ?? 'Failed to send message',
           isError: true,
         );
-        return false;
       }
     } catch (e) {
       debugPrint("sendSupportMessage Error: $e");
       showCustomSnackBar("Error: ${e.toString()}", isError: true);
-      return false;
     } finally {
       isLoading.value = false;
     }

@@ -19,7 +19,7 @@ class ContactUsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar:CustomRoyelAppbar(
+      appBar: CustomRoyelAppbar(
         titleName: "Support",
         leftIcon: true,
       ),
@@ -53,7 +53,7 @@ class ContactUsScreen extends StatelessWidget {
                     hintText: "Your name",
                     controller: controller.nameController,
                     validator: (v) =>
-                    v == null || v.isEmpty ? "Name is required" : null,
+                        v == null || v.isEmpty ? "Name is required" : null,
                   ),
 
                   /// Email
@@ -62,8 +62,7 @@ class ContactUsScreen extends StatelessWidget {
                     hintText: "your.email@example.com",
                     controller: controller.emailController,
                     keyboardType: TextInputType.emailAddress,
-                    validator: (v) =>
-                    v == null || !v.contains("@")
+                    validator: (v) => v == null || !v.contains("@")
                         ? "Enter valid email"
                         : null,
                   ),
@@ -79,7 +78,7 @@ class ContactUsScreen extends StatelessWidget {
                   CustomFormCard(
                     title: "Message",
                     hintText:
-                    "Please describe your issue or question in detail...",
+                        "Please describe your issue or question in detail...",
                     controller: controller.messageController,
                     maxLine: 5,
                     isMultiLine: true,
@@ -106,10 +105,7 @@ class ContactUsScreen extends StatelessWidget {
                           ? null
                           : () async {
                               if (_formKey.currentState!.validate()) {
-                                final success = await controller.sendSupportMessage();
-                                if (success) {
-                                  Get.back();
-                                }
+                                await controller.sendSupportMessage();
                               }
                             },
                     );
