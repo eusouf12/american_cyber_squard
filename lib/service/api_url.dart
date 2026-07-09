@@ -72,6 +72,11 @@ class ApiUrl {
       "/api/v1/exam_announcement/find_by_exam_grades_specific_teacher";
   static String updateExamGrade({required String studentId}) =>
       "/api/v1/exam_announcement/update_exam_grades_specific_teacher/$studentId";
+//====assignment===
+  static const String createAssignment =
+      "/api/v1/assignments/create_assignment";
+  static String getTeacherAssignment({required String status, String? classLevel}) =>
+      "/api/v1/assignments/find_by_specific_teacher_assignment?status=$status${classLevel != null ? '&classLevel=$classLevel' : ''}";
 
 //============================================================================
 

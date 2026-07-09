@@ -46,7 +46,7 @@ class DependencyInjection extends Bindings {
     
     Get.lazyPut(() => TeachersMaterialController(), fenix: true);
     Get.lazyPut(() => TeacherStudentController(), fenix: true);
-    Get.lazyPut(() => TeacherCreateController(), fenix: true);
+    Get.lazyPut(() => TeacherAssignmentController(), fenix: true);
     Get.lazyPut(() => TeacherAttendanceController(), fenix: true);
     Get.lazyPut(() => TeacherCreateExamController(), fenix: true);
 

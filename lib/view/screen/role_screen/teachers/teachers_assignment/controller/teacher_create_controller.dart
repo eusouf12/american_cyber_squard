@@ -1,11 +1,159 @@
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:america_ayber_squad/service/api_client.dart';
+import 'package:america_ayber_squad/service/api_url.dart';
+import 'package:america_ayber_squad/utils/ToastMsg/toast_message.dart';
 
-class TeacherCreateController extends GetxController {
-  var selectedIndex = 0.obs;
+class TeacherAssignmentController extends GetxController {
+  final RxInt selectedIndex = 0.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    getAssignmentsList();
+  }
 
   void changeTab(int index) {
     selectedIndex.value = index;
+    getAssignmentsList();
   }
-  //progress bar
+
+  String getStatusFromIndex(int index) {
+    if (index == 0) return "all";
+    if (index == 1) return "active";
+    return "completed";
+  }
+
   final RxInt progress = 0.obs;
+
+  // Selected class/subject from dropdown
+  final RxnString selectedClassId = RxnString();
+  final RxnString selectedClassLevel = RxnString();
+  final RxnString selectedSubject = RxnString();
+
+  // Dialog inputs / picker states
+  final RxList<File> pickedFiles = <File>[].obs;
+  final RxBool isLoading = false.obs;
+  final RxBool isGetLoading = false.obs;
+
+  // Assignments List
+  final RxList<dynamic> assignments = <dynamic>[].obs;
+
+  // Picker helper
+  Future<void> pickFiles() async {
+    try {
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        allowMultiple: true,
+        type: FileType.any,
+      );
+      if (result != null) {
+        pickedFiles.addAll(result.paths.where((path) => path != null).map((path) => File(path!)));
+      }
+    } catch (e) {
+      debugPrint("pickFiles Error: $e");
+    }
+  }
+
+  void removeFile(int index) {
+    pickedFiles.removeAt(index);
+  }
+
+  // Get Assignments List
+  Future<void> getAssignmentsList() async {
+    isGetLoading.value = true;
+    try {
+      final status = getStatusFromIndex(selectedIndex.value);
+      final String url = ApiUrl.getTeacherAssignment(
+        status: status,
+        classLevel: selectedClassLevel.value,
+      );
+      final response = await ApiClient.getData(url);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final Map<String, dynamic> jsonResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body);
+        
+        final rawData = jsonResponse['data'];
+        if (rawData is List) {
+          assignments.value = rawData;
+        } else if (rawData is Map && rawData['data'] is List) {
+          assignments.value = rawData['data'];
+        } else {
+          assignments.clear();
+        }
+      } else {
+        assignments.clear();
+      }
+    } catch (e) {
+      debugPrint("getAssignmentsList Error: $e");
+      assignments.clear();
+    } finally {
+      isGetLoading.value = false;
+    }
+  }
+
+  // Post Assignment
+  Future<bool> createAssignment({
+    required String title,
+    required String type,
+    required String description,
+    required String dueDate, // ISO format e.g. "2026-05-12T00:00:00.000Z"
+  }) async {
+    if (selectedClassLevel.value == null || selectedClassId.value == null) {
+      showCustomSnackBar("Please select a class/subject first", isError: true);
+      return false;
+    }
+
+    isLoading.value = true;
+    try {
+      final Map<String, String> data = {
+        "classLevel": selectedClassLevel.value!,
+        "classDistributionId": selectedClassId.value!,
+        "assignmentTitle": title,
+        "assignmentType": type,
+        "assignmentDueDate": dueDate,
+        "description": description,
+      };
+
+      final body = {
+        "data": jsonEncode(data),
+      };
+
+      List<MultipartBody> multipartBody = [];
+      for (var file in pickedFiles) {
+        multipartBody.add(MultipartBody('attachments', file));
+      }
+
+      final response = await ApiClient.postMultipartData(
+        ApiUrl.createAssignment,
+        body,
+        multipartBody: multipartBody.isNotEmpty ? multipartBody : null,
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        showCustomSnackBar("Assignment created successfully", isError: false);
+        pickedFiles.clear();
+        getAssignmentsList(); // Refresh list
+        return true;
+      } else {
+        final Map<String, dynamic> errorResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body ?? {});
+        showCustomSnackBar(
+          errorResponse['message']?.toString() ?? 'Failed to create assignment',
+          isError: true,
+        );
+        return false;
+      }
+    } catch (e) {
+      debugPrint("createAssignment Error: $e");
+      showCustomSnackBar("Error creating assignment: ${e.toString()}", isError: true);
+      return false;
+    } finally {
+      isLoading.value = false;
+    }
+  }
 }
