@@ -92,6 +92,7 @@ class TeachersController extends GetxController {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final Map<String, dynamic> jsonResponse =response.body is String ? jsonDecode(response.body) : Map<String, dynamic>.from(response.body);
+        debugPrint("RAW SCHEDULE RESPONSE: ${jsonEncode(jsonResponse)}");
         final RoutineResponse model = RoutineResponse.fromJson(jsonResponse);
         
         if (model.data != null && model.data!.data != null) {

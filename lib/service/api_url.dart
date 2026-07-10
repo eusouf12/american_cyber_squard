@@ -88,6 +88,17 @@ class ApiUrl {
       "/api/v1/assignments/update_teacher_assignment/$assignmentId";
   static String specificAssignment({required String assignmentId}) =>
       "/api/v1/assignments/find_by_specific_assignment/$assignmentId";
+  //====materials===
+  static const String createMaterials =
+      "/api/v1/assignments/create_class_materials";
+  static String getTeacherMaterials({required String id}) =>
+      "/api/v1/assignments/find_by_specific_teacher_class_material/$id";
+  static String deleteMaterials({required String materialId}) =>
+      "/api/v1/assignments/delete_class_materials/$materialId";
+  static String updateMaterials({required String materialId}) =>
+      "/api/v1/assignments/update_specific_class_material/$materialId";
+  static String specificMaterials({required String materialId}) =>
+      "/api/v1/assignments/find_by_specific_class_material/$materialId";
 
 //============================================================================
 

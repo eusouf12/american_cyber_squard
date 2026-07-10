@@ -222,8 +222,12 @@ class TeacherScheduleScreen extends StatelessWidget {
                             child: GestureDetector(
                               onTap: isOnline
                                   ? () {
+                                      final classDistId = item.classDistributionId
+                                          ?? item.classDistribution?.id
+                                          ?? item.id
+                                          ?? "";
                                       showPostOnlineClassPopup(
-                                          context, item.id ?? "");
+                                          context, classDistId);
                                     }
                                   : null,
                               child: CustomScheduleCard(

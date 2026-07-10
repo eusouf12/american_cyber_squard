@@ -1,65 +1,70 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../../components/custom_button/custom_button.dart';
-import '../model/teachers_resource_model.dart';
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:america_ayber_squad/view/components/custom_button/custom_button.dart';
+import '../model/metarial.dart';
+import '../controller/teachers_material_controller.dart';
+import '../view/material_details_screen.dart';
+import '../view/edit_material_screen.dart';
 
 class CustomTeachersMaterialCard extends StatelessWidget {
-  final TeachersResourceModel item;
+  final MaterialItem item;
 
-  const CustomTeachersMaterialCard({super.key, required this.item});
+  CustomTeachersMaterialCard({super.key, required this.item});
+
+  final TeachersMaterialController controller = Get.find<TeachersMaterialController>();
 
   /// 🔹 type → icon mapper
-  IconData _getIconByType(String type) {
-    switch (type.toLowerCase()) {
+  IconData _getIconByType(String? type) {
+    switch (type?.toLowerCase()) {
       case 'pdf':
         return Icons.picture_as_pdf;
       case 'video':
         return Icons.play_circle_fill;
       case 'audio':
         return Icons.audiotrack;
+      case 'doc':
       case 'file':
         return Icons.insert_drive_file;
       case 'link':
         return Icons.link;
-      case 'zip':
-        return Icons.folder_zip;
-      case 'sheet':
-        return Icons.grid_on;
-      case 'picture':
-        return Icons.image;
       default:
-        return item.icon;
+        return Icons.bookmark_outline;
     }
   }
 
   /// 🔹 type → color mapper
-  Color _getColorByType(String type) {
-    switch (type.toLowerCase()) {
+  Color _getColorByType(String? type) {
+    switch (type?.toLowerCase()) {
       case 'pdf':
         return Colors.redAccent;
       case 'video':
         return Colors.deepPurple;
       case 'audio':
         return Colors.orange;
+      case 'doc':
       case 'file':
         return Colors.blueGrey;
       case 'link':
         return Colors.blue;
-      case 'zip':
-        return Colors.brown;
-      case 'sheet':
-        return Colors.green;
-      case 'picture':
-        return Colors.pink;
       default:
-        return item.color;
+        return Colors.teal;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final IconData iconData = _getIconByType(item.type);
-    final Color iconColor = _getColorByType(item.type);
+    final IconData iconData = _getIconByType(item.materialType);
+    final Color iconColor = _getColorByType(item.materialType);
+
+    final String filesCount = item.materialFiles != null && item.materialFiles!.isNotEmpty
+        ? "${item.materialFiles!.length} files attached"
+        : "No files";
+
+    final String dateString = item.createdAt != null
+        ? DateFormat('MM/dd/yyyy').format(item.createdAt!)
+        : "N/A";
 
     return Container(
       margin: const EdgeInsets.only(bottom: 16),
@@ -74,7 +79,7 @@ class CustomTeachersMaterialCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              /// ✅ Left icon (type based)
+              /// Left icon (type based)
               Container(
                 padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
@@ -95,7 +100,9 @@ class CustomTeachersMaterialCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      item.fileName,
+                      item.assignmentTitle ?? "No Title",
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -104,7 +111,7 @@ class CustomTeachersMaterialCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      item.size,
+                      filesCount,
                       style: TextStyle(
                         fontSize: 12,
                         color: Colors.grey.shade600,
@@ -122,7 +129,7 @@ class CustomTeachersMaterialCard extends StatelessWidget {
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: Text(
-                            item.subject,
+                            item.classDistributions?.classLevel ?? "N/A",
                             style: const TextStyle(
                               fontSize: 11,
                               color: Colors.blueGrey,
@@ -131,7 +138,7 @@ class CustomTeachersMaterialCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 12),
                         Text(
-                          item.date,
+                          dateString,
                           style: TextStyle(
                             fontSize: 11,
                             color: Colors.grey.shade500,
@@ -144,12 +151,18 @@ class CustomTeachersMaterialCard extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(height: 20,),
+          const SizedBox(height: 20),
           Row(
             children: [
               Expanded(
                 child: CustomButton(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(() => MaterialDetailsScreen(
+                          materialId: item.id ?? "",
+                          assignmentTitle: item.assignmentTitle,
+                          classLevel: item.classDistributions?.classLevel,
+                        ));
+                  },
                   title: "View Details",
                   fontSize: 9.sp,
                   height: 30.h,
@@ -157,10 +170,12 @@ class CustomTeachersMaterialCard extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              SizedBox(width: 5,),
+              const SizedBox(width: 5),
               Expanded(
                 child: CustomButton(
-                  onTap: () {},
+                  onTap: () {
+                    Get.to(() => EditMaterialScreen(material: item));
+                  },
                   title: "Edit",
                   fontSize: 9.sp,
                   height: 30.h,
@@ -169,10 +184,30 @@ class CustomTeachersMaterialCard extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              SizedBox(width: 5,),
+              const SizedBox(width: 5),
               Expanded(
                 child: CustomButton(
-                  onTap: () {},
+                  onTap: () {
+                    Get.dialog(
+                      AlertDialog(
+                        title: const Text("Delete Material"),
+                        content: const Text("Are you sure you want to delete this class material?"),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Get.back(),
+                            child: const Text("Cancel"),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Get.back();
+                              controller.deleteMaterial(item.id ?? "");
+                            },
+                            child: const Text("Delete", style: TextStyle(color: Colors.red)),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
                   title: "Delete",
                   fontSize: 9.sp,
                   height: 30.h,
@@ -181,7 +216,6 @@ class CustomTeachersMaterialCard extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-
             ],
           ),
         ],

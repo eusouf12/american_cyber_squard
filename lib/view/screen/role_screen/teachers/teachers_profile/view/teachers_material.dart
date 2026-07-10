@@ -1,69 +1,44 @@
-import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_royel_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
-import '../../../../../../utils/app_colors/app_colors.dart';
-import '../../../../../components/custom_text/custom_text.dart';
-import '../../../parents/widget/custom_parents_show_card.dart';
+import 'package:america_ayber_squad/view/components/custom_royel_appbar/custom_royel_appbar.dart';
+import 'package:america_ayber_squad/view/components/custom_loader/custom_loader.dart';
+import 'package:america_ayber_squad/view/components/custom_text/custom_text.dart';
+import 'package:america_ayber_squad/utils/app_colors/app_colors.dart';
+import '../../teachers_home/controller/teachers_controller.dart';
+import '../../teachers_home/model/teacher_schedule.dart';
 import '../controller/teachers_material_controller.dart';
-import '../model/teachers_resource_model.dart';
 import '../widget/custom_teachers_material_card.dart';
+import 'add_material_screen.dart';
 
 class TeachersMaterial extends StatelessWidget {
   TeachersMaterial({super.key});
 
-  final TeachersMaterialController teachersMaterialController = Get.find<TeachersMaterialController>();
+  final TeachersMaterialController teachersMaterialController =
+      Get.find<TeachersMaterialController>();
+  final TeachersController teachersController = Get.find<TeachersController>();
 
   @override
   Widget build(BuildContext context) {
-    final List<TeachersResourceModel> resources = [
-      TeachersResourceModel(
-        fileName: "Mathematics Formula Sheet",
-        size: "1.2 MB",
-        subject: "Mathematics",
-        type: "PDF",
-        date: "Dec 01, 2024",
-        icon: Icons.description_outlined,
-        color: Colors.green,
-      ),
-      TeachersResourceModel(
-        fileName: "Physics Lecture: Newton's Laws",
-        size: "450 MB",
-        subject: "Physics",
-        type: "Video",
-        date: "Nov 28, 2024",
-        icon: Icons.videocam_outlined,
-        color: Colors.teal,
-      ),
-      TeachersResourceModel(
-        fileName: "Chemistry Lab Safety Guidelines",
-        size: "800 KB",
-        subject: "Chemistry",
-        type: "PDF",
-        date: "Sep 15, 2024",
-        icon: Icons.description_outlined,
-        color: Colors.green,
-      ),
-      TeachersResourceModel(
-        fileName: "Shakespeare's Works Archive",
-        size: "N/A",
-        subject: "English",
-        type: "Link",
-        date: "Oct 10, 2024",
-        icon: Icons.link,
-        color: Colors.blue,
-      ),
-      TeachersResourceModel(
-        fileName: "Programming Basics 101",
-        size: "15 MB",
-        subject: "Computer Science",
-        type: "ZIP",
-        date: "Nov 05, 2024",
-        icon: Icons.folder_open_outlined,
-        color: Colors.orange,
-      ),
-    ];
+    // Initial fetch of schedules on load if list is empty
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      if (teachersController.allScheduleList.isEmpty) {
+        await teachersController.getTeacherSchedule();
+      }
+      // Set default class distribution if not set
+      final uniqueSchedules = teachersController.allScheduleList
+          .where((e) => e.classLevel != null && e.classLevel!.isNotEmpty)
+          .toList();
+
+      if (teachersMaterialController.selectedClassId.value == null && uniqueSchedules.isNotEmpty) {
+        final matched = uniqueSchedules.first;
+        teachersMaterialController.selectedClassLevel.value = matched.classLevel;
+        teachersMaterialController.selectedClassId.value = matched.id ?? matched.classDistributionId ?? "";
+        teachersMaterialController.getMaterialsList();
+      } else if (teachersMaterialController.selectedClassId.value != null) {
+        teachersMaterialController.getMaterialsList();
+      }
+    });
 
     return Scaffold(
       backgroundColor: const Color(0xFFF8F9FA),
@@ -73,43 +48,10 @@ class TeachersMaterial extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
           child: Column(
             children: [
-              //Card View
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    CustomParentsShowCard(
-                      count: "PDF Document",
-                      label: "3",
-                      icon: Icons.assignment,
-                    ),
-                    SizedBox(width: 12),
-                    //Children
-                    CustomParentsShowCard(
-                      count: "Word Document",
-                      label: "2",
-                      icon: Icons.description_outlined,
-                    ),
-                    SizedBox(width: 12),
-                    //Ave Attendance
-                    CustomParentsShowCard(
-                      count: "Play File",
-                      label: "95",
-                      icon: Icons.play_arrow_outlined,
-                    ),
-                    SizedBox(width: 12),
-                    CustomParentsShowCard(
-                      count: "External link",
-                      label: "95",
-                      icon: Icons.link,
-                    ),
-                  ],
-                ),
-              ),
-              SizedBox(height: 20,),
+              // Dropdown Selection Container
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -135,78 +77,99 @@ class TeachersMaterial extends StatelessWidget {
                         color: const Color(0xFF374151),
                       ),
                       SizedBox(height: 8.h),
-                      Obx(() => Container(
-                        padding: EdgeInsets.symmetric(horizontal: 16.w,vertical: 2.h),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10.r),
-                          border: Border.all(color: Colors.grey.shade300),
-                        ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: teachersMaterialController.selectedClass.value,
-                            isExpanded: true,
-                            icon: Icon(
-                              teachersMaterialController.isOpen.value
-                                  ? Icons.keyboard_arrow_up
-                                  : Icons.keyboard_arrow_down,
-                              color: Colors.grey.shade400,
-                            ),
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              color: Colors.black87,
-                            ),
-                            onTap: () {
-                              teachersMaterialController.isOpen.toggle();
-                            },
-                            onChanged: (String? newValue) {
-                              if (newValue != null) {
-                                teachersMaterialController.selectedClass.value = newValue;
-                                teachersMaterialController.isOpen.value = false;
-                              }
-                            },
-                            items: teachersMaterialController.classList
-                                .map<DropdownMenuItem<String>>(
-                                  (String value) => DropdownMenuItem<String>(
-                                value: value,
-                                child: Text(
-                                  value,
-                                  style: TextStyle(
-                                    fontSize: 14.sp,
-                                    color: Colors.black87,
-                                  ),
-                                ),
-                              ),
-                            )
-                                .toList(),
-                          ),
-                        ),
-                      )),
-                      SizedBox(height: 8.h),
-                      CustomText(
-                        text: "Select Date",
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w600,
-                        color: const Color(0xFF374151),
-                      ),
-                      SizedBox(height: 8.h),
-                      InkWell(
-                        onTap: () {
+                      Obx(() {
+                        final uniqueSchedules = teachersController.allScheduleList
+                            .where((e) => e.classLevel != null && e.classLevel!.isNotEmpty)
+                            .toList();
 
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                        final String? selectedId = (teachersMaterialController.selectedClassId.value != null &&
+                                uniqueSchedules.any((e) => (e.id ?? e.classDistributionId ?? "") == teachersMaterialController.selectedClassId.value))
+                            ? teachersMaterialController.selectedClassId.value
+                            : null;
+
+                        return Container(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16.w, vertical: 2.h),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10.r),
                             border: Border.all(color: Colors.grey.shade300),
                           ),
-                          child: Row(
-                            children: [
-                              Icon(Icons.calendar_today_outlined, size: 20.sp, color: Colors.black87),
-                              SizedBox(width: 12.w),
-                              CustomText(
-                                text: "January 21st, 2026",
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              dropdownColor: Colors.white,
+                              value: selectedId,
+                              hint: Text(
+                                "Select Class",
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: Colors.grey.shade600,
+                                ),
+                              ),
+                              isExpanded: true,
+                              icon: Icon(
+                                Icons.keyboard_arrow_down,
+                                color: Colors.grey.shade400,
+                              ),
+                              style: TextStyle(
                                 fontSize: 14.sp,
                                 color: Colors.black87,
+                              ),
+                              onChanged: (String? newValueId) {
+                                if (newValueId != null) {
+                                  final matched = uniqueSchedules.firstWhere((e) => (e.id ?? e.classDistributionId ?? "") == newValueId);
+                                  teachersMaterialController.selectedClassId.value = newValueId;
+                                  teachersMaterialController.selectedClassLevel.value = matched.classLevel;
+                                  teachersMaterialController.getMaterialsList();
+                                }
+                              },
+                              items: uniqueSchedules
+                                  .map<DropdownMenuItem<String>>(
+                                    (RoutineModel routine) {
+                                      final id = routine.id ?? routine.classDistributionId ?? "";
+                                      final classText = "${routine.classLevel ?? ''} - ${routine.assignableSubject ?? ''}";
+                                      return DropdownMenuItem<String>(
+                                        value: id,
+                                        child: Text(
+                                          classText,
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  )
+                                  .toList(),
+                            ),
+                          ),
+                        );
+                      }),
+                      SizedBox(height: 16.h),
+                      InkWell(
+                        onTap: () {
+                          Get.to(() => AddMaterialScreen());
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(vertical: 12.h),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary,
+                            borderRadius: BorderRadius.circular(10.r),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.add,
+                                size: 18.sp,
+                                color: Colors.white,
+                              ),
+                              CustomText(
+                                text: "Add New Materials",
+                                fontSize: 14.sp,
+                                left: 8.w,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
                             ],
                           ),
@@ -216,12 +179,13 @@ class TeachersMaterial extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20,),
-              //Course material
+              SizedBox(height: 20.h),
+
+              // Course Materials Container
               Container(
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
+                  borderRadius: BorderRadius.circular(16.r),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withValues(alpha: 0.1),
@@ -231,40 +195,64 @@ class TeachersMaterial extends StatelessWidget {
                   ],
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
                   child: Column(
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          CustomText(text: "Course Materials", fontSize: 16, fontWeight: FontWeight.w600),
-                          Spacer(),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-                            decoration: BoxDecoration(
-                              color: AppColors.primary,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              children: [
-                                Icon(Icons.add, size: 18, color: Colors.white,),
-                                CustomText(text: "Add New Materials", fontSize: 12, left: 5, color: Colors.white, fontWeight: FontWeight.w500),
-                              ],
-                            ),
+                          CustomText(
+                            text: "Course Materials",
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.w600,
                           ),
-                          SizedBox(height: 10,),
                         ],
                       ),
-                      SizedBox(height: 10,),
-                      ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
+                      SizedBox(height: 15.h),
+
+                      // Materials list loader / view builder
+                      Obx(() {
+                        if (teachersMaterialController.isGetLoading.value) {
+                          return const Center(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 30),
+                              child: CustomLoader(),
+                            ),
+                          );
+                        }
+
+                        final list = teachersMaterialController.materialsList;
+
+                        if (list.isEmpty) {
+                          return Center(
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 40.h),
+                              child: Column(
+                                children: [
+                                  Icon(Icons.folder_open_outlined,
+                                      size: 48.sp, color: Colors.grey.shade300),
+                                  SizedBox(height: 12.h),
+                                  CustomText(
+                                    text: "No materials uploaded for this class",
+                                    fontSize: 14.sp,
+                                    color: Colors.grey,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        }
+
+                        return ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: 3,
+                          itemCount: list.length,
                           itemBuilder: (context, index) {
-                          final item = resources[index];
-                          return CustomTeachersMaterialCard(item: item);
-                        },
-                      ),
+                            final item = list[index];
+                            return CustomTeachersMaterialCard(item: item);
+                          },
+                        );
+                      }),
                     ],
                   ),
                 ),

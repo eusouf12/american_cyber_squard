@@ -73,6 +73,8 @@ class RoutineModel {
   final String? day;
   final String? time;
   final bool? isOnline;
+  final String? classDistributionId;
+  final RoutineClassDistribution? classDistribution;
   final String? createdAt;
   final String? updatedAt;
 
@@ -85,6 +87,8 @@ class RoutineModel {
     this.day,
     this.time,
     this.isOnline,
+    this.classDistributionId,
+    this.classDistribution,
     this.createdAt,
     this.updatedAt,
   });
@@ -99,8 +103,26 @@ class RoutineModel {
       day: json['day'],
       time: json['time'],
       isOnline: json['isOnline'],
+      classDistributionId: json['classDistributionId'],
+      classDistribution: json['classDistribution'] != null
+          ? RoutineClassDistribution.fromJson(json['classDistribution'])
+          : null,
       createdAt: json['createdAt'],
       updatedAt: json['updatedAt'],
+    );
+  }
+}
+
+class RoutineClassDistribution {
+  final String? id;
+  final String? classLevel;
+
+  RoutineClassDistribution({this.id, this.classLevel});
+
+  factory RoutineClassDistribution.fromJson(Map<String, dynamic> json) {
+    return RoutineClassDistribution(
+      id: json['id'],
+      classLevel: json['classLevel'],
     );
   }
 }
