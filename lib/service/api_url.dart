@@ -104,6 +104,16 @@ class ApiUrl {
 
   static String getStudentSchedule({required int page}) =>
       "/api/v1/students/find_my_all_class_list?page=$page&limit=10";
+  static String getStudentAssignment({required int page, String? classLevel, String? subject}) {
+    String url = "/api/v1/students/find_my_class_assignment?page=$page&limit=10";
+    if (classLevel != null && classLevel.isNotEmpty) {
+      url += "&classLevel=${Uri.encodeComponent(classLevel)}";
+    }
+    if (subject != null && subject.isNotEmpty) {
+      url += "&assignableSubject=${Uri.encodeComponent(subject)}";
+    }
+    return url;
+  }
 
 //================================== ===============================================
   static const String googleAuth = "/api/v1/user/google_auth";

@@ -5,12 +5,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/app_icons/app_icons.dart';
-import '../../screen/role_screen/student/view/student_assignment/student_assignment_screen.dart';
+import '../../screen/role_screen/student/view/student_assignment/view/student_assignment_screen.dart';
 import '../../screen/role_screen/student/view/student_home/student_home_screen.dart';
 import '../../screen/role_screen/student/view/student_my_classes_screen/student_my_classes_screen.dart';
 import '../../screen/role_screen/student/view/student_profile/view/student_grade_screen.dart';
 import '../../screen/role_screen/student/view/student_profile/view/student_profile.dart';
-
 
 class StudentNavBar extends StatefulWidget {
   final int currentIndex;
@@ -31,7 +30,6 @@ class _UserNavBarState extends State<StudentNavBar> {
     AppIcons.exam,
     AppIcons.student,
     AppIcons.profile,
-
   ];
 
   @override
@@ -69,7 +67,7 @@ class _UserNavBarState extends State<StudentNavBar> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: List.generate(
             icons.length,
-                (index) => InkWell(
+            (index) => InkWell(
               onTap: () => onTap(index),
               borderRadius: BorderRadius.circular(20.r),
               child: Column(
@@ -84,15 +82,16 @@ class _UserNavBarState extends State<StudentNavBar> {
                       borderRadius: BorderRadius.circular(20.r),
                       gradient: index == bottomNavIndex
                           ? const LinearGradient(
-                        colors: [
-                         AppColors.primary,
-                          Color(0xFFC8E6C9),
-                        ],
-                        begin: Alignment.centerRight,
-                        end: Alignment.bottomRight,
-                      )
+                              colors: [
+                                AppColors.primary,
+                                Color(0xFFC8E6C9),
+                              ],
+                              begin: Alignment.centerRight,
+                              end: Alignment.bottomRight,
+                            )
                           : null,
-                      color: index == bottomNavIndex ? null : Colors.transparent,
+                      color:
+                          index == bottomNavIndex ? null : Colors.transparent,
                     ),
                     alignment: Alignment.center,
                     child: SvgPicture.asset(
@@ -100,7 +99,9 @@ class _UserNavBarState extends State<StudentNavBar> {
                       height: 25.h,
                       width: 25.w,
                       colorFilter: ColorFilter.mode(
-                        index == bottomNavIndex ? Colors.black : const Color(0xFFD2D2D2),
+                        index == bottomNavIndex
+                            ? Colors.black
+                            : const Color(0xFFD2D2D2),
                         BlendMode.srcIn,
                       ),
                     ),
@@ -143,18 +144,6 @@ class _UserNavBarState extends State<StudentNavBar> {
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 //
 //
