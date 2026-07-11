@@ -87,39 +87,43 @@ class TeacherScheduleScreen extends StatelessWidget {
             Row(
               children: [
                 CustomText(
+                    text: "Time",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14.sp),
+                const Spacer(),
+                CustomText(
                     text: "Day:", fontWeight: FontWeight.w600, fontSize: 14.sp),
                 SizedBox(width: 12.w),
-                Expanded(
-                  child: Obx(() => Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12.w),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey.shade300),
-                          borderRadius: BorderRadius.circular(16.r),
+                Obx(() => Container(
+                      width: 130.w,
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade300),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: selectedDay.value,
+                          isExpanded: true,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          style:
+                              TextStyle(fontSize: 14.sp, color: Colors.black),
+                          onChanged: (String? val) {
+                            if (val != null) selectedDay.value = val;
+                          },
+                          items: _days
+                              .map<DropdownMenuItem<String>>(
+                                (d) => DropdownMenuItem<String>(
+                                  value: d,
+                                  child: Text(d,
+                                      style: const TextStyle(
+                                          color: Colors.black)),
+                                ),
+                              )
+                              .toList(),
                         ),
-                        child: DropdownButtonHideUnderline(
-                          child: DropdownButton<String>(
-                            value: selectedDay.value,
-                            isExpanded: true,
-                            icon: const Icon(Icons.arrow_drop_down),
-                            style:
-                                TextStyle(fontSize: 14.sp, color: Colors.black),
-                            onChanged: (String? val) {
-                              if (val != null) selectedDay.value = val;
-                            },
-                            items: _days
-                                .map<DropdownMenuItem<String>>(
-                                  (d) => DropdownMenuItem<String>(
-                                    value: d,
-                                    child: Text(d,
-                                        style: const TextStyle(
-                                            color: Colors.black)),
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                        ),
-                      )),
-                ),
+                      ),
+                    )),
               ],
             ),
             SizedBox(height: 20.h),
@@ -222,10 +226,11 @@ class TeacherScheduleScreen extends StatelessWidget {
                             child: GestureDetector(
                               onTap: isOnline
                                   ? () {
-                                      final classDistId = item.classDistributionId
-                                          ?? item.classDistribution?.id
-                                          ?? item.id
-                                          ?? "";
+                                      final classDistId =
+                                          item.classDistributionId ??
+                                              item.classDistribution?.id ??
+                                              item.id ??
+                                              "";
                                       showPostOnlineClassPopup(
                                           context, classDistId);
                                     }

@@ -1,6 +1,6 @@
 class ApiUrl {
   static const String baseUrl =
-      "https://apparel-emission-monster-news.trycloudflare.com";
+      "https://tin-dictionary-libs-folder.trycloudflare.com";
   static const String imageUrl = baseUrl;
   static String socketUrl = baseUrl;
 

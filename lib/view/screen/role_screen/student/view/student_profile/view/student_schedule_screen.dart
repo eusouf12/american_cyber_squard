@@ -50,43 +50,44 @@ class StudentScheduleScreen extends StatelessWidget {
             ),
             SizedBox(height: 20),
 
-            // Time and Day Row
             Row(
               children: [
                 CustomText(text: "Time", fontWeight: FontWeight.w600, fontSize: 14.sp),
-                SizedBox(width: 120),
-                CustomText(text: "Day", fontWeight: FontWeight.w600, fontSize: 14.sp),
-                SizedBox(width: 10),
+                const Spacer(),
+                CustomText(text: "Day:", fontWeight: FontWeight.w600, fontSize: 14.sp),
+                SizedBox(width: 12.w),
 
                 // Dropdown for Day selection with different colors
-                Container(
-                  padding: EdgeInsets.symmetric(horizontal: 12),
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(16.r),
-                  ),
-                  child: Obx(() {
-                    return DropdownButton<String>(
-                      value: dayController.selectedDay.value,
-                      icon: Icon(Icons.arrow_drop_down),
-                      style: TextStyle(fontSize: 14.sp, color: Colors.black),  // Text color for dropdown
-                      onChanged: (String? newValue) {
-                        dayController.selectedDay.value = newValue!;
-                      },
-                      items: dayController.days.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(
-                            value,
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                        );
-                      }).toList(),
-                    );
-                  }),
-                ),
+                Obx(() => Container(
+                      width: 130.w,
+                      padding: EdgeInsets.symmetric(horizontal: 12.w),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey.shade300),
+                        borderRadius: BorderRadius.circular(16.r),
+                      ),
+                      child: DropdownButtonHideUnderline(
+                        child: DropdownButton<String>(
+                          value: dayController.selectedDay.value,
+                          isExpanded: true,
+                          icon: const Icon(Icons.arrow_drop_down),
+                          style: TextStyle(fontSize: 14.sp, color: Colors.black),  // Text color for dropdown
+                          onChanged: (String? newValue) {
+                            if (newValue != null) dayController.selectedDay.value = newValue;
+                          },
+                          items: dayController.days.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(
+                                value,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    )),
               ],
             ),
             SizedBox(height: 20),

@@ -466,19 +466,6 @@ class LoginController extends GetxController {
     }
   }
 
-  @override
-  void onClose() {
-    emailController.dispose();
-    passwordController.dispose();
-    oldPasswordController.dispose();
-    newPasswordController.dispose();
-    confirmPasswordController.dispose();
-    editNameController.dispose();
-    editAddressController.dispose();
-    editPhoneController.dispose();
-    editEmailController.dispose();
-    super.onClose();
-  }
 }
 
 Map<String, dynamic> _parseResponseBody(dynamic body) {
