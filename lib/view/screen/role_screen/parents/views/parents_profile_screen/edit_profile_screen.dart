@@ -35,6 +35,12 @@ class EditScreen extends StatelessWidget {
         if (loginController.editEmailController.text.isEmpty) {
           loginController.editEmailController.text = profile.email;
         }
+        if (loginController.editClassNameController.text.isEmpty) {
+          loginController.editClassNameController.text = profile.assignClass.isNotEmpty ? profile.assignClass.first : '';
+        }
+        if (loginController.editGuardianNameController.text.isEmpty) {
+          loginController.editGuardianNameController.text = profile.guardianName;
+        }
       }
     }
 
@@ -75,69 +81,90 @@ class EditScreen extends StatelessWidget {
             ),
 
             // ── Main content ─────────────────────────────────────────
-            SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 8.h),
+            Obx(() {
+              final bool isStudent = loginController.selectedRole.value.toLowerCase() == "student";
+              return SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 16.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 8.h),
 
-                  // ── Avatar section ────────────────────────────────
-                  _buildProfileImage(loginController),
+                    // ── Avatar section ────────────────────────────────
+                    _buildProfileImage(loginController),
 
-                  SizedBox(height: 28.h),
+                    SizedBox(height: 28.h),
 
-                  // ── Form fields ───────────────────────────────────
-                  const _FieldLabel(label: 'Full Name'),
-                  SizedBox(height: 8.h),
-                  _InputField(
-                    hintText: 'Enter your full name',
-                    icon: Icons.person_outline_rounded,
-                    controller: loginController.editNameController,
-                  ),
+                    // ── Form fields ───────────────────────────────────
+                    const _FieldLabel(label: 'Full Name'),
+                    SizedBox(height: 8.h),
+                    _InputField(
+                      hintText: 'Enter your full name',
+                      icon: Icons.person_outline_rounded,
+                      controller: loginController.editNameController,
+                    ),
 
-                  SizedBox(height: 18.h),
+                    SizedBox(height: 18.h),
 
-                  const _FieldLabel(label: 'Email Address'),
-                  SizedBox(height: 8.h),
-                  _InputField(
-                    hintText: 'Enter your email',
-                    icon: Icons.email_outlined,
-                    controller: loginController.editEmailController,
-                    keyboardType: TextInputType.emailAddress,
-                    readOnly: true,
-                  ),
-                  SizedBox(height: 18.h),
+                    const _FieldLabel(label: 'Email Address'),
+                    SizedBox(height: 8.h),
+                    _InputField(
+                      hintText: 'Enter your email',
+                      icon: Icons.email_outlined,
+                      controller: loginController.editEmailController,
+                      keyboardType: TextInputType.emailAddress,
+                      readOnly: true,
+                    ),
+                    if (!isStudent) ...[
+                      const _FieldLabel(label: 'Address'),
+                      SizedBox(height: 8.h),
+                      _InputField(
+                        hintText: 'Enter your address',
+                        icon: Icons.location_on_outlined,
+                        controller: loginController.editAddressController,
+                      ),
+                      SizedBox(height: 18.h),
+                    ],
 
-                  const _FieldLabel(label: 'Address'),
-                  SizedBox(height: 8.h),
-                  _InputField(
-                    hintText: 'Enter your address',
-                    icon: Icons.location_on_outlined,
-                    controller: loginController.editAddressController,
-                  ),
+                    _FieldLabel(label: isStudent ? 'Guardian Phone Number' : 'Phone Number'),
+                    SizedBox(height: 8.h),
+                    _InputField(
+                      hintText: isStudent ? 'Enter guardian phone number' : 'Enter your phone number',
+                      icon: Icons.phone_outlined,
+                      controller: loginController.editPhoneController,
+                      keyboardType: TextInputType.phone,
+                    ),
 
-                  SizedBox(height: 18.h),
+                    if (isStudent) ...[
+                      SizedBox(height: 18.h),
+                      const _FieldLabel(label: 'Class Name'),
+                      SizedBox(height: 8.h),
+                      _InputField(
+                        hintText: 'Enter class name',
+                        icon: Icons.class_outlined,
+                        controller: loginController.editClassNameController,
+                      ),
+                      SizedBox(height: 18.h),
+                      const _FieldLabel(label: 'Guardian Name'),
+                      SizedBox(height: 8.h),
+                      _InputField(
+                        hintText: 'Enter guardian name',
+                        icon: Icons.person_pin_outlined,
+                        controller: loginController.editGuardianNameController,
+                      ),
+                    ],
 
-                  const _FieldLabel(label: 'Phone Number'),
-                  SizedBox(height: 8.h),
-                  _InputField(
-                    hintText: 'Enter your phone number',
-                    icon: Icons.phone_outlined,
-                    controller: loginController.editPhoneController,
-                    keyboardType: TextInputType.phone,
-                  ),
+                    SizedBox(height: 36.h),
 
-                  SizedBox(height: 36.h),
+                    // ── Save button ───────────────────────────────────
+                    _buildSaveButton(loginController),
 
-                  // ── Save button ───────────────────────────────────
-                  _buildSaveButton(loginController),
-
-                  SizedBox(height: 24.h),
-                ],
-              ),
-            ),
+                    SizedBox(height: 24.h),
+                  ],
+                ),
+              );
+            }),
           ],
         ),
       ),

@@ -35,6 +35,7 @@ class TeacherProfileData {
   final String? photo;
   final String status;
   final DateTime createdAt;
+  final String guardianName;
 
   TeacherProfileData({
     required this.teacherName,
@@ -49,23 +50,24 @@ class TeacherProfileData {
     required this.photo,
     required this.status,
     required this.createdAt,
+    required this.guardianName,
   });
 
   factory TeacherProfileData.fromJson(
     Map<String, dynamic> json,
   ) {
     return TeacherProfileData(
-      teacherName: json['teacherName'] ?? '',
+      teacherName: json['teacherName'] ?? json['name'] ?? '',
       email: json['email'] ?? '',
-      phoneNumber: json['phoneNumber'] ?? '',
+      phoneNumber: json['phoneNumber'] ?? json['guardianPhone'] ?? '',
       branchName: json['branchName'] ?? '',
       subject: List<String>.from(
         json['subject'] ?? [],
       ),
       assignClass: List<String>.from(
-        json['assignClass'] ?? [],
+        json['assignClass'] ?? (json['className'] != null ? [json['className']] : []),
       ),
-      teacherId: json['teacherId'] ?? '',
+      teacherId: json['teacherId'] ?? json['id'] ?? '',
       address: json['address'] ?? '',
       isVerified: json['isVerified'] ?? false,
       photo: json['photo'],
@@ -74,6 +76,7 @@ class TeacherProfileData {
             json['createdAt'] ?? '',
           ) ??
           DateTime.now(),
+      guardianName: json['guardianName'] ?? '',
     );
   }
 }

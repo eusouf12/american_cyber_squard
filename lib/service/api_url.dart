@@ -100,8 +100,12 @@ class ApiUrl {
   static String specificMaterials({required String materialId}) =>
       "/api/v1/assignments/find_by_specific_class_material/$materialId";
 
-//============================================================================
+//=========================== Student =================================================
 
+  static String getStudentSchedule({required int page}) =>
+      "/api/v1/students/find_my_all_class_list?page=$page&limit=10";
+
+//================================== ===============================================
   static const String googleAuth = "/api/v1/user/google_auth";
   static String deleteAccount({required String userId}) =>
       "/api/v1/auth/delete_account/$userId";

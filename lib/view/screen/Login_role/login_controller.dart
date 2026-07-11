@@ -23,6 +23,8 @@ class LoginController extends GetxController {
   Future<void> _checkTokenAndGetProfile() async {
     String token = await SharePrefsHelper.getString(AppConstants.bearerToken);
     if (token.isNotEmpty) {
+      String role = await SharePrefsHelper.getString(AppConstants.role);
+      selectedRole.value = role;
       getMyProfile();
     }
   }
@@ -70,6 +72,7 @@ class LoginController extends GetxController {
           "Debug Id===========================================================$id ==$userRole",
         );
         await SharePrefsHelper.setString(AppConstants.role, userRole);
+        selectedRole.value = userRole;
         debugPrint("Navigating with Role: $userRole ");
         String roleLower = userRole.toLowerCase();
          debugPrint("roleLower with Role: $roleLower ");
@@ -335,6 +338,8 @@ class LoginController extends GetxController {
   final editAddressController = TextEditingController();
   final editPhoneController   = TextEditingController();
   final editEmailController   = TextEditingController();
+  final editClassNameController = TextEditingController();
+  final editGuardianNameController = TextEditingController();
   final RxBool updateProfileLoading = false.obs;
 
   Rxn<File> profileImage = Rxn<File>();
@@ -368,18 +373,36 @@ class LoginController extends GetxController {
     final address = editAddressController.text.trim();
     final phone   = editPhoneController.text.trim();
 
-    if (name.isEmpty || address.isEmpty || phone.isEmpty) {
-      showCustomSnackBar("All fields are required.", isError: true);
-      return;
+    final String role = await SharePrefsHelper.getString(AppConstants.role);
+    final bool isStudent = role.toLowerCase() == "student";
+
+    if (isStudent) {
+      if (name.isEmpty || phone.isEmpty || editClassNameController.text.trim().isEmpty || editGuardianNameController.text.trim().isEmpty) {
+        showCustomSnackBar("All fields are required.", isError: true);
+        return;
+      }
+    } else {
+      if (name.isEmpty || address.isEmpty || phone.isEmpty) {
+        showCustomSnackBar("All fields are required.", isError: true);
+        return;
+      }
     }
 
     updateProfileLoading.value = true;
 
+    final String phoneKey = isStudent ? "guardianPhone" : "phoneNumber";
+
     final Map<String, String> body = {
       "name": name,
-      "address"    : address,
-      "phoneNumber": phone,
+      phoneKey: phone,
     };
+
+    if (isStudent) {
+      body["className"] = editClassNameController.text.trim();
+      body["guardianName"] = editGuardianNameController.text.trim();
+    } else {
+      body["address"] = address;
+    }
 
     try {
       Response response;
@@ -445,8 +468,10 @@ class LoginController extends GetxController {
         if (!isClosed) {
           editNameController.text = model.data.teacherName;
           editAddressController.text = model.data.address;
-            editPhoneController.text = model.data.phoneNumber;
+          editPhoneController.text = model.data.phoneNumber;
           editEmailController.text = model.data.email;
+          editClassNameController.text = model.data.assignClass.isNotEmpty ? model.data.assignClass.first : '';
+          editGuardianNameController.text = model.data.guardianName;
         }
 
         setMyProfileStatus(Status.completed);

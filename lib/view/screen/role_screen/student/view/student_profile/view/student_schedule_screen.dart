@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import '../../../../../../components/custom_loader/custom_loader.dart';
 import '../../../../../../components/custom_royel_appbar/custom_royel_appbar.dart';
 import '../../../../../../components/custom_text/custom_text.dart';
-import '../controller/student_shedule_controller.dart';
+import '../controller/student_profile_controller.dart';
 import '../widgets/custom_schedule_card.dart';
 import '../widgets/custom_time_card.dart';
 
@@ -13,7 +14,12 @@ class StudentScheduleScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // GetX Controller for day selection
-    final StudentSheduleController dayController = Get.find<StudentSheduleController>();
+    final StudentProfileController dayController = Get.find<StudentProfileController>();
+
+    // Load latest schedule data on screen entry
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      dayController.getStudentSchedule();
+    });
 
     return Scaffold(
       appBar: CustomRoyelAppbar(
@@ -93,64 +99,83 @@ class StudentScheduleScreen extends StatelessWidget {
             SizedBox(height: 20),
 
             // Schedule Cards
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTimeCard(time: "8:45 - 9:30"),
-                SizedBox(width: 12),
-                Expanded(
-                  child: CustomScheduleCard(
-                    status: ClassStatus.online,
-                    subject: "English",
-                    teacher: "Ms. Davis",
+            Obx(() {
+              if (dayController.isScheduleLoading.value) {
+                return const Center(
+                  child: Padding(
+                    padding: EdgeInsets.all(40),
+                    child: CustomLoader(),
                   ),
-                ),
-              ],
-            ),
+                );
+              }
 
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTimeCard(time: "8:45 - 9:30"),
-                SizedBox(width: 12),
-                Expanded(
-                  child: CustomScheduleCard(
-                    status: ClassStatus.free,
-                    subject: "Free Period",
-                  ),
-                ),
-              ],
-            ),
+              final allItems = dayController.allScheduleList;
 
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTimeCard(time: "8:45 - 9:30"),
-                SizedBox(width: 12),
-                Expanded(
-                  child: CustomScheduleCard(
-                    status: ClassStatus.breakTime,
-                    subject: "Break",
-                  ),
-                ),
-              ],
-            ),
+              // Filter by selected day
+              final filtered = allItems
+                  .where((e) =>
+                      e.day?.trim().toLowerCase() ==
+                      dayController.selectedDay.value.trim().toLowerCase())
+                  .toList();
 
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                CustomTimeCard(time: "8:45 - 9:30"),
-                SizedBox(width: 12),
-                Expanded(
-                  child: CustomScheduleCard(
-                    status: ClassStatus.offline,
-                    subject: "History",
-                    teacher: "Mr. Wilson",
-                    room: "Room 105",
+              if (filtered.isEmpty) {
+                return Center(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 40.h),
+                    child: Column(
+                      children: [
+                        Icon(Icons.calendar_today_outlined,
+                            size: 48.sp, color: Colors.grey.shade300),
+                        SizedBox(height: 12.h),
+                        CustomText(
+                          text: "No schedule found",
+                          fontSize: 14.sp,
+                          color: Colors.grey,
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
+                );
+              }
+
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: filtered.length,
+                itemBuilder: (context, index) {
+                  final item = filtered[index];
+
+                  final bool isOnline = item.isOnline == true;
+                  final String timeText = item.time ?? "N/A";
+                  final String subjectText =
+                      item.assignableSubject ?? "Subject";
+                  final String teacherText = item.teacher?.teacherName ?? "";
+                  final String roomText = item.roomNumber ?? "";
+
+                  final ClassStatus cardStatus =
+                      isOnline ? ClassStatus.online : ClassStatus.offline;
+
+                  return Padding(
+                    padding: EdgeInsets.only(bottom: 12.h),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomTimeCard(time: timeText),
+                        SizedBox(width: 12.w),
+                        Expanded(
+                          child: CustomScheduleCard(
+                            status: cardStatus,
+                            subject: subjectText,
+                            teacher: teacherText.isNotEmpty ? teacherText : null,
+                            room: isOnline ? null : (roomText.isNotEmpty ? roomText : null),
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }),
           ],
         ),
       ),

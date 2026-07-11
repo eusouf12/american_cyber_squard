@@ -8,7 +8,7 @@ import '../../view/screen/role_screen/parents/controller/academic_controller.dar
 import '../../view/screen/role_screen/school_nurse/view/immunization/controller/immunization_controller.dart';
 import '../../view/screen/role_screen/student/controller/student_attandance_controller.dart';
 import '../../view/screen/role_screen/student/controller/student_home_controller.dart';
-import '../../view/screen/role_screen/student/view/student_profile/controller/student_shedule_controller.dart';
+import '../../view/screen/role_screen/student/view/student_profile/controller/student_profile_controller.dart';
 import '../../view/screen/role_screen/student/view/student_profile/controller/support_controller.dart';
 import '../../view/screen/role_screen/teachers/teachers_assignment/controller/teacher_create_controller.dart';
 import '../../view/screen/role_screen/teachers/teachers_attendance/controller/teacher_attendence_controller.dart';
@@ -37,7 +37,7 @@ class DependencyInjection extends Bindings {
     ///==========================Student Controllers =========================
     Get.lazyPut(() => StudentHomeController(), fenix: true);
     Get.lazyPut(() => StudentAttendanceController(), fenix: true);
-    Get.lazyPut(() => StudentSheduleController(), fenix: true);
+    Get.lazyPut(() => StudentProfileController(), fenix: true);
     Get.lazyPut(() => ContactUsController(), fenix: true);
 
     ///==========================Teacher Controllers =========================
