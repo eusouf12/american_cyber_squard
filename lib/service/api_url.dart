@@ -1,6 +1,6 @@
 class ApiUrl {
   static const String baseUrl =
-      "https://tin-dictionary-libs-folder.trycloudflare.com";
+      "https://operations-constitute-largest-ann.trycloudflare.com";
   static const String imageUrl = baseUrl;
   static String socketUrl = baseUrl;
 
@@ -104,8 +104,10 @@ class ApiUrl {
 
   static String getStudentSchedule({required int page}) =>
       "/api/v1/students/find_my_all_class_list?page=$page&limit=10";
-  static String getStudentAssignment({required int page, String? classLevel, String? subject}) {
-    String url = "/api/v1/students/find_my_class_assignment?page=$page&limit=10";
+  static String getStudentAssignment(
+      {required int page, String? classLevel, String? subject}) {
+    String url =
+        "/api/v1/students/find_my_class_assignment?page=$page&limit=10";
     if (classLevel != null && classLevel.isNotEmpty) {
       url += "&classLevel=${Uri.encodeComponent(classLevel)}";
     }

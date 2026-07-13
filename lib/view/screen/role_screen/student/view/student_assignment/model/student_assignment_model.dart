@@ -98,12 +98,16 @@ class StudentAssignmentSummary {
   int? completed;
   int? pending;
   int? due;
+  int? submitted;
+  int? notSubmitted;
 
   StudentAssignmentSummary({
     this.total,
     this.completed,
     this.pending,
     this.due,
+    this.submitted,
+    this.notSubmitted,
   });
 
   StudentAssignmentSummary.fromJson(Map<String, dynamic> json) {
@@ -111,6 +115,8 @@ class StudentAssignmentSummary {
     completed = json['completed'];
     pending = json['pending'];
     due = json['due'];
+    submitted = json['submitted'];
+    notSubmitted = json['notSubmitted'];
   }
 
   Map<String, dynamic> toJson() {
@@ -119,6 +125,8 @@ class StudentAssignmentSummary {
       'completed': completed,
       'pending': pending,
       'due': due,
+      'submitted': submitted,
+      'notSubmitted': notSubmitted,
     };
   }
 }
@@ -238,6 +246,7 @@ class StudentClassAssignment {
   bool? assessmentAvailable;
   DateTime? createdAt;
   String? status;
+  bool? isSubmitted;
 
   StudentClassAssignment({
     this.id,
@@ -249,6 +258,7 @@ class StudentClassAssignment {
     this.assessmentAvailable,
     this.createdAt,
     this.status,
+    this.isSubmitted,
   });
 
   StudentClassAssignment.fromJson(Map<String, dynamic> json) {
@@ -272,6 +282,7 @@ class StudentClassAssignment {
         json['createdAt'] != null ? DateTime.tryParse(json['createdAt']) : null;
 
     status = json['status'];
+    isSubmitted = json['isSubmitted'];
   }
 
   Map<String, dynamic> toJson() {
@@ -285,6 +296,7 @@ class StudentClassAssignment {
       'assessmentAvailable': assessmentAvailable,
       'createdAt': createdAt?.toIso8601String(),
       'status': status,
+      'isSubmitted': isSubmitted,
     };
   }
 }

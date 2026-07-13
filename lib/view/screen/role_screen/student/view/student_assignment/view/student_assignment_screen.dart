@@ -159,38 +159,93 @@ class StudentAssignmentScreen extends StatelessWidget {
                         final StudentClassAssignment ass = item["assignment"];
 
                         final title = ass.assignmentTitle ?? "N/A";
-                        final status = ass.status ?? "Pending";
-                        final isCompleted = status.toLowerCase() == "completed";
+                        final bool isSubmitted = ass.isSubmitted ?? false;
+                        final bool isOver = ass.assessmentAvailable ?? false;
+
+                        // Calculate tag text, status text, and colors
+                        String tagText = "Pending";
+                        Color tagBg = Colors.orange.shade50;
+                        Color tagTextClr = Colors.orange.shade800;
+                        
+                        String statusText = "Pending";
+                        Color statusBg = Colors.orange.shade50;
+                        Color statusTextClr = Colors.orange.shade800;
+                        
+                        bool showSubmitButton = false;
+                        bool isCompletedIcon = false;
+                        String dateLabel = "Due: ";
 
                         // Format due date
                         final dueStr = ass.assignmentDueDate != null
                             ? DateFormat('MMM d, yyyy').format(ass.assignmentDueDate!.toLocal())
                             : "N/A";
 
-                        // Calculate tag text
-                        String tagText = status;
-                        Color tagBg = Colors.orange.shade50;
-                        Color tagTextClr = Colors.orange.shade800;
-
-                        if (isCompleted) {
-                          tagText = "Completed";
+                        if (isSubmitted) {
+                          // Student submitted it!
+                          tagText = "Submitted";
                           tagBg = Colors.green.shade50;
                           tagTextClr = Colors.green;
-                        } else if (ass.assignmentDueDate != null) {
-                          final now = DateTime.now();
-                          final diff = ass.assignmentDueDate!.difference(now).inDays;
-                          if (diff < 0) {
+                          isCompletedIcon = true;
+                          showSubmitButton = false;
+
+                          if (isOver) {
+                            // Submitted and date over
+                            statusText = "Submitted";
+                            statusBg = Colors.green.shade50;
+                            statusTextClr = Colors.green;
+                            dateLabel = "Completed: ";
+                          } else {
+                            // Submitted but time remaining (In Progress)
+                            statusText = "In Progress";
+                            statusBg = Colors.blue.shade50;
+                            statusTextClr = Colors.blue;
+                            dateLabel = "Submitted: ";
+                          }
+                        } else {
+                          // Not submitted!
+                          if (isOver) {
+                            // Not submitted & date is over
                             tagText = "Overdue";
                             tagBg = Colors.red.shade50;
                             tagTextClr = Colors.red;
-                          } else if (diff == 0) {
-                            tagText = "Due Today";
-                            tagBg = Colors.red.shade50;
-                            tagTextClr = Colors.red;
+                            
+                            statusText = "Not Submitted";
+                            statusBg = Colors.red.shade50;
+                            statusTextClr = Colors.red;
+                            
+                            showSubmitButton = false;
+                            dateLabel = "Overdue: ";
                           } else {
-                            tagText = "Due in $diff day${diff > 1 ? 's' : ''}";
-                            tagBg = Colors.blue.shade50;
-                            tagTextClr = Colors.blue;
+                            // Not submitted & still has time
+                            statusText = "Pending";
+                            statusBg = Colors.orange.shade50;
+                            statusTextClr = Colors.orange.shade800;
+                            
+                            showSubmitButton = true;
+                            dateLabel = "Due: ";
+
+                            if (ass.assignmentDueDate != null) {
+                              final now = DateTime.now();
+                              final diff = ass.assignmentDueDate!.difference(now).inDays;
+                              if (diff == 0) {
+                                tagText = "Due Today";
+                                tagBg = Colors.red.shade50;
+                                tagTextClr = Colors.red;
+                              } else if (diff < 0) {
+                                tagText = "Overdue";
+                                tagBg = Colors.red.shade50;
+                                tagTextClr = Colors.red;
+                                showSubmitButton = false;
+                              } else {
+                                tagText = "Due in $diff day${diff > 1 ? 's' : ''}";
+                                tagBg = Colors.blue.shade50;
+                                tagTextClr = Colors.blue;
+                              }
+                            } else {
+                              tagText = "Pending";
+                              tagBg = Colors.orange.shade50;
+                              tagTextClr = Colors.orange.shade800;
+                            }
                           }
                         }
 
@@ -200,13 +255,13 @@ class StudentAssignmentScreen extends StatelessWidget {
                           tagText: tagText,
                           tagColor: tagBg,
                           tagTextColor: tagTextClr,
-                          isCheckIcon: isCompleted,
-                          dateLabel: isCompleted ? "Completed: " : "Due: ",
+                          isCheckIcon: isCompletedIcon,
+                          dateLabel: dateLabel,
                           dateValue: dueStr,
-                          status: status,
-                          statusColor: isCompleted ? Colors.green.shade50 : Colors.orange.shade100,
-                          statusTextColor: isCompleted ? Colors.green : Colors.orange.shade800,
-                          showSubmitButton: !isCompleted,
+                          status: statusText,
+                          statusColor: statusBg,
+                          statusTextColor: statusTextClr,
+                          showSubmitButton: showSubmitButton,
                           onViewDetails: () {},
                           onSubmit: () {},
                         );

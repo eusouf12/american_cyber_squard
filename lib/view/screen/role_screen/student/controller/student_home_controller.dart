@@ -61,14 +61,6 @@ class StudentHomeController extends GetxController {
         final StudentAssignmentResponse model = StudentAssignmentResponse.fromJson(jsonResponse);
         
         if (model.data != null) {
-          // Bind summary
-          if (model.data!.summary != null) {
-            totalCount.value = model.data!.summary!.total ?? 0;
-            completedCount.value = model.data!.summary!.completed ?? 0;
-            pendingCount.value = model.data!.summary!.pending ?? 0;
-            dueCount.value = model.data!.summary!.due ?? 0;
-          }
-
           // Gather all class assignments
           final List<StudentAssignmentClassDistribution> temp = [];
           if (model.data!.data != null) {
@@ -79,6 +71,37 @@ class StudentHomeController extends GetxController {
             }
           }
           assignmentsList.value = temp;
+
+          // Calculate summary counts dynamically
+          int completed = 0;
+          int inProgress = 0;
+          int pending = 0;
+
+          for (var dist in temp) {
+            if (dist.classAssignments != null) {
+              for (var ass in dist.classAssignments!) {
+                final bool isSub = ass.isSubmitted ?? false;
+                final bool isOver = ass.assessmentAvailable ?? false;
+
+                if (isSub) {
+                  if (isOver) {
+                    completed++;
+                  } else {
+                    inProgress++;
+                  }
+                } else {
+                  if (!isOver) {
+                    pending++;
+                  }
+                }
+              }
+            }
+          }
+
+          completedCount.value = completed;
+          pendingCount.value = inProgress; // In Progress
+          dueCount.value = pending; // Pending
+          totalCount.value = completed + inProgress + pending;
         }
 
         rxAssignmentStatus.value = Status.completed;
@@ -110,7 +133,9 @@ class StudentHomeController extends GetxController {
     for (var dist in assignmentsList) {
       if (dist.classAssignments != null) {
         for (var ass in dist.classAssignments!) {
-          if (ass.assignmentDueDate != null && ass.status?.toLowerCase() != "completed") {
+          if (ass.assignmentDueDate != null && 
+              (ass.isSubmitted ?? false) == false && 
+              (ass.assessmentAvailable ?? false) == false) {
             final dueLocal = ass.assignmentDueDate!.toLocal();
             final dueDay = DateTime(dueLocal.year, dueLocal.month, dueLocal.day);
             if (dueDay.isAtSameMomentAs(localToday)) {
