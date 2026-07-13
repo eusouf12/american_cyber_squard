@@ -4,79 +4,94 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAllInfoCard extends StatelessWidget {
   final String title;
-  final String subtitle;
   final String count;
   final IconData icon;
   final Color textColor;
+  final List<Color>? gradientColors;
+  final Color? backgroundColor;
   final VoidCallback? onTap;
 
   const CustomAllInfoCard({
     super.key,
     required this.title,
     this.onTap,
-    required this.subtitle,
     required this.count,
     required this.icon,
     this.textColor = Colors.black,
+    this.gradientColors,
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
+    final shadowColor = gradientColors != null
+        ? gradientColors!.first
+        : (backgroundColor ?? AppColors.primary);
+
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 120.h,
-        width: 210.w,
-        padding: const EdgeInsets.all(20),
+        padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 6.w),
         decoration: BoxDecoration(
-          color: AppColors.primary,
-          borderRadius: BorderRadius.circular(20),
+          color: gradientColors == null
+              ? (backgroundColor ?? AppColors.primary)
+              : null,
+          gradient: gradientColors != null
+              ? LinearGradient(
+                  colors: gradientColors!,
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                )
+              : null,
+          borderRadius: BorderRadius.circular(20.r),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.1),
-              blurRadius: 6,
-              offset: const Offset(0, 3),
+              color: shadowColor.withValues(alpha: 0.15),
+              blurRadius: 10,
+              offset: const Offset(0, 6),
             ),
           ],
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Icon(
-                  icon,
-                  size: 20,
-                  color: AppColors.white,
-                ),
-                SizedBox(width: 8,),
-                Text(
-                  title,
-                  style: TextStyle(
-                    color: AppColors.white,
-                    fontSize: 14.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 10),
-            Text(
-              subtitle,
-              style: TextStyle(
-                fontSize: 12.sp,
-                  color: AppColors.white
+            // Circular Icon Container
+            Container(
+              padding: EdgeInsets.all(8.r),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white.withValues(alpha: 0.18),
+              ),
+              child: Icon(
+                icon,
+                size: 20.sp,
+                color: Colors.white,
               ),
             ),
-            const SizedBox(height: 10),
+            SizedBox(height: 10.h),
+            // Title text
+            Text(
+              title,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w600,
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+            SizedBox(height: 6.h),
+            // Count text
             Text(
               count,
-              style:  TextStyle(
+              style: TextStyle(
+                color: Colors.white,
                 fontSize: 20.sp,
                 fontWeight: FontWeight.bold,
-                color: AppColors.white
               ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),

@@ -24,60 +24,107 @@ class CustomPrimaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: AppColors.primary,
-        borderRadius: BorderRadius.circular(24),
+        gradient: LinearGradient(
+          colors: [
+            AppColors.primary,
+            AppColors.primary.withValues(alpha: 0.85),
+          ],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(24.r),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 10,
-            offset: const Offset(0, 4),
+            color: AppColors.primary.withValues(alpha: 0.2),
+            blurRadius: 16,
+            offset: const Offset(0, 8),
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Title
-          CustomText(
-            text: title,
-            fontSize: 18.sp,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            textAlign: TextAlign.start,
-          ),
-
-          // Description
-          CustomText(
-            text: description,
-            fontSize: 11.sp,
-            color: Colors.white.withValues(alpha: 0.9),
-            top: 8,
-            bottom: 20,
-            maxLines: 4,
-            textAlign: TextAlign.start,
-          ),
-          isInbox== true ? Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-            decoration: BoxDecoration(
-              color: AppColors.white.withValues(alpha: 0.1),
-              borderRadius: BorderRadius.circular(16),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24.r),
+        child: Stack(
+          children: [
+            Positioned(
+              right: -20.w,
+              top: -20.h,
+              child: Container(
+                width: 100.w,
+                height: 100.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withValues(alpha: 0.08),
+                ),
+              ),
             ),
-            child: Row(
-              children: [
-                Icon(icon ?? Icons.group,color: Colors.white,),
-                SizedBox(width: 12.w,),
-                CustomText(text: inboxTitle ?? "2 Students Linked",
-                  fontSize: 12.sp,fontWeight: FontWeight.w600,color: Colors.white,
-                )
-              ],
+            Positioned(
+              left: -30.w,
+              bottom: -40.h,
+              child: Container(
+                width: 120.w,
+                height: 120.w,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white.withValues(alpha: 0.05),
+                ),
+              ),
             ),
+            Padding(
+              padding: EdgeInsets.all(20.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Title
+                  CustomText(
+                    text: title,
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    textAlign: TextAlign.start,
+                  ),
 
-          )
-          : SizedBox.shrink(),
-          const SizedBox(height: 16),
-        ],
+                  // Description
+                  CustomText(
+                    text: description,
+                    fontSize: 11.sp,
+                    color: Colors.white.withValues(alpha: 0.85),
+                    top: 8.h,
+                    bottom: 20.h,
+                    maxLines: 4,
+                    textAlign: TextAlign.start,
+                  ),
+                  
+                  isInbox == true
+                      ? Container(
+                          padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withValues(alpha: 0.12),
+                            borderRadius: BorderRadius.circular(16.r),
+                            border: Border.all(color: Colors.white.withValues(alpha: 0.15)),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(icon ?? Icons.group, color: Colors.white, size: 20.sp),
+                              SizedBox(width: 12.w),
+                              Expanded(
+                                child: CustomText(
+                                  text: inboxTitle ?? "2 Students Linked",
+                                  fontSize: 12.sp,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                  textAlign: TextAlign.start,
+                                ),
+                              )
+                            ],
+                          ),
+                        )
+                      : const SizedBox.shrink(),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

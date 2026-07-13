@@ -110,45 +110,51 @@ class StudentHomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Summary Cards (Classes & GPA)
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
+                // Summary Cards
+                Obx(() {
+                  final attendance =
+                      "${studentProfileController.averageAttendance.value.toStringAsFixed(0)}%";
+                  final assignments =
+                      "${studentProfileController.pendingAssignmentCount.value}";
+                  final exams =
+                      "${studentProfileController.upcomingExamCount.value}";
+
+                  return Row(
                     children: [
-                      CustomAllInfoCard(
-                        title: "Attendance",
-                        subtitle: "Overall attendance rate",
-                        count: "92%",
-                        icon: Icons.check_circle_outline,
-                        textColor: Colors.grey[800]!,
+                      Expanded(
+                        child: CustomAllInfoCard(
+                          title: "Average\nAttendance",
+                          count: attendance,
+                          icon: Icons.check_circle_outline,
+                        ),
                       ),
                       const SizedBox(width: 8),
-                      CustomAllInfoCard(
-                        title: "Pending Assignments",
-                        subtitle: "Assignments due soon",
-                        count: "3",
-                        icon: Icons.assignment_late_outlined,
-                        textColor: Colors.grey[800]!,
+                      Expanded(
+                        child: CustomAllInfoCard(
+                          title: "Pending\nAssignments",
+                          count: assignments,
+                          icon: Icons.assignment_late_outlined,
+                          gradientColors: const [
+                            Color(0xFFEA580C),
+                            Color(0xFFF97316)
+                          ],
+                        ),
                       ),
                       const SizedBox(width: 8),
-                      CustomAllInfoCard(
-                        title: "Upcoming Exams",
-                        subtitle: "Exams scheduled soon",
-                        count: "2",
-                        icon: Icons.school_outlined,
-                        textColor: Colors.grey[800]!,
-                      ),
-                      const SizedBox(width: 8),
-                      CustomAllInfoCard(
-                        title: "Grades Received",
-                        subtitle: "Recent grades received",
-                        count: "4",
-                        icon: Icons.grade_outlined,
-                        textColor: AppColors.white,
+                      Expanded(
+                        child: CustomAllInfoCard(
+                          title: "Upcoming\nExams",
+                          count: exams,
+                          icon: Icons.school_outlined,
+                          gradientColors: const [
+                            Color(0xFF4F46E5),
+                            Color(0xFF6366F1)
+                          ],
+                        ),
                       ),
                     ],
-                  ),
-                ),
+                  );
+                }),
 
                 const SizedBox(height: 25),
 
