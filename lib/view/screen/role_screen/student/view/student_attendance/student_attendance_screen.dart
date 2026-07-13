@@ -1,16 +1,21 @@
+import 'package:america_ayber_squad/utils/app_colors/app_colors.dart';
 import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradient.dart';
+import 'package:america_ayber_squad/view/components/custom_loader/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../components/custom_nav_bar/student_nav_bar.dart';
-import '../../../parents/widget/custom_welcome_card.dart';
-import '../../controller/student_attandance_controller.dart';
+
+import 'controller/student_attandance_controller.dart';
 import '../../widget/custom_grade_summary_card.dart';
 import '../../widget/custom_history_item.dart';
+
+import 'view_all_history/student_attendance_history_all_screen.dart';
 
 class StudentAttendanceScreen extends StatelessWidget {
   StudentAttendanceScreen({super.key});
 
-  final StudentAttendanceController studentAttendanceController = Get.find<StudentAttendanceController>();
+  final StudentAttendanceController studentAttendanceController =
+      Get.find<StudentAttendanceController>();
 
   @override
   Widget build(BuildContext context) {
@@ -20,105 +25,146 @@ class StudentAttendanceScreen extends StatelessWidget {
           padding: const EdgeInsets.all(20),
           child: Column(
             children: [
-              SizedBox(height: 40,),
-              // Horizontal Scrolling for Cards (Summary Cards)
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal, // Make it horizontally scrollable
-                child: Row(
+              SizedBox(
+                height: 40,
+              ),
+              // Summary Cards
+              Obx(() {
+                final stats = studentAttendanceController.statistics.value;
+                return Column(
                   children: [
-                    CustomGradeSummaryCard(
-                      count: "92%",
-                      label: "Average Attendance",
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomGradeSummaryCard(
+                            count:
+                                "${stats?.presentPercentage?.toStringAsFixed(2) ?? 0}%",
+                            label: "Average Attendance",
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: CustomGradeSummaryCard(
+                            count: "${stats?.totalAttendance ?? 0}",
+                            label: "Total Attendance",
+                          ),
+                        ),
+                      ],
                     ),
-                    const SizedBox(width: 10),
-                    CustomGradeSummaryCard(
-                      count: "3",
-                      label: "Days Present",
-                    ),
-                    const SizedBox(width: 10),
-                    CustomGradeSummaryCard(
-                      count: "12",
-                      label: "Late",
-                    ),
-                    const SizedBox(width: 10),
-                    CustomGradeSummaryCard(
-                      count: "12",
-                      label: "Days Absent",
+                    const SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomGradeSummaryCard(
+                            count: "${stats?.present ?? 0}",
+                            label: "Days Present",
+                            cardColor: Colors.green,
+                          ),
+                        ),
+                        const SizedBox(width: 10),
+                        Expanded(
+                          child: CustomGradeSummaryCard(
+                            count: "${stats?.absent ?? 0}",
+                            label: "Days Absent",
+                            cardColor: Colors.red,
+                          ),
+                        ),
+                      ],
                     ),
                   ],
-                ),
-              ),
-
-              const SizedBox(height: 25),
-
-              CustomPrimaryCard(
-                title: "Attendance Record",
-                description: "Track your daily attendance \n status",
-                isInbox: true,
-                icon: Icons.calendar_today_outlined,
-                inboxTitle: "Total Days: 50",
-              ),
+                );
+              }),
 
               const SizedBox(height: 30),
 
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Recent History",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-              const SizedBox(height: 16),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      const Text(
+                        "Recent History",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Get.to(() => StudentAttendanceHistoryAllScreen());
+                        },
+                        child: const Text("View All",
+                            style: TextStyle(color: AppColors.primary)),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 16),
+                  Obx(() {
+                    if (studentAttendanceController.isHistoryLoading.value) {
+                      return const Center(child: CustomLoader());
+                    }
 
-              HistoryItem(
-                date: "Dec 10, 2024",
-                subtitle: "Regular Class Day",
-                status: "Present",
-                statusColor: Colors.green,
-                icon: Icons.check_circle,
-                iconBg: Colors.green.withValues(alpha: 0.1),
-              ),
+                    if (studentAttendanceController.historyList.isEmpty) {
+                      return const Center(
+                        child: Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: Text("No recent history found."),
+                        ),
+                      );
+                    }
 
-              HistoryItem(
-                date: "Dec 09, 2024",
-                subtitle: "Regular Class Day",
-                status: "Present",
-                statusColor: Colors.green,
-                icon: Icons.check_circle,
-                iconBg: Colors.green.withValues(alpha: 0.1),
-              ),
+                    // Show up to 10 items
+                    final displayList = studentAttendanceController.historyList
+                        .take(10)
+                        .toList();
 
-              HistoryItem(
-                date: "Dec 08, 2024",
-                subtitle: "Regular Class Day",
-                status: "Late",
-                statusColor: Colors.orange,
-                icon: Icons.access_time_filled,
-                iconBg: Colors.orange.withValues(alpha: 0.1),
-              ),
+                    return ListView.builder(
+                      padding: EdgeInsets.zero,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: displayList.length,
+                      itemBuilder: (context, index) {
+                        final item = displayList[index];
 
-              HistoryItem(
-                date: "Dec 07, 2024",
-                subtitle: "Regular Class Day",
-                status: "Absent",
-                statusColor: Colors.red,
-                icon: Icons.cancel,
-                iconBg: Colors.red.withValues(alpha: 0.1),
-              ),
+                        Color statusColor = Colors.grey;
+                        IconData iconData = Icons.info;
+                        String statusStr =
+                            item.attendanceStatus?.toLowerCase() ?? "";
 
-              HistoryItem(
-                date: "Dec 06, 2024",
-                subtitle: "Regular Class Day",
-                status: "Present",
-                statusColor: Colors.green,
-                icon: Icons.check_circle,
-                iconBg: Colors.green.withValues(alpha: 0.1),
-              ),
-            ],
-          )
+                        if (statusStr == "present") {
+                          statusColor = Colors.green;
+                          iconData = Icons.check_circle;
+                        } else if (statusStr == "absent") {
+                          statusColor = Colors.red;
+                          iconData = Icons.cancel;
+                        } else if (statusStr == "late") {
+                          statusColor = Colors.orange;
+                          iconData = Icons.access_time_filled;
+                        }
+
+                        String dateStr = "";
+                        if (item.attendanceDate != null) {
+                          dateStr =
+                              "${item.attendanceDate!.year}-${item.attendanceDate!.month.toString().padLeft(2, '0')}-${item.attendanceDate!.day.toString().padLeft(2, '0')}";
+                        }
+
+                        return Padding(
+                          padding: const EdgeInsets.only(bottom: 12.0),
+                          child: HistoryItem(
+                            date: dateStr,
+                            subtitle: "Regular Class Day",
+                            status: item.attendanceStatus ?? "Unknown",
+                            statusColor: statusColor,
+                            icon: iconData,
+                            iconBg: statusColor.withValues(alpha: 0.1),
+                          ),
+                        );
+                      },
+                    );
+                  }),
+                ],
+              )
             ],
           ),
         ),

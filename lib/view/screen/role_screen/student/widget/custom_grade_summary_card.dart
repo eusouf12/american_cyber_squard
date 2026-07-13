@@ -6,24 +6,29 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class CustomGradeSummaryCard extends StatelessWidget {
   final String? count;
   final String? label;
+  final Color? cardColor;
 
   const CustomGradeSummaryCard({
     super.key,
     this.count,
     this.label,
+    this.cardColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 120.h,
-      width: 200.w,
+      height: 90.h,
+      width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: AppColors.primary,
+        color: cardColor ?? AppColors.primary,
         boxShadow: [
-          BoxShadow(color: Colors.grey.withValues(alpha: 0.1), blurRadius: 5, offset: const Offset(0, 3)),
+          BoxShadow(
+              color: Colors.grey.withValues(alpha: 0.1),
+              blurRadius: 5,
+              offset: const Offset(0, 3)),
         ],
       ),
       child: Column(
@@ -32,11 +37,18 @@ class CustomGradeSummaryCard extends StatelessWidget {
           // Count Text (Bold)
           Text(
             count ?? '',
-            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: AppColors.white),
+            style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+                color: AppColors.white),
           ),
           const SizedBox(height: 5),
           // Label Text (Grey color)
-          CustomText(text: label ?? "", fontSize: 12.sp, fontWeight: FontWeight.w400, color: AppColors.white),
+          CustomText(
+              text: label ?? "",
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w400,
+              color: AppColors.white),
         ],
       ),
     );
