@@ -11,6 +11,7 @@ import 'package:america_ayber_squad/view/screen/role_screen/student/widget/custo
 import 'package:america_ayber_squad/view/screen/role_screen/student/controller/student_home_controller.dart';
 import '../model/student_assignment_model.dart';
 import 'package:america_ayber_squad/view/screen/role_screen/teachers/teachers_attendance/widgets/custom_teachers_attendance_card.dart';
+import 'student_assignment_details_screen.dart';
 
 class StudentAssignmentScreen extends StatelessWidget {
   const StudentAssignmentScreen({super.key});
@@ -21,7 +22,7 @@ class StudentAssignmentScreen extends StatelessWidget {
 
     // Reload assignments on entry
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      controller.getStudentAssignments();
+      controller.initData();
     });
 
     return CustomGradient(
@@ -29,7 +30,7 @@ class StudentAssignmentScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         body: SafeArea(
           child: RefreshIndicator(
-            onRefresh: () => controller.getStudentAssignments(),
+            onRefresh: () => controller.initData(),
             child: SingleChildScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               padding: const EdgeInsets.all(20),
@@ -37,6 +38,92 @@ class StudentAssignmentScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(height: 10.h),
+
+                  // --- Subject Dropdown Block ---
+                  Obx(() {
+                    if (controller.studentSubjectsList.isEmpty) {
+                      return const SizedBox.shrink();
+                    }
+                    return Container(
+                      width: double.infinity,
+                      margin: EdgeInsets.only(bottom: 16.h),
+                      padding: EdgeInsets.all(16.w),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(16.r),
+                        border: Border.all(color: Colors.grey.shade100),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.03),
+                            blurRadius: 10,
+                            offset: const Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            text: "Select Subject",
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.w600,
+                            color: const Color(0xFF374151),
+                          ),
+                          SizedBox(height: 8.h),
+                          Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 2.h),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.r),
+                              border: Border.all(color: Colors.grey.shade300),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                dropdownColor: Colors.white,
+                                value: controller.selectedSubject.value,
+                                hint: Text(
+                                  "Select Subject",
+                                  style: TextStyle(
+                                    fontSize: 14.sp,
+                                    color: Colors.grey.shade600,
+                                  ),
+                                ),
+                                isExpanded: true,
+                                icon: Icon(
+                                  Icons.keyboard_arrow_down,
+                                  color: Colors.grey.shade400,
+                                ),
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  color: Colors.black87,
+                                ),
+                                onChanged: (String? val) {
+                                  if (val != null) {
+                                    controller.selectedSubject.value = val;
+                                    controller.getStudentAssignments();
+                                  }
+                                },
+                                items: controller.studentSubjectsList
+                                    .map<DropdownMenuItem<String>>(
+                                      (String value) => DropdownMenuItem<String>(
+                                        value: value,
+                                        child: Text(
+                                          value,
+                                          style: TextStyle(
+                                            fontSize: 14.sp,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                    .toList(),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  }),
                   
                   // Summary cards styled like teachers attendance cards
                   Obx(() {
@@ -60,9 +147,9 @@ class StudentAssignmentScreen extends StatelessWidget {
                         const SizedBox(width: 8),
                         Expanded(
                           child: CustomTeachersAttendanceCard(
-                            count: "In Progress",
-                            label: "${controller.pendingCount.value}",
-                            icon: Icons.pending_actions,
+                            count: "Overdue",
+                            label: "${controller.overdueCount.value}",
+                            icon: Icons.error_outline,
                           ),
                         ),
                       ],
@@ -135,6 +222,8 @@ class StudentAssignmentScreen extends StatelessWidget {
                         }
                       }
                     }
+
+
 
                     if (allItems.isEmpty) {
                       return Center(
@@ -262,8 +351,15 @@ class StudentAssignmentScreen extends StatelessWidget {
                           statusColor: statusBg,
                           statusTextColor: statusTextClr,
                           showSubmitButton: showSubmitButton,
-                          onViewDetails: () {},
-                          onSubmit: () {},
+                          onViewDetails: () {
+                            Get.to(() => StudentAssignmentDetailsScreen(
+                                  assignment: ass,
+                                  subject: subject,
+                                ));
+                          },
+                          onSubmit: () {
+                            showSubmitAssignmentPopup(context, ass, controller);
+                          },
                         );
                       },
                     );
@@ -275,6 +371,211 @@ class StudentAssignmentScreen extends StatelessWidget {
         ),
         bottomNavigationBar: StudentNavBar(currentIndex: 2),
       ),
+    );
+  }
+
+  void showSubmitAssignmentPopup(BuildContext context, StudentClassAssignment assignment, StudentHomeController controller) {
+    controller.submissionFiles.clear();
+
+    Get.bottomSheet(
+      Obx(() {
+        final files = controller.submissionFiles;
+        final isSubmitting = controller.isSubmitting.value;
+
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 24.h),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 20,
+                offset: const Offset(0, -4),
+              ),
+            ],
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomText(
+                            text: "Submit Assignment",
+                            fontSize: 16.sp,
+                            fontWeight: FontWeight.bold,
+                            textAlign: TextAlign.start,
+                          ),
+                          SizedBox(height: 4.h),
+                          Text(
+                            assignment.assignmentTitle ?? "",
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: Colors.grey.shade500,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () => Get.back(),
+                      icon: const Icon(Icons.close),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20.h),
+                CustomText(
+                  text: "Upload Attachment",
+                  fontSize: 12.sp,
+                  fontWeight: FontWeight.w600,
+                  color: Colors.grey.shade700,
+                  bottom: 8.h,
+                ),
+
+                // File Picker Box
+                InkWell(
+                  onTap: isSubmitting ? null : () => controller.pickSubmissionFiles(),
+                  borderRadius: BorderRadius.circular(12.r),
+                  child: Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(vertical: 24.h),
+                    decoration: BoxDecoration(
+                      color: AppColors.primary.withValues(alpha: 0.03),
+                      borderRadius: BorderRadius.circular(12.r),
+                      border: Border.all(
+                        color: AppColors.primary.withValues(alpha: 0.25),
+                        style: BorderStyle.solid,
+                        width: 1.5,
+                      ),
+                    ),
+                    child: Column(
+                      children: [
+                        Icon(
+                          Icons.cloud_upload_outlined,
+                          size: 36.sp,
+                          color: AppColors.primary,
+                        ),
+                        SizedBox(height: 8.h),
+                        CustomText(
+                          text: "Select picture, PDF, or any file",
+                          fontSize: 12.sp,
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 16.h),
+
+                // List of picked files
+                if (files.isNotEmpty) ...[
+                  CustomText(
+                    text: "Selected Files (${files.length})",
+                    fontSize: 12.sp,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey.shade700,
+                    bottom: 8.h,
+                  ),
+                  Container(
+                    constraints: BoxConstraints(maxHeight: 120.h),
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: files.length,
+                      itemBuilder: (context, index) {
+                        final file = files[index];
+                        final name = file.path.split('/').last;
+                        return Container(
+                          margin: EdgeInsets.only(bottom: 8.h),
+                          padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 8.h),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade50,
+                            borderRadius: BorderRadius.circular(8.r),
+                            border: Border.all(color: Colors.grey.shade200),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(Icons.insert_drive_file_outlined,
+                                  color: AppColors.primary, size: 18.sp),
+                              SizedBox(width: 8.w),
+                              Expanded(
+                                child: Text(
+                                  name,
+                                  style: TextStyle(fontSize: 12.sp),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              IconButton(
+                                constraints: const BoxConstraints(),
+                                padding: EdgeInsets.zero,
+                                onPressed: isSubmitting ? null : () => controller.removeSubmissionFile(index),
+                                icon: const Icon(Icons.delete_outline, color: Colors.red),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                ],
+
+                // Submit Button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    onPressed: isSubmitting
+                        ? null
+                        : () async {
+                            final success = await controller.submitAssignment(assignment.id!);
+                            if (success) {
+                              Get.back();
+                            }
+                          },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: AppColors.primary,
+                      foregroundColor: Colors.white,
+                      padding: EdgeInsets.symmetric(vertical: 14.h),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      elevation: 0,
+                    ),
+                    child: isSubmitting
+                        ? SizedBox(
+                            height: 20.h,
+                            width: 20.h,
+                            child: const CircularProgressIndicator(
+                              color: Colors.white,
+                              strokeWidth: 2,
+                            ),
+                          )
+                        : Text(
+                            "Submit Assignment",
+                            style: TextStyle(
+                              fontSize: 14.sp,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }),
+      isScrollControlled: true,
+      barrierColor: Colors.black.withValues(alpha: 0.4),
     );
   }
 }

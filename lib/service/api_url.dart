@@ -119,6 +119,8 @@ class ApiUrl {
     return url;
   }
 
+  static String submitAssignment = "/api/v1/students/submit-assignment";
+
 //================================== ===============================================
   static const String googleAuth = "/api/v1/user/google_auth";
   static String deleteAccount({required String userId}) =>
