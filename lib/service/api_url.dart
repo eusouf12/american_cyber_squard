@@ -88,6 +88,8 @@ class ApiUrl {
       "/api/v1/assignments/update_teacher_assignment/$assignmentId";
   static String specificAssignment({required String assignmentId}) =>
       "/api/v1/assignments/find_by_specific_assignment/$assignmentId";
+  static String getAssignmentSubmitedList({required String assignmentId}) =>
+      "/api/v1/assignments/find_by_submitted_assignment_list/$assignmentId";
   //====materials===
   static const String createMaterials =
       "/api/v1/assignments/create_class_materials";

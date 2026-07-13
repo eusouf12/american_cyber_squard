@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:america_ayber_squad/service/api_client.dart';
 import 'package:america_ayber_squad/service/api_url.dart';
 import 'package:america_ayber_squad/utils/ToastMsg/toast_message.dart';
+import '../model/assignment_submit_list_model.dart';
 
 class TeacherAssignmentController extends GetxController {
   final RxInt selectedIndex = 0.obs;
@@ -45,6 +46,10 @@ class TeacherAssignmentController extends GetxController {
   // Specific assignment detail (for details screen)
   final Rxn<Map<String, dynamic>> specificAssignmentData = Rxn<Map<String, dynamic>>();
   final RxBool isSpecificAssignmentLoading = false.obs;
+
+  // Submitted student list
+  final RxList<SubmittedAssignmentList> submittedList = <SubmittedAssignmentList>[].obs;
+  final RxBool isSubmittedListLoading = false.obs;
 
   // Picker helper
   Future<void> pickFiles() async {
@@ -192,6 +197,32 @@ class TeacherAssignmentController extends GetxController {
       return null;
     } finally {
       isSpecificAssignmentLoading.value = false;
+    }
+  }
+
+  // Get Submitted Student List
+  Future<void> assignmentSubmitedList(String assignmentId) async {
+    isSubmittedListLoading.value = true;
+    submittedList.clear();
+    try {
+      final response = await ApiClient.getData(
+        ApiUrl.getAssignmentSubmitedList(assignmentId: assignmentId),
+      );
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final Map<String, dynamic> jsonResponse = response.body is String
+            ? jsonDecode(response.body)
+            : Map<String, dynamic>.from(response.body);
+        final model = StudentSubmittedAssignmentResponse.fromJson(jsonResponse);
+        if (model.data?.data != null) {
+          submittedList.value = model.data!.data!;
+        }
+      } else {
+        debugPrint("assignmentSubmitedList failed status: ${response.statusCode}");
+      }
+    } catch (e) {
+      debugPrint("assignmentSubmitedList Error: $e");
+    } finally {
+      isSubmittedListLoading.value = false;
     }
   }
 

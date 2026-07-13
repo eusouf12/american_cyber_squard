@@ -147,19 +147,20 @@ class CustomCreateAssignmentCard extends StatelessWidget {
           // btn
           Row(
             children: [
-              Expanded(
-                child: CustomButton(
-                  onTap: onTapEdit,
-                  title: "Edit",
-                  height: 36,
-                  fontSize: 10.sp,
-                  fontWeight: FontWeight.w400,
-                  fillColor: AppColors.grey_02 ,
-                  textColor: Colors.black ,
+              if (status != "Completed") ...[
+                Expanded(
+                  child: CustomButton(
+                    onTap: onTapEdit,
+                    title: "Edit",
+                    height: 36,
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w400,
+                    fillColor: AppColors.grey_02 ,
+                    textColor: Colors.black ,
+                  ),
                 ),
-              ),
-
-              SizedBox(width: 6.w),
+                SizedBox(width: 6.w),
+              ],
 
               Expanded(
                 child: CustomButton(
