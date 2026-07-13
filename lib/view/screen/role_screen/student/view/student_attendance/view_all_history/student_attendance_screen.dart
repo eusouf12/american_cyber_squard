@@ -3,13 +3,13 @@ import 'package:america_ayber_squad/view/components/custom_gradient/custom_gradi
 import 'package:america_ayber_squad/view/components/custom_loader/custom_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../../components/custom_nav_bar/student_nav_bar.dart';
+import '../../../../../../components/custom_nav_bar/student_nav_bar.dart';
 
-import 'controller/student_attandance_controller.dart';
-import '../../widget/custom_grade_summary_card.dart';
-import '../../widget/custom_history_item.dart';
+import '../controller/student_attandance_controller.dart';
+import '../../../widget/custom_grade_summary_card.dart';
+import '../../../widget/custom_history_item.dart';
 
-import 'view_all_history/student_attendance_history_all_screen.dart';
+import 'student_attendance_history_all_screen.dart';
 
 class StudentAttendanceScreen extends StatelessWidget {
   StudentAttendanceScreen({super.key});

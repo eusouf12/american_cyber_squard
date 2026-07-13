@@ -1,4 +1,4 @@
-import 'package:america_ayber_squad/view/screen/role_screen/student/view/student_attendance/student_attendance_screen.dart';
+import 'package:america_ayber_squad/view/screen/role_screen/student/view/student_attendance/view_all_history/student_attendance_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';

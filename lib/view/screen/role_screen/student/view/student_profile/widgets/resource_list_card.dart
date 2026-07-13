@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../model/resource_list_model.dart';
 
 class ResourceCard extends StatelessWidget {
@@ -140,8 +141,17 @@ class ResourceCard extends StatelessWidget {
           ),
 
           IconButton(
-            onPressed: () {
-              debugPrint("Downloading ${item.fileName}");
+            onPressed: () async {
+              if (item.fileUrl != null && item.fileUrl!.isNotEmpty) {
+                final Uri uri = Uri.parse(item.fileUrl!);
+                if (await canLaunchUrl(uri)) {
+                  await launchUrl(uri);
+                } else {
+                  debugPrint("Could not launch ${item.fileUrl}");
+                }
+              } else {
+                debugPrint("Downloading ${item.fileName} - NO URL PROVIDED");
+              }
             },
             icon: const Icon(Icons.download_for_offline_outlined),
             color: const Color(0xFF2ECC71),

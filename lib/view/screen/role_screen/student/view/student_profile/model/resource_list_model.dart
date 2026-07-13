@@ -8,6 +8,7 @@ class ResourceModel {
   final IconData icon;
   final String type;
   final Color color;
+  final String? fileUrl;
 
   ResourceModel({
     required this.fileName,
@@ -17,5 +18,6 @@ class ResourceModel {
     required this.date,
     required this.icon,
     required this.color,
+    this.fileUrl,
   });
 }

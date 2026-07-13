@@ -6,6 +6,7 @@ import 'package:america_ayber_squad/service/api_url.dart';
 import 'package:america_ayber_squad/utils/ToastMsg/toast_message.dart';
 import 'package:america_ayber_squad/utils/app_const/app_const.dart';
 import '../model/student_schedule_model.dart';
+import '../model/resource_list_model.dart';
 
 class StudentProfileController extends GetxController {
   @override
@@ -13,6 +14,7 @@ class StudentProfileController extends GetxController {
     super.onInit();
     getStudentSchedule();
     getStudentOverview();
+    getStudentClassMaterial();
   }
 
   // Observable for the selected day
@@ -104,6 +106,72 @@ class StudentProfileController extends GetxController {
       debugPrint("getStudentOverview Error: $e");
     } finally {
       isOverviewLoading.value = false;
+    }
+  }
+
+  RxList<ResourceModel> materialFiles = <ResourceModel>[].obs;
+  RxBool isMaterialLoading = false.obs;
+
+  Future<void> getStudentClassMaterial() async {
+    isMaterialLoading.value = true;
+    try {
+      final response = await ApiClient.getData(ApiUrl.studentclassMaterial);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final Map<String, dynamic> jsonResponse = response.body is String 
+            ? jsonDecode(response.body) 
+            : Map<String, dynamic>.from(response.body);
+            
+        final dataMap = jsonResponse['data'];
+        if (dataMap != null && dataMap['data'] != null) {
+          final List dynamicList = dataMap['data'];
+          List<ResourceModel> tempMaterials = [];
+          
+          for (var branchItem in dynamicList) {
+            final classDistributions = branchItem['classDistributions'] as List?;
+            if (classDistributions != null) {
+              for (var distItem in classDistributions) {
+                final subject = distItem['assignableSubject'] ?? "Unknown";
+                final classMaterials = distItem['classMaterials'] as List?;
+                if (classMaterials != null) {
+                  for (var material in classMaterials) {
+                    final desc = material['description'] ?? "Class Material";
+                    final type = material['materialType'] ?? "Link";
+                    final date = material['createdAt'] != null ? material['createdAt'].toString().substring(0, 10) : "N/A";
+                    
+                    String? fUrl;
+                    final externalLink = material['external_link'];
+                    if (externalLink != null && externalLink.toString().isNotEmpty) {
+                      fUrl = externalLink.toString();
+                    } else {
+                      final files = material['materialFiles'] as List?;
+                      if (files != null && files.isNotEmpty) {
+                        final path = files.first.toString();
+                        fUrl = path.startsWith("http") ? path : "${ApiUrl.imageUrl}$path";
+                      }
+                    }
+                    
+                    tempMaterials.add(ResourceModel(
+                      fileName: desc,
+                      size: "N/A",
+                      subject: subject,
+                      type: type,
+                      date: date,
+                      icon: Icons.description_outlined,
+                      color: Colors.blue,
+                      fileUrl: fUrl,
+                    ));
+                  }
+                }
+              }
+            }
+          }
+          materialFiles.value = tempMaterials;
+        }
+      }
+    } catch (e) {
+      debugPrint("Error fetching materials: $e");
+    } finally {
+      isMaterialLoading.value = false;
     }
   }
 }

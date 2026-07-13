@@ -129,6 +129,8 @@ class ApiUrl {
   static String studentOverview = "/api/v1/students/student_overview";
   static String attendencehistory =
       "/api/v1/students/find_my_class_attendance_history";
+  static String studentclassMaterial =
+      "/api/v1/students/find_my_class_material";
 
 //================================== ===============================================
   static const String googleAuth = "/api/v1/user/google_auth";
