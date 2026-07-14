@@ -15,10 +15,10 @@ class StudentProfile extends StatelessWidget {
 
   static const List<_ProfileMenuItem> _menuItems = [
     _ProfileMenuItem(
-      title: 'Grades & Exams',
-      subtitle: 'View your results & scores',
-      icon: Icons.grade_rounded,
-      gradientColors: [Color(0xFF7C3AED), Color(0xFFA78BFA)],
+      title: 'Fees & Payments',
+      subtitle: 'Manage your tuition & history',
+      icon: Icons.account_balance_wallet_rounded,
+      gradientColors: [Color(0xFF00BFA5), Color(0xFF00E676)],
     ),
     _ProfileMenuItem(
       title: 'Schedule',
@@ -55,7 +55,7 @@ class StudentProfile extends StatelessWidget {
   void _handleMenuTap(int index) {
     switch (index) {
       case 0:
-        Get.toNamed(AppRoutes.studentGradeScreen);
+        Get.toNamed(AppRoutes.studentFeesScreen);
       case 1:
         Get.toNamed(AppRoutes.studentScheduleScreen);
       case 2:

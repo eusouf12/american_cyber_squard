@@ -7,6 +7,7 @@ import 'package:america_ayber_squad/utils/ToastMsg/toast_message.dart';
 import 'package:america_ayber_squad/utils/app_const/app_const.dart';
 import '../model/student_schedule_model.dart';
 import '../model/resource_list_model.dart';
+import '../model/student_fees_model.dart';
 
 class StudentProfileController extends GetxController {
   @override
@@ -15,6 +16,40 @@ class StudentProfileController extends GetxController {
     getStudentSchedule();
     getStudentOverview();
     getStudentClassMaterial();
+    getStudentFees();
+  }
+
+  RxList<StudentFeesModel> studentFeesList = <StudentFeesModel>[].obs;
+  RxBool isFeesLoading = false.obs;
+  RxDouble totalDue = 0.0.obs;
+
+  Future<void> getStudentFees() async {
+    isFeesLoading.value = true;
+    try {
+      final response = await ApiClient.getData(ApiUrl.studentFees);
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final Map<String, dynamic> jsonResponse = response.body is String 
+            ? jsonDecode(response.body) 
+            : Map<String, dynamic>.from(response.body);
+            
+        final dataMap = jsonResponse['data'];
+        if (dataMap != null && dataMap['data'] != null) {
+          final List dynamicList = dataMap['data'];
+          List<StudentFeesModel> fees = dynamicList.map((e) => StudentFeesModel.fromJson(e)).toList();
+          studentFeesList.value = fees;
+          
+          double due = 0.0;
+          for (var item in fees) {
+            due += item.unpaidAmount;
+          }
+          totalDue.value = due;
+        }
+      }
+    } catch (e) {
+      debugPrint("Error fetching fees: $e");
+    } finally {
+      isFeesLoading.value = false;
+    }
   }
 
   // Observable for the selected day
