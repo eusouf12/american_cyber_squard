@@ -7,7 +7,7 @@ import '../../view/screen/role_screen/parents/views/praents_student_view_profile
 import '../../view/screen/role_screen/school_nurse/view/school_nurse_home/view/school_nurse_home_screen.dart';
 import '../../view/screen/role_screen/school_nurse/view/school_nurse_profile/view/school_nurse_incident_reporting.dart';
 import '../../view/screen/role_screen/student/view/student_home/student_home_screen.dart';
-import '../../view/screen/role_screen/student/view/student_profile/view/student_grade_screen.dart';
+import '../../view/screen/role_screen/student/view/student_profile/view/student_fees_screen.dart';
 import '../../view/screen/role_screen/student/view/student_profile/view/student_metarial_screen.dart';
 import '../../view/screen/role_screen/student/view/student_profile/view/student_schedule_screen.dart';
 import '../../view/screen/role_screen/student/view/student_profile/view/student_support_screen.dart';
@@ -47,6 +47,7 @@ class AppRoutes {
   ///=================== Students Part ======================
   static const String studentHomeScreen = "/StudentHomeScreen";
   static const String resourceListScreen = "/ResourceListScreen";
+  static const String studentFeesScreen ="/StudentFeesScreen";
   static const String studentGradeScreen = "/StudentGradeScreen";
   static const String contactUsScreen = "/ContactUsScreen";
   static const String studentScheduleScreen = "/StudentScheduleScreen";
@@ -85,7 +86,7 @@ class AppRoutes {
     ///===================== Student Part================
     GetPage(name: studentHomeScreen, page: () => StudentHomeScreen()),
     GetPage(name: resourceListScreen, page: () => const StudentMetarialScreen()),
-    GetPage(name: studentGradeScreen, page: () => StudentGradeScreen()),
+    GetPage(name: studentFeesScreen, page: () => const StudentFeesScreen()),
     GetPage(name: contactUsScreen, page: () => ContactUsScreen()),
     GetPage(name: studentScheduleScreen, page: () => StudentScheduleScreen()),
 
