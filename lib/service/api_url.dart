@@ -131,6 +131,7 @@ class ApiUrl {
       "/api/v1/students/find_my_class_attendance_history";
   static String studentclassMaterial =
       "/api/v1/students/find_my_class_material";
+  static String studentFees = "/api/v1/fees/find_my_all_fess";
 
 //================================== ===============================================
   static const String googleAuth = "/api/v1/user/google_auth";
